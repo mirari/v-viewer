@@ -1,0 +1,93 @@
+{
+  "name": "v-viewer",
+  "version": "0.1.0",
+  "description": "Image viewer component for vue, supports rotation, scale, zoom and so on, based on viewer.js",
+  "main": "dist/v-viewer.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node build/dev-server.js",
+    "release": "webpack --progress --hide-modules --config  ./build/webpack.release.js && cross-env NODE_ENV=production webpack --progress --hide-modules --config  ./build/webpack.release.min.js",
+    "example": "cross-env NODE_ENV=production node build/build.js",
+    "gh": "node build/deploy",
+    "publish": "npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mirari/v-viewer.git"
+  },
+  "keywords": [
+    "vue",
+    "viewer",
+    "gallery",
+    "picture",
+    "img",
+    "image"
+  ],
+  "author": "mirari",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mirari/v-viewer/issues"
+  },
+  "homepage": "https://github.com/mirari/v-viewer#readme",
+  "engines": {
+    "node": ">=4",
+    "npm": ">=3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.7.7",
+    "babel-core": "^6.22.1",
+    "babel-eslint": "^7.1.1",
+    "babel-helper-vue-jsx-merge-props": "^2.0.2",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-component": "^0.9.1",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-plugin-transform-export-extensions": "^6.8.0",
+    "babel-plugin-transform-vue-jsx": "^3.4.2",
+    "babel-polyfill": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.22.0",
+    "bulma": "^0.5.1",
+    "connect-history-api-fallback": "^1.3.0",
+    "cross-env": "^3.1.3",
+    "css-loader": "^0.27.1",
+    "electron-devtools-installer": "^2.0.1",
+    "eslint": "^3.17.1",
+    "eslint-config-standard": "^7.0.1",
+    "eslint-friendly-formatter": "^2.0.7",
+    "eslint-loader": "^1.6.1",
+    "eslint-plugin-html": "^2.0.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^2.1.1",
+    "eventsource-polyfill": "^0.9.6",
+    "express": "^4.15.2",
+    "extract-text-webpack-plugin": "^2.0.0-beta.4",
+    "file-loader": "^0.10.1",
+    "gh-pages": "^1.0.0",
+    "github-markdown-css": "^2.8.0",
+    "html-webpack-plugin": "^2.25.0",
+    "http-proxy-middleware": "^0.17.4",
+    "imports-loader": "^0.7.0",
+    "node-sass": "^4.1.1",
+    "opn": "^4.0.2",
+    "ora": "^1.1.0",
+    "postcss-loader": "^1.3.3",
+    "progress-bar-webpack-plugin": "^1.9.1",
+    "sass-loader": "^6.0.3",
+    "serve-favicon": "^2.4.1",
+    "style-loader": "^0.13.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "url-loader": "^0.5.7",
+    "vue": "^2.4.1",
+    "vue-html-loader": "^1.2.3",
+    "vue-loader": "^11.1.4",
+    "vue-markdown-loader": "^2.1.0",
+    "vue-template-compiler": "^2.2.2",
+    "webpack": "^2.2.1",
+    "webpack-dev-middleware": "^1.9.0",
+    "webpack-hot-middleware": "^2.14.0",
+    "webpack-merge": "^4.0.0"
+  },
+  "dependencies": {
+    "viewerjs": "^0.7.2"
+  }
+}

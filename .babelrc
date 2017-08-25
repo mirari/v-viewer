@@ -1,0 +1,11 @@
+{
+  "presets": [
+    ["es2015", { "modules": false }],
+    "stage-2"
+  ],
+  "plugins": [
+    "transform-export-extensions",
+    "transform-vue-jsx"
+  ],
+  "comments": false
+}
