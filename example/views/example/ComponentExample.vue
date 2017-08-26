@@ -31,7 +31,7 @@
             <input class="input" type="text" v-model.number="form.zoom">
           </div>
           <div class="control">
-            <span class="button" @click="zoom">Zoom</span>
+            <span class="button" @click="zoom()">Zoom</span>
           </div>
         </div>
         <div class="field has-addons" style="width: 140px">
@@ -47,7 +47,7 @@
             <input class="input" type="text" v-model.number="form.rotate">
           </div>
           <div class="control">
-            <span class="button" @click="rotate">Rotate</span>
+            <span class="button" @click="rotate()">Rotate</span>
           </div>
         </div>
         <div class="field has-addons" style="width: 140px">
@@ -112,6 +112,7 @@
         </div>
         <button type="button" class="button" @click="full">Full</button>
         <button type="button" class="button" @click="tooltip">Tooltip</button>
+        <button type="button" class="button" @click="reset">Reset</button>
       </template>
       <template v-else>
         <button type="button" class="button" @click="show">Show</button>
@@ -140,12 +141,13 @@
           >
             <template scope="scope">
               <figure class="images">
-                <div class="image-wrapper" v-for="{source, thumbnail} in images" :key="source">
+                <div class="image-wrapper" v-for="{source, thumbnail} in scope.images" :key="source">
                   <img class="image"
                        :src="thumbnail" :data-source="source" :alt="source.split('/').pop()"
                   >
                 </div>
               </figure>
+              <p><strong>Options: </strong>{{scope.options}}</p>
             </template>
           </viewer>
         </div>
@@ -339,6 +341,9 @@ export default {
     },
     tooltip () {
       this.$viewer.tooltip()
+    },
+    reset () {
+      this.$viewer.reset()
     },
     toggleInline (inline) {
       this.options.inline = inline

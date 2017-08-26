@@ -18,7 +18,7 @@
       </div>
     </section>
     <div class="container" style="margin-bottom: 30px">
-      <example style="margin-bottom: 30px;"></example>
+      <example style="margin-bottom: 100px;"></example>
       <doc class="markdown-body"></doc>
     </div>
     <footer class="footer">

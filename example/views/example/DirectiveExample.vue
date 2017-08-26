@@ -14,11 +14,11 @@
     <p>
       To show the viewer, you can click these images too.
     </p>
-    <transition-group tag="div" name="images" v-viewer="options" class="images clearfix">
+    <div v-viewer="options" class="images clearfix">
       <template v-for="{source, thumbnail} in images">
         <img :src="thumbnail" :data-source="source" class="image" :key="source" :alt="source.split('/').pop()">
       </template>
-    </transition-group>
+    </div>
   </div>
 </template>
 
@@ -125,12 +125,6 @@ export default {
     width: calc(20% - 10px);
     cursor: pointer;
     margin: 5px;
-    transition: all 1s;
     display: inline-block;
-  }
-
-  .images-enter, .images-leave-to {
-    opacity: 0;
-    transform: translateY(30px);
   }
 </style>

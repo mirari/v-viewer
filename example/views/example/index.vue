@@ -2,12 +2,14 @@
   <div>
     <h1 class="title">Demo</h1>
     <hr>
-    <div>
-      <h2 class="title is-4">Usage of directive</h2>
+    <div style="margin-bottom: 3em">
+      <h2 class="title is-4">Directive</h2>
+      <p class="subtitle"><a href="https://github.com/mirari/v-viewer/blob/master/example/views/example/DirectiveExample.vue" target="_blank">Source</a></p>
       <directive-example></directive-example>
     </div>
     <div>
-      <h2 class="title is-4">Usage of component</h2>
+      <h2 class="title is-4">Component</h2>
+      <p class="subtitle"><a href="https://github.com/mirari/v-viewer/blob/master/example/views/example/ComponentExample.vue" target="_blank">Source</a></p>
       <component-example></component-example>
     </div>
   </div>
