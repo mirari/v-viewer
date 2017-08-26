@@ -1,12 +1,121 @@
 <template>
   <div>
-    <div class="field is-grouped is-grouped-multiline">
-      <p class="control">
-        <button type="button" class="button" @click="add" :disabled="images.length===9">Add</button>
-      </p>
-      <p class="control">
-        <button type="button" class="button" @click="remove" :disabled="images.length===1">Remove</button>
-      </p>
+    <div class="methods is-flex">
+      <div class="field has-addons">
+        <p class="control">
+          <button type="button" class="button is-primary"
+                  @click="toggleInline(false)"
+                  :class="{' is-active': !options.inline}"
+          >Modal</button>
+        </p>
+        <p class="control">
+          <button type="button" class="button is-primary"
+                  @click="toggleInline(true)"
+                  :class="{' is-active': options.inline}"
+          >Inline</button>
+        </p>
+      </div>
+      <button type="button" class="button" @click="add" :disabled="images.length===9">Add</button>
+      <button type="button" class="button" @click="remove" :disabled="images.length===1">Remove</button>
+      <template v-if="options.inline">
+        <div class="field has-addons" style="width: 110px">
+          <div class="control">
+            <span class="button is-static">View</span>
+          </div>
+          <div class="control">
+            <input class="input" type="text" v-model.number="form.view" @keyup="view">
+          </div>
+        </div>
+        <div class="field has-addons" style="width: 120px">
+          <div class="control">
+            <input class="input" type="text" v-model.number="form.zoom">
+          </div>
+          <div class="control">
+            <span class="button" @click="zoom">Zoom</span>
+          </div>
+        </div>
+        <div class="field has-addons" style="width: 140px">
+          <div class="control">
+            <input class="input" type="text" v-model.number="form.zoomTo">
+          </div>
+          <div class="control">
+            <span class="button" @click="zoomTo">Zoom to</span>
+          </div>
+        </div>
+        <div class="field has-addons" style="width: 120px">
+          <div class="control">
+            <input class="input" type="text" v-model.number="form.rotate">
+          </div>
+          <div class="control">
+            <span class="button" @click="rotate">Rotate</span>
+          </div>
+        </div>
+        <div class="field has-addons" style="width: 140px">
+          <div class="control">
+            <input class="input" type="text" v-model.number="form.rotateTo">
+          </div>
+          <div class="control">
+            <span class="button" @click="rotateTo">Rotate to</span>
+          </div>
+        </div>
+        <div class="field has-addons">
+          <div class="control">
+            <button type="button" class="button" @click="zoom(0.5)">Zoom In</button>
+          </div>
+          <div class="control">
+            <button type="button" class="button" @click="zoom(-0.5)">Zoom Out</button>
+          </div>
+        </div>
+        <div class="field has-addons">
+          <div class="control">
+            <button type="button" class="button" @click="rotate(-90)">Rotate Left</button>
+          </div>
+          <div class="control">
+            <button type="button" class="button" @click="rotate(90)">Rotate Right</button>
+          </div>
+        </div>
+        <div class="field has-addons">
+          <div class="control">
+            <button type="button" class="button" @click="scaleX()">Flip Horizontal</button>
+          </div>
+          <div class="control">
+            <button type="button" class="button" @click="scaleY()">Flip Vertical</button>
+          </div>
+        </div>
+        <div class="field has-addons">
+          <div class="control">
+            <button type="button" class="button" @click="move(-10, 0)">Left</button>
+          </div>
+          <div class="control">
+            <button type="button" class="button" @click="move(10, 0)">Right</button>
+          </div>
+          <div class="control">
+            <button type="button" class="button" @click="move(0, -10)">Up</button>
+          </div>
+          <div class="control">
+            <button type="button" class="button" @click="move(0, 10)">Down</button>
+          </div>
+        </div>
+        <div class="field has-addons">
+          <div class="control">
+            <button type="button" class="button" @click="prev">Prev</button>
+          </div>
+          <div class="control">
+            <button type="button" class="button" @click="next">Next</button>
+          </div>
+          <div class="control">
+            <button type="button" class="button" @click="play">Play</button>
+          </div>
+          <div class="control">
+            <button type="button" class="button" @click="stop">Stop</button>
+          </div>
+        </div>
+        <button type="button" class="button" @click="full">Full</button>
+        <button type="button" class="button" @click="tooltip">Tooltip</button>
+      </template>
+      <template v-else>
+        <button type="button" class="button" @click="show">Show</button>
+      </template>
     </div>
     <div class="tile is-ancestor">
       <div class="tile is-2 is-vertical is-parent">
@@ -15,22 +124,6 @@
             <p class="panel-heading">
               Options
             </p>
-            <div class="panel-block">
-              <div class="field has-addons toggle-mode">
-                <p class="control">
-                  <button type="button" class="button is-primary"
-                          @click="toggleInline(false)"
-                          :class="{' is-active': !options.inline}"
-                  >Modal</button>
-                </p>
-                <p class="control">
-                  <button type="button" class="button is-primary"
-                          @click="toggleInline(true)"
-                          :class="{' is-active': options.inline}"
-                  >Inline</button>
-                </p>
-              </div>
-            </div>
             <div class="panel-block" v-for="item of toggleOptions" :key="item">
               <label class="checkbox">
                 <input type="checkbox" name="button" v-model="options[item]"> {{item}}
@@ -41,7 +134,10 @@
       </div>
       <div class="tile is-10 is-vertical is-parent">
         <div class="viewer-wrapper">
-          <viewer :options="options" :images="images" class="viewer" ref="viewer">
+          <viewer :options="options" :images="images"
+                  @inited="inited"
+                  class="viewer" ref="viewer"
+          >
             <template scope="scope">
               <figure class="images">
                 <div class="image-wrapper" v-for="{source, thumbnail} in images" :key="source">
@@ -54,8 +150,6 @@
           </viewer>
         </div>
       </div>
-<!--      <div class="tile is-2 is-vertical is-parent">
-      </div>-->
     </div>
   </div>
 </template>
@@ -133,6 +227,15 @@ export default {
 
   data () {
     return {
+      form: {
+        view: 2,
+        zoom: -0.1,
+        zoomTo: 0.8,
+        rotate: 90,
+        rotateTo: 180,
+        scaleX: 1,
+        scaleY: 1
+      },
       toggleOptions: [
         'button',
         'navbar',
@@ -171,19 +274,71 @@ export default {
   },
 
   methods: {
+    inited (viewer) {
+      this.$viewer = viewer
+    },
     add () {
       this.images.push(sourceImages[this.images.length])
     },
     remove () {
       this.images.pop()
     },
-    show () {
-      const viewer = this.$refs['viewer'].$viewer
-      viewer.show()
+    view () {
+      if (this.form.view >= 0 && this.form.view < this.images.length) {
+        this.$viewer.view(this.form.view)
+      }
     },
-    hide () {
-      const viewer = this.$refs['viewer'].$viewer
-      viewer.hide()
+    zoom (value) {
+      this.$viewer.zoom(value || this.form.zoom)
+    },
+    zoomTo () {
+      this.$viewer.zoomTo(this.form.zoomTo)
+    },
+    rotate (value) {
+      this.$viewer.rotate(value || this.form.rotate)
+    },
+    rotateTo () {
+      this.$viewer.rotateTo(this.form.rotateTo)
+    },
+    scaleX (value) {
+      if (value) {
+        this.$viewer.scaleX(value)
+      } else {
+        this.form.scaleX = -this.form.scaleX
+        this.$viewer.scaleX(this.form.scaleX)
+      }
+    },
+    scaleY (value) {
+      if (value) {
+        this.$viewer.scaleY(value)
+      } else {
+        this.form.scaleY = -this.form.scaleY
+        this.$viewer.scaleY(this.form.scaleY)
+      }
+    },
+    move (x, y) {
+      this.$viewer.move(x, y)
+    },
+    prev () {
+      this.$viewer.prev()
+    },
+    next () {
+      this.$viewer.next()
+    },
+    play () {
+      this.$viewer.play()
+    },
+    stop () {
+      this.$viewer.stop()
+    },
+    show () {
+      this.$viewer.show()
+    },
+    full () {
+      this.$viewer.full()
+    },
+    tooltip () {
+      this.$viewer.tooltip()
     },
     toggleInline (inline) {
       this.options.inline = inline
@@ -199,6 +354,15 @@ export default {
     height: 100%;
   }
 
+  .methods {
+    margin-bottom: 1em;
+    flex-wrap: wrap;
+
+    & > * {
+      margin-right: 0.75rem;
+    }
+  }
+
   .options-panel {
     .panel-block {
       padding: 0;
@@ -208,19 +372,6 @@ export default {
         width: 100%;
         margin: 0;
         padding: 0.5em 0.75em;
-      }
-    }
-  }
-
-  .toggle-mode {
-    width: 100%;
-    padding: 0.5em;
-
-    .control {
-      width: 100%;
-
-      .button {
-        width: 100%;
       }
     }
   }

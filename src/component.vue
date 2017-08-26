@@ -34,6 +34,7 @@ export default {
       const options = Object.assign({}, defaults, this.options)
       this.$viewer && this.$viewer.destroy()
       this.$viewer = new Viewer(this.$el, options)
+      this.$emit('inited', this.$viewer)
     }
   },
 
