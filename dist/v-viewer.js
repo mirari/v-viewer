@@ -153,7 +153,7 @@ var Component = __webpack_require__(6)(
   /* cssModules */
   null
 )
-Component.options.__file = "D:\\Workspaces\\Web\\Git\\v-viewer\\src\\component.vue"
+Component.options.__file = "D:\\Workspaces\\Git\\v-viewer\\src\\component.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] component.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -235,6 +235,7 @@ var defaults = {
       var options = Object.assign({}, defaults, this.options);
       this.$viewer && this.$viewer.destroy();
       this.$viewer = new __WEBPACK_IMPORTED_MODULE_0_viewerjs___default.a(this.$el, options);
+      this.$emit('inited', this.$viewer);
     }
   },
 
@@ -330,7 +331,8 @@ module.exports = function normalizeComponent (
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_vm._t("default", null, {
-    images: _vm.images
+    images: _vm.images,
+    options: _vm.options
   })], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
