@@ -25,7 +25,7 @@
       <div class="container">
         <div class="content has-text-centered">
           <p>
-            <a href="https://mirari.cc" target="_blank" title="mirari.cc">
+            <a href="http://mirari.cc" target="_blank" title="mirari.cc">
               <strong>mirari.cc</strong>
             </a>
             ·  GitHub
