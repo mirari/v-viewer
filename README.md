@@ -15,7 +15,7 @@ npm install v-viewer
 
 ## Usage
 
-To use `vue-viewer`, simply import it, and call `Vue.use()` to install.
+To use `v-viewer`, simply import it, and call `Vue.use()` to install.
 
 ```html
 <template>
