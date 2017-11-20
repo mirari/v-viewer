@@ -139,7 +139,7 @@
                   @inited="inited"
                   class="viewer" ref="viewer"
           >
-            <template scope="scope">
+            <template slot-scope="scope">
               <figure class="images">
                 <div class="image-wrapper" v-for="{source, thumbnail} in scope.images" :key="source">
                   <img class="image"
