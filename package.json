@@ -1,6 +1,6 @@
 {
   "name": "v-viewer",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Image viewer component for vue, supports rotation, scale, zoom and so on, based on viewer.js",
   "main": "dist/v-viewer.js",
   "scripts": {
@@ -88,6 +88,6 @@
     "webpack-merge": "^4.0.0"
   },
   "dependencies": {
-    "viewerjs": "^0.10.0"
+    "viewerjs": "0.7.2"
   }
 }
