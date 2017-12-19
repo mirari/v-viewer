@@ -7,6 +7,8 @@
 <script>
 import Viewer from 'viewerjs'
 import 'viewerjs/dist/viewer.css'
+import {extend} from './utils'
+
 const defaults = {
   zIndex: 100000000
 }
@@ -31,7 +33,7 @@ export default {
 
   methods: {
     createViewer () {
-      const options = Object.assign({}, defaults, this.options)
+      const options = extend(true, {}, defaults, this.options)
       this.$viewer && this.$viewer.destroy()
       this.$viewer = new Viewer(this.$el, options)
       this.$emit('inited', this.$viewer)
