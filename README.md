@@ -167,7 +167,7 @@ If you need to avoid name conflict, you can import it like this:
 
 If you need to set the viewer default options, you can import it like this:
 ```javascript
-import Viewer from 'src'
+import Viewer from 'v-viewer'
 import Vue from 'vue'
 Vue.use(Viewer, {
   defaultOptions: {
@@ -178,7 +178,7 @@ Vue.use(Viewer, {
 
 And you can reset the default options at any other time:
 ```javascript
-import Viewer from 'src'
+import Viewer from 'v-viewer'
 import Vue from 'vue'
 Vue.use(Viewer)
 Viewer.setDefaults({
