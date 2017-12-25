@@ -7,7 +7,7 @@
 		exports["VueViewer"] = factory(require("viewerjs"), require("viewerjs/dist/viewer.css"));
 	else
 		root["VueViewer"] = factory(root["viewerjs"], root["viewerjs/dist/viewer.css"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -78,6 +78,70 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_viewerjs__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_viewerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_viewerjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_viewerjs_dist_viewer_css__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_viewerjs_dist_viewer_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_viewerjs_dist_viewer_css__);
+
+
+
+var install = function install(Vue, _ref) {
+  var _ref$name = _ref.name,
+      name = _ref$name === undefined ? 'viewer' : _ref$name,
+      _ref$debug = _ref.debug,
+      debug = _ref$debug === undefined ? false : _ref$debug;
+
+  function createViewer(el, binding) {
+    var options = binding.value;
+    el['$' + name] && el['$' + name].destroy();
+    el['$' + name] = new __WEBPACK_IMPORTED_MODULE_0_viewerjs___default.a(el, options);
+  }
+
+  function log(content) {
+    debug && console.log(content);
+  }
+
+  Vue.directive('viewer', {
+    bind: function bind(el, binding) {
+      log('viewer bind');
+    },
+
+    inserted: function inserted(el, binding) {
+      log('viewer inserted');
+      createViewer(el, binding);
+    },
+    componentUpdated: function componentUpdated(el, binding) {
+      log('viewer componentUpdated');
+      createViewer(el, binding);
+    },
+    unbind: function unbind(el, binding) {
+      log('viewer unbind');
+      el['$' + name] && el['$' + name].destroy();
+    }
+  });
+};
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  install: install
+});
+
+/***/ }),
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -113,79 +177,6 @@ function extend() {
 
   return extended;
 }
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_viewerjs__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_viewerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_viewerjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_viewerjs_dist_viewer_css__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_viewerjs_dist_viewer_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_viewerjs_dist_viewer_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(0);
-
-
-
-
-var defaults = {
-  debug: false,
-  zIndex: 100000000
-};
-
-var install = function install(Vue) {
-  var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-  var name = opts.name || 'viewer';
-
-  function createViewer(el, binding) {
-    var options = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* extend */])(true, {}, defaults, binding.value);
-    el['$' + name] && el['$' + name].destroy();
-    el['$' + name] = new __WEBPACK_IMPORTED_MODULE_0_viewerjs___default.a(el, options);
-  }
-
-  function log(content, binding) {
-    var _extend = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* extend */])(true, {}, defaults, binding.value),
-        debug = _extend.debug;
-
-    debug && console.log(content);
-  }
-
-  Vue.directive('viewer', {
-    bind: function bind(el, binding) {
-      log('viewer bind', binding);
-    },
-
-    inserted: function inserted(el, binding) {
-      log('viewer inserted', binding);
-      createViewer(el, binding);
-    },
-    componentUpdated: function componentUpdated(el, binding) {
-      log('viewer componentUpdated', binding);
-      createViewer(el, binding);
-    },
-    unbind: function unbind(el, binding) {
-      log('viewer unbind', binding);
-      el['$' + name] && el['$' + name].destroy();
-    }
-  });
-};
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-  install: install
-});
 
 /***/ }),
 /* 4 */
@@ -227,21 +218,33 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__component_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__component_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__component_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__directive__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__directive__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_viewerjs__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_viewerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_viewerjs__);
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   install: function install(Vue) {
-    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+        _ref$name = _ref.name,
+        name = _ref$name === undefined ? 'viewer' : _ref$name,
+        _ref$debug = _ref.debug,
+        debug = _ref$debug === undefined ? false : _ref$debug,
+        defaultOptions = _ref.defaultOptions;
 
-    var name = opts.name || 'viewer';
+    __WEBPACK_IMPORTED_MODULE_3_viewerjs___default.a.setDefaults(defaultOptions);
+
     Vue.component(name, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["a" /* extend */])(__WEBPACK_IMPORTED_MODULE_1__component_vue___default.a, { name: name }));
-    Vue.use(__WEBPACK_IMPORTED_MODULE_2__directive__["a" /* default */], { name: name });
+    Vue.use(__WEBPACK_IMPORTED_MODULE_2__directive__["a" /* default */], { name: name, debug: debug });
+  },
+  setDefaults: function setDefaults(defaultOptions) {
+    __WEBPACK_IMPORTED_MODULE_3_viewerjs___default.a.setDefaults(defaultOptions);
   }
 });
 
@@ -251,20 +254,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_viewerjs__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_viewerjs__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_viewerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_viewerjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_viewerjs_dist_viewer_css__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_viewerjs_dist_viewer_css__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_viewerjs_dist_viewer_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_viewerjs_dist_viewer_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(0);
 
 
 
 
 
-
-var defaults = {
-  zIndex: 100000000
-};
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     images: {
@@ -285,9 +283,8 @@ var defaults = {
 
   methods: {
     createViewer: function createViewer() {
-      var options = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* extend */])(true, {}, defaults, this.options);
       this.$viewer && this.$viewer.destroy();
-      this.$viewer = new __WEBPACK_IMPORTED_MODULE_0_viewerjs___default.a(this.$el, options);
+      this.$viewer = new __WEBPACK_IMPORTED_MODULE_0_viewerjs___default.a(this.$el, this.options);
       this.$emit('inited', this.$viewer);
     }
   },
