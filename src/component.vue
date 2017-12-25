@@ -7,11 +7,7 @@
 <script>
 import Viewer from 'viewerjs'
 import 'viewerjs/dist/viewer.css'
-import {extend} from './utils'
 
-const defaults = {
-  zIndex: 100000000
-}
 export default {
   props: {
     images: {
@@ -33,9 +29,8 @@ export default {
 
   methods: {
     createViewer () {
-      const options = extend(true, {}, defaults, this.options)
       this.$viewer && this.$viewer.destroy()
-      this.$viewer = new Viewer(this.$el, options)
+      this.$viewer = new Viewer(this.$el, this.options)
       this.$emit('inited', this.$viewer)
     }
   },

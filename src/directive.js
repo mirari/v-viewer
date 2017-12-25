@@ -1,40 +1,31 @@
 import Viewer from 'viewerjs'
 import 'viewerjs/dist/viewer.css'
-import {extend} from './utils'
 
-const defaults = {
-  debug: false,
-  zIndex: 100000000
-}
-
-const install = (Vue, opts = {}) => {
-  const name = opts.name || 'viewer'
-
+const install = (Vue, {name = 'viewer', debug = false}) => {
   function createViewer (el, binding) {
-    const options = extend(true, {}, defaults, binding.value)
+    const options = binding.value
     el[`$${name}`] && el[`$${name}`].destroy()
     el[`$${name}`] = new Viewer(el, options)
   }
 
-  function log (content, binding) {
-    const {debug} = extend(true, {}, defaults, binding.value)
+  function log (content) {
     debug && console.log(content)
   }
 
   Vue.directive('viewer', {
     bind (el, binding) {
-      log('viewer bind', binding)
+      log('viewer bind')
     },
     inserted: function (el, binding) {
-      log('viewer inserted', binding)
+      log('viewer inserted')
       createViewer(el, binding)
     },
     componentUpdated: function (el, binding) {
-      log('viewer componentUpdated', binding)
+      log('viewer componentUpdated')
       createViewer(el, binding)
     },
     unbind (el, binding) {
-      log('viewer unbind', binding)
+      log('viewer unbind')
       el[`$${name}`] && el[`$${name}`].destroy()
     }
   })

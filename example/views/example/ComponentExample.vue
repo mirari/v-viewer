@@ -160,6 +160,9 @@
 import Viewer from 'src'
 import Vue from 'vue'
 Vue.use(Viewer)
+Viewer.setDefaults({
+  zIndexInline: 2017
+})
 import img1 from './source/losglaciares_1920_1200_ss_01.jpg'
 import img2 from './source/losglaciares_1920_1200_ss_02.jpg'
 import img3 from './source/losglaciares_1920_1200_ss_03.jpg'

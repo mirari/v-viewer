@@ -116,7 +116,11 @@ Listen for the `inited` event to get the `viewer` instance, or use `this.refs.xx
 
 Refer to [viewer.js](https://github.com/fengyuanchen/viewerjs).
 
-## No conflict
+## Plugin options
+### name
+
+- Type: `String`
+- Default: `viewer`
 
 If you need to avoid name conflict, you can import it like this:
 
@@ -145,4 +149,30 @@ If you need to avoid name conflict, you can import it like this:
     }
   }
 </script>
+```
+
+### defaultOptions
+
+- Type: `Object`
+- Default: `undefined`
+
+If you need to set the viewer default options, you can import it like this:
+```javascript
+import Viewer from 'src'
+import Vue from 'vue'
+Vue.use(Viewer, {
+  defaultOptions: {
+    zIndex: 9999
+  }
+})
+```
+
+And you can reset the default options at any other time:
+```javascript
+import Viewer from 'src'
+import Vue from 'vue'
+Vue.use(Viewer)
+Viewer.setDefaults({
+  zIndexInline: 2017
+})
 ```
