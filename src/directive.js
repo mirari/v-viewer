@@ -3,9 +3,11 @@ import 'viewerjs/dist/viewer.css'
 
 const install = (Vue, {name = 'viewer', debug = false}) => {
   function createViewer (el, binding) {
-    const options = binding.value
     el[`$${name}`] && el[`$${name}`].destroy()
-    el[`$${name}`] = new Viewer(el, options)
+    Vue.nextTick(() => {
+      const options = binding.value
+      el[`$${name}`] = new Viewer(el, options)
+    })
   }
 
   function log (content) {

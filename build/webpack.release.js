@@ -15,7 +15,14 @@ module.exports = {
     libraryTarget: 'umd'
   },
   externals: [
-    'viewerjs',
+    {
+      viewerjs: {
+        commonjs: 'viewerjs',
+        commonjs2: 'viewerjs',
+        amd: 'viewerjs',
+        root: 'Viewer'
+      }
+    },
     /^viewerjs\/.+$/
   ],
   module: {

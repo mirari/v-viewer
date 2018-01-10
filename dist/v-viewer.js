@@ -6,7 +6,7 @@
 	else if(typeof exports === 'object')
 		exports["VueViewer"] = factory(require("viewerjs"), require("viewerjs/dist/viewer.css"));
 	else
-		root["VueViewer"] = factory(root["viewerjs"], root["viewerjs/dist/viewer.css"]);
+		root["VueViewer"] = factory(root["Viewer"], root["viewerjs/dist/viewer.css"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -107,9 +107,11 @@ var install = function install(Vue, _ref) {
       debug = _ref$debug === undefined ? false : _ref$debug;
 
   function createViewer(el, binding) {
-    var options = binding.value;
     el['$' + name] && el['$' + name].destroy();
-    el['$' + name] = new __WEBPACK_IMPORTED_MODULE_0_viewerjs___default.a(el, options);
+    Vue.nextTick(function () {
+      var options = binding.value;
+      el['$' + name] = new __WEBPACK_IMPORTED_MODULE_0_viewerjs___default.a(el, options);
+    });
   }
 
   function log(content) {
