@@ -44,6 +44,31 @@ To use `v-viewer`, simply import it, and call `Vue.use()` to install.
 </script>
 ```
 
+
+### Support UMD
+
+#### Browser
+```html
+<link href="//path/viewer.css" rel="stylesheet">
+<script src="//path/vue.js"></script>
+<script src="//path/viewer.js"></script>
+<script src="//path/v-viewer.js"></script>
+...
+<script>
+  Vue.use(VueViewer)
+</script>
+```
+
+#### CommonJS
+```javascript
+var VueViewer = require('VueViewer')
+```
+
+#### AMD
+```javascript
+require(['VueViewer'], function (VueViewer) {});
+```
+
 ### Usage of directive
 Just add the directive `v-viewer` to any element, then all `img` elements in it will be handled by `viewer`.
 

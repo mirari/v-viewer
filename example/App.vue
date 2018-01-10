@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import Doc from './views/Doc.md'
+import Doc from '../README.md'
 import Example from './views/example'
 import 'github-markdown-css'
 import 'highlight.js/styles/github.css'
