@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import 'viewerjs/dist/viewer.css'
 import Viewer from 'src'
 import Vue from 'vue'
 Vue.use(Viewer, {

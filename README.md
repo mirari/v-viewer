@@ -5,6 +5,8 @@ Image viewer component for vue, supports rotation, scale, zoom and so on, based 
 
 ## [Live demo](http://mirari.github.io/v-viewer/)
 
+## [JSFiddle demo](https://jsfiddle.net/mirari/n1L0gxtv/)
+
 ## [中文文档](http://mirari.cc/2017/08/27/Vue%E5%9B%BE%E7%89%87%E6%B5%8F%E8%A7%88%E7%BB%84%E4%BB%B6v-viewer%EF%BC%8C%E6%94%AF%E6%8C%81%E6%97%8B%E8%BD%AC%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E7%BF%BB%E8%BD%AC%E7%AD%89%E6%93%8D%E4%BD%9C/)
 
 ## Installation 
@@ -15,7 +17,7 @@ npm install v-viewer
 
 ## Usage
 
-To use `v-viewer`, simply import it, and call `Vue.use()` to install.
+To use `v-viewer`, simply import it and the `css` file, and call `Vue.use()` to install.
 
 ```html
 <template>
@@ -33,6 +35,7 @@ To use `v-viewer`, simply import it, and call `Vue.use()` to install.
   </div>
 </template>
 <script>
+  import 'viewerjs/dist/viewer.css'
   import Viewer from 'v-viewer'
   import Vue from 'vue'
   Vue.use(Viewer)
@@ -55,7 +58,7 @@ To use `v-viewer`, simply import it, and call `Vue.use()` to install.
 <script src="//path/v-viewer.js"></script>
 ...
 <script>
-  Vue.use(VueViewer)
+  Vue.use(VueViewer.default)
 </script>
 ```
 
@@ -86,6 +89,7 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
   </div>
 </template>
 <script>
+  import 'viewerjs/dist/viewer.css'
   import Viewer from 'v-viewer'
   import Vue from 'vue'
   Vue.use(Viewer)
@@ -126,6 +130,7 @@ Listen for the `inited` event to get the `viewer` instance, or use `this.refs.xx
   </div>
 </template>
 <script>
+  import 'viewerjs/dist/viewer.css'
   import Viewer from "v-viewer/src/component.vue"
   export default {
     components: {
@@ -168,6 +173,7 @@ If you need to avoid name conflict, you can import it like this:
   </div>
 </template>
 <script>
+  import 'viewerjs/dist/viewer.css'
   import Vuer from 'v-viewer'
   import Vue from 'vue'
   Vue.use(Vuer, {name: 'vuer'})

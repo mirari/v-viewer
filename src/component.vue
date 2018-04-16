@@ -6,7 +6,6 @@
 </template>
 <script>
 import Viewer from 'viewerjs'
-import 'viewerjs/dist/viewer.css'
 
 export default {
   props: {

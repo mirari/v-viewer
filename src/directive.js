@@ -1,5 +1,4 @@
 import Viewer from 'viewerjs'
-import 'viewerjs/dist/viewer.css'
 
 const install = (Vue, {name = 'viewer', debug = false}) => {
   function createViewer (el, binding) {
