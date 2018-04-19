@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot :images="images" :options="options">
+    <slot :options="options">
     </slot>
   </div>
 </template>
@@ -9,10 +9,6 @@ import Viewer from 'viewerjs'
 
 export default {
   props: {
-    images: {
-      type: Array,
-      required: true
-    },
     options: {
       type: Object
     }
@@ -35,11 +31,6 @@ export default {
   },
 
   watch: {
-    images () {
-      this.$nextTick(() => {
-        this.createViewer()
-      })
-    },
     options: {
       handler: function () {
         this.$nextTick(() => {
