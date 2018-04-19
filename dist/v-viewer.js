@@ -256,9 +256,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     images: {
-      type: Array,
-      required: true
+      type: Array
     },
+    trigger: {},
     options: {
       type: Object
     }
@@ -288,12 +288,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
 
-    options: {
+    trigger: {
       handler: function handler() {
         var _this2 = this;
 
         this.$nextTick(function () {
           _this2.createViewer();
+        });
+      },
+      deep: true
+    },
+    options: {
+      handler: function handler() {
+        var _this3 = this;
+
+        this.$nextTick(function () {
+          _this3.createViewer();
         });
       },
       deep: true

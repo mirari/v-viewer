@@ -29,7 +29,7 @@ To use `v-viewer`, simply import it and the `css` file, and call `Vue.use()` to 
       ...
     </div>
     <!-- component -->
-    <viewer>
+    <viewer :images="images">
       <img v-for="src in images" :src="src" :key="src">
     </viewer>
   </div>
@@ -117,13 +117,13 @@ Listen for the `inited` event to get the `viewer` instance, or use `this.refs.xx
 ```html
 <template>
   <div id="app">
-    <viewer :options="options"
+    <viewer :options="options" :images="images"
             @inited="inited"
             class="viewer" ref="viewer"
     >
-      <template slot-scope="{ options }">
-        <img v-for="src in images" :src="src" :key="src">
-        {{ options }}
+      <template slot-scope="scope">
+        <img v-for="src in scope.images" :src="src" :key="src">
+        {{scope.options}}
       </template>
     </viewer>
     <button type="button" @click="show">Show</button>
@@ -149,6 +149,14 @@ Listen for the `inited` event to get the `viewer` instance, or use `this.refs.xx
     }
   }
 </script>
+```
+
+You can replace `images` with `trigger`, to accept any type of prop.
+when the `trigger` changes, the component will re-render the viewer.
+```html
+<viewer :trigger="externallyGeneratedHtmlWithImages">
+  <div v-html="externallyGeneratedHtmlWithImages"/>
+</viewer>
 ```
 
 ## Options & Methods 
