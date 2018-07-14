@@ -87,7 +87,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_viewerjs__ = __webpack_require__(0);
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_viewerjs__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_viewerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_viewerjs__);
 
 
@@ -105,6 +105,19 @@ var install = function install(Vue, _ref) {
     });
   }
 
+  function createObserver(el, binding) {
+    var MutationObserver = global.MutationObserver || global.WebKitMutationObserver || global.MozMutationObserver;
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        log('viewer mutation:' + mutation.type);
+        createViewer(el, binding);
+      });
+    });
+    var config = { attributes: true, childList: true, characterData: true, subtree: true };
+    observer.observe(el, config);
+    el['$viewerMutationObserver'] = observer;
+  }
+
   function log(content) {
     debug && console.log(content);
   }
@@ -112,18 +125,14 @@ var install = function install(Vue, _ref) {
   Vue.directive('viewer', {
     bind: function bind(el, binding) {
       log('viewer bind');
-    },
+      createViewer(el, binding);
 
-    inserted: function inserted(el, binding) {
-      log('viewer inserted');
-      createViewer(el, binding);
-    },
-    componentUpdated: function componentUpdated(el, binding) {
-      log('viewer componentUpdated');
-      createViewer(el, binding);
+      createObserver(el, binding);
     },
     unbind: function unbind(el, binding) {
       log('viewer unbind');
+
+      el['$viewerMutationObserver'] && el['$viewerMutationObserver'].disconnect();
       el['$' + name] && el['$' + name].destroy();
     }
   });
@@ -132,6 +141,7 @@ var install = function install(Vue, _ref) {
 /* harmony default export */ __webpack_exports__["a"] = ({
   install: install
 });
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(6)))
 
 /***/ }),
 /* 2 */
@@ -175,11 +185,11 @@ function extend() {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(6)(
+var Component = __webpack_require__(7)(
   /* script */
   __webpack_require__(5),
   /* template */
-  __webpack_require__(7),
+  __webpack_require__(8),
   /* scopeId */
   null,
   /* cssModules */
@@ -322,6 +332,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 6 */
 /***/ (function(module, exports) {
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var g;
+
+g = function () {
+	return this;
+}();
+
+try {
+	g = g || Function("return this")() || (1, eval)("this");
+} catch (e) {
+	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
+}
+
+module.exports = g;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
 // this module is a runtime utility for cleaner component module output and will
 // be included in the final webpack user bundle
 
@@ -376,7 +406,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
