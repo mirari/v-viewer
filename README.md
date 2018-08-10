@@ -115,6 +115,18 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
 </script>
 ```
 
+#### Direcitve modifiers
+##### static
+The `viewer` renderer will be executed only once after the directive binded.
+
+If you're sure the images inside this element won't change again, use it to avoid unnecessary re-render.
+
+```
+<div class="images" v-viewer.static="{inline: true}">
+  <img v-for="src in images" :src="src" :key="src">
+</div>
+```
+
 ### Usage of component
 You can simply import the component and register it locally too.
 

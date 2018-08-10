@@ -89,6 +89,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_viewerjs__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_viewerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_viewerjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_throttle_debounce__ = __webpack_require__(5);
+
 
 
 var install = function install(Vue, _ref) {
@@ -97,15 +99,17 @@ var install = function install(Vue, _ref) {
       _ref$debug = _ref.debug,
       debug = _ref$debug === undefined ? false : _ref$debug;
 
-  function createViewer(el, binding) {
-    el['$' + name] && el['$' + name].destroy();
+  var createViewer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_throttle_debounce__["a" /* debounce */])(50, function (el, binding) {
     Vue.nextTick(function () {
+      destroyViewer(el);
       var options = binding.value;
       el['$' + name] = new __WEBPACK_IMPORTED_MODULE_0_viewerjs___default.a(el, options);
+      log('viewer created');
     });
-  }
+  });
 
   function createObserver(el, binding) {
+    destroyObserver(el);
     var MutationObserver = global.MutationObserver || global.WebKitMutationObserver || global.MozMutationObserver;
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
@@ -116,6 +120,25 @@ var install = function install(Vue, _ref) {
     var config = { attributes: true, childList: true, characterData: true, subtree: true };
     observer.observe(el, config);
     el['$viewerMutationObserver'] = observer;
+    log('observer created');
+  }
+
+  function destroyViewer(el) {
+    if (!el['$' + name]) {
+      return;
+    }
+    el['$' + name].destroy();
+    delete el['$' + name];
+    log('viewer destroyed');
+  }
+
+  function destroyObserver(el) {
+    if (!el['$viewerMutationObserver']) {
+      return;
+    }
+    el['$viewerMutationObserver'].disconnect();
+    delete el['$viewerMutationObserver'];
+    log('observer destroyed');
   }
 
   function log(content) {
@@ -127,13 +150,16 @@ var install = function install(Vue, _ref) {
       log('viewer bind');
       createViewer(el, binding);
 
-      createObserver(el, binding);
+      if (!binding.modifiers.static) {
+        createObserver(el, binding);
+      }
     },
     unbind: function unbind(el, binding) {
       log('viewer unbind');
 
-      el['$viewerMutationObserver'] && el['$viewerMutationObserver'].disconnect();
-      el['$' + name] && el['$' + name].destroy();
+      destroyObserver(el);
+
+      destroyViewer(el);
     }
   });
 };
@@ -141,7 +167,7 @@ var install = function install(Vue, _ref) {
 /* harmony default export */ __webpack_exports__["a"] = ({
   install: install
 });
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
 
 /***/ }),
 /* 2 */
@@ -185,11 +211,11 @@ function extend() {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(7)(
+var Component = __webpack_require__(8)(
   /* script */
-  __webpack_require__(5),
+  __webpack_require__(6),
   /* template */
-  __webpack_require__(8),
+  __webpack_require__(9),
   /* scopeId */
   null,
   /* cssModules */
@@ -253,6 +279,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 /* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export throttle */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return debounce; });
+
+function throttle(delay, noTrailing, callback, debounceMode) {
+	var timeoutID;
+
+	var lastExec = 0;
+
+	if (typeof noTrailing !== 'boolean') {
+		debounceMode = callback;
+		callback = noTrailing;
+		noTrailing = undefined;
+	}
+
+	function wrapper() {
+
+		var self = this;
+		var elapsed = Number(new Date()) - lastExec;
+		var args = arguments;
+
+		function exec() {
+			lastExec = Number(new Date());
+			callback.apply(self, args);
+		}
+
+		function clear() {
+			timeoutID = undefined;
+		}
+
+		if (debounceMode && !timeoutID) {
+			exec();
+		}
+
+		if (timeoutID) {
+			clearTimeout(timeoutID);
+		}
+
+		if (debounceMode === undefined && elapsed > delay) {
+			exec();
+		} else if (noTrailing !== true) {
+			timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
+		}
+	}
+
+	return wrapper;
+}
+
+function debounce(delay, atBegin, callback) {
+	return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
+}
+
+
+
+/***/ }),
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -329,7 +413,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -349,7 +433,7 @@ try {
 module.exports = g;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 // this module is a runtime utility for cleaner component module output and will
@@ -406,7 +490,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
