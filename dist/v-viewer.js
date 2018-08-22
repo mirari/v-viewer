@@ -99,22 +99,22 @@ var install = function install(Vue, _ref) {
       _ref$debug = _ref.debug,
       debug = _ref$debug === undefined ? false : _ref$debug;
 
-  var createViewer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_throttle_debounce__["a" /* debounce */])(50, function (el, binding) {
+  function createViewer(el, binding) {
     Vue.nextTick(function () {
       destroyViewer(el);
       var options = binding.value;
       el['$' + name] = new __WEBPACK_IMPORTED_MODULE_0_viewerjs___default.a(el, options);
       log('viewer created');
     });
-  });
+  }
 
-  function createObserver(el, binding) {
+  function createObserver(el, binding, debouncedCreateViewer) {
     destroyObserver(el);
     var MutationObserver = global.MutationObserver || global.WebKitMutationObserver || global.MozMutationObserver;
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
         log('viewer mutation:' + mutation.type);
-        createViewer(el, binding);
+        debouncedCreateViewer(el, binding);
       });
     });
     var config = { attributes: true, childList: true, characterData: true, subtree: true };
@@ -148,10 +148,11 @@ var install = function install(Vue, _ref) {
   Vue.directive('viewer', {
     bind: function bind(el, binding) {
       log('viewer bind');
-      createViewer(el, binding);
+      var debouncedCreateViewer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_throttle_debounce__["a" /* debounce */])(50, createViewer);
+      debouncedCreateViewer(el, binding);
 
       if (!binding.modifiers.static) {
-        createObserver(el, binding);
+        createObserver(el, binding, debouncedCreateViewer);
       }
     },
     unbind: function unbind(el, binding) {

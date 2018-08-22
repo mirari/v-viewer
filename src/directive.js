@@ -2,8 +2,7 @@ import Viewer from 'viewerjs'
 import { debounce } from 'throttle-debounce'
 
 const install = (Vue, {name = 'viewer', debug = false}) => {
-  // 使用去抖避免不必要的大量突发重建
-  const createViewer = debounce(50, (el, binding) => {
+  function createViewer (el, binding) {
     // nextTick执行，否则可能漏掉未渲染完的子元素
     Vue.nextTick(() => {
       destroyViewer(el)
@@ -11,15 +10,15 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
       el[`$${name}`] = new Viewer(el, options)
       log('viewer created')
     })
-  })
+  }
 
-  function createObserver (el, binding) {
+  function createObserver (el, binding, debouncedCreateViewer) {
     destroyObserver(el)
     const MutationObserver = global.MutationObserver || global.WebKitMutationObserver || global.MozMutationObserver
     const observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
         log('viewer mutation:' + mutation.type)
-        createViewer(el, binding)
+        debouncedCreateViewer(el, binding)
       })
     })
     const config = { attributes: true, childList: true, characterData: true, subtree: true }
@@ -53,12 +52,13 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
   Vue.directive('viewer', {
     bind (el, binding) {
       log('viewer bind')
-      createViewer(el, binding)
+      const debouncedCreateViewer = debounce(50, createViewer)
+      debouncedCreateViewer(el, binding)
 
       // 是否监听变化
       if (!binding.modifiers.static) {
         // 增加dom变化监听
-        createObserver(el, binding)
+        createObserver(el, binding, debouncedCreateViewer)
       }
     },
     unbind (el, binding) {
