@@ -99,28 +99,48 @@ var install = function install(Vue, _ref) {
       _ref$debug = _ref.debug,
       debug = _ref$debug === undefined ? false : _ref$debug;
 
-  function createViewer(el, binding) {
+  function createViewer(el, options) {
     Vue.nextTick(function () {
       destroyViewer(el);
-      var options = binding.value;
       el['$' + name] = new __WEBPACK_IMPORTED_MODULE_0_viewerjs___default.a(el, options);
       log('viewer created');
     });
   }
 
-  function createObserver(el, binding, debouncedCreateViewer) {
+  function createObserver(el, options, debouncedCreateViewer) {
     destroyObserver(el);
     var MutationObserver = global.MutationObserver || global.WebKitMutationObserver || global.MozMutationObserver;
+    if (!MutationObserver) {
+      log('observer not supported');
+      return;
+    }
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
         log('viewer mutation:' + mutation.type);
-        debouncedCreateViewer(el, binding);
+        debouncedCreateViewer(el, options);
       });
     });
     var config = { attributes: true, childList: true, characterData: true, subtree: true };
     observer.observe(el, config);
     el['$viewerMutationObserver'] = observer;
     log('observer created');
+  }
+
+  function createWatcher(el, _ref2, vnode, debouncedCreateViewer) {
+    var expression = _ref2.expression;
+
+    var simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/;
+    if (!simplePathRE.test(expression)) {
+      log('only simple dot-delimited paths can create watcher');
+      return;
+    }
+    el['$viewerUnwatch'] = vnode.context.$watch(expression, function (newVal, oldVal) {
+      log('change detected by watcher: ', expression);
+      debouncedCreateViewer(el, newVal);
+    }, {
+      deep: true
+    });
+    log('watcher created, expression: ', expression);
   }
 
   function destroyViewer(el) {
@@ -141,24 +161,39 @@ var install = function install(Vue, _ref) {
     log('observer destroyed');
   }
 
-  function log(content) {
-    debug && console.log(content);
+  function destroyWatcher(el) {
+    if (!el['$viewerUnwatch']) {
+      return;
+    }
+    el['$viewerUnwatch']();
+    delete el['$viewerUnwatch'];
+    log('watcher destroyed');
+  }
+
+  function log() {
+    var _console;
+
+    debug && (_console = console).log.apply(_console, arguments);
   }
 
   Vue.directive('viewer', {
-    bind: function bind(el, binding) {
+    bind: function bind(el, binding, vnode) {
       log('viewer bind');
       var debouncedCreateViewer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_throttle_debounce__["a" /* debounce */])(50, createViewer);
-      debouncedCreateViewer(el, binding);
+      debouncedCreateViewer(el, binding.value);
+
+      createWatcher(el, binding, vnode, debouncedCreateViewer);
 
       if (!binding.modifiers.static) {
-        createObserver(el, binding, debouncedCreateViewer);
+        createObserver(el, binding.value, debouncedCreateViewer);
       }
     },
     unbind: function unbind(el, binding) {
       log('viewer unbind');
 
       destroyObserver(el);
+
+      destroyWatcher(el);
 
       destroyViewer(el);
     }
@@ -222,7 +257,7 @@ var Component = __webpack_require__(8)(
   /* cssModules */
   null
 )
-Component.options.__file = "D:\\Workspaces\\Web\\Git\\v-viewer\\src\\component.vue"
+Component.options.__file = "D:\\Workspaces\\Git\\v-viewer\\src\\component.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] component.vue: functional components are not supported with templates, they should use render functions.")}
 

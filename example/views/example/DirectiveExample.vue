@@ -10,6 +10,20 @@
       <p class="control">
         <button type="button" class="button" @click="show">Show</button>
       </p>
+      <div class="field has-addons">
+        <p class="control">
+          <button type="button" class="button is-primary"
+                  @click="toggleToolbar(true)"
+                  :class="{' is-active': options.toolbar}"
+          >Show Toolbar</button>
+        </p>
+        <p class="control">
+          <button type="button" class="button is-primary"
+                  @click="toggleToolbar(false)"
+                  :class="{' is-active': !options.toolbar}"
+          >Hide Toolbar</button>
+        </p>
+      </div>
     </div>
     <p>
       To show the viewer, you can click these images too.
@@ -47,6 +61,7 @@ export default {
   data () {
     return {
       options: {
+        toolbar: true,
         url: 'data-source'
       },
       images: [...sourceImages].splice(0, 5)
@@ -57,6 +72,10 @@ export default {
   },
 
   methods: {
+    toggleToolbar (toolbar) {
+      // this.options = Object.assign({}, this.options, {toolbar})
+      this.options.toolbar = toolbar
+    },
     add () {
       this.images.push(sourceImages[this.images.length])
     },
