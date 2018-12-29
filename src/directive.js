@@ -32,7 +32,7 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
 
   function createWatcher (el, {expression}, vnode, debouncedCreateViewer) {
     const simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/
-    if (!simplePathRE.test(expression)) {
+    if (!expression || !simplePathRE.test(expression)) {
       log('only simple dot-delimited paths can create watcher')
       return
     }
