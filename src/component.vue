@@ -37,7 +37,7 @@ export default {
   watch: {
     images () {
       this.$nextTick(() => {
-        this.createViewer()
+        this.$viewer.update()
       })
     },
     trigger: {
