@@ -51,8 +51,8 @@ const sourceImages = []
 const base = parseInt((Math.random() * 60), 10) + 10
 for (let i = 0; i < 10; i++) {
   sourceImages.push({
-    thumbnail: 'https://picsum.photos/346/216/?image=' + (base + i),
-    source: 'https://picsum.photos/1440/900/?image=' + (base + i)
+    thumbnail: `https://picsum.photos/id/${base + i}/346/216`,
+    source: `https://picsum.photos/id/${base + i}/1440/900`
   })
 }
 
