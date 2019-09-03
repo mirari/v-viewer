@@ -4,7 +4,7 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
-const isExample = process.env.isExample
+const mode = process.env.mode
 // || process.env.NODE_ENV === 'test'
 
 const releaseConfig = {
@@ -101,6 +101,26 @@ const exampleConfig = {
   },
 }
 
-const testConfig = {}
+const defaultConfig = {
+  chainWebpack: config => {
+    if (process.env.NODE_ENV === 'coverage') {
+      config.module.rule('js')
+        .use('istanbul')
+        .loader('istanbul-instrumenter-loader')
+        .options({ esModules: true })
+        .before('babel-loader')
+    }
+  },
+}
 
-module.exports = process.env.NODE_ENV === 'test' ? testConfig : (isExample ? exampleConfig : releaseConfig)
+let exportConfig = defaultConfig
+switch (mode) {
+  case 'release':
+    exportConfig = releaseConfig
+    break
+  case 'example':
+    exportConfig = exampleConfig
+    break
+}
+
+module.exports = exportConfig

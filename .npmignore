@@ -18,4 +18,5 @@ vue.config.js
 yarn.lock
 _config.yml
 v-viewer.iml
-
+.nyc_output
+coverage

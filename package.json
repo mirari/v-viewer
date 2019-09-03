@@ -8,10 +8,11 @@
   "scripts": {
     "dev": "vue-cli-service serve --mode example",
     "example": "vue-cli-service build --mode example",
-    "release": "vue-cli-service build --target lib src/index.js",
+    "release": "vue-cli-service build --mode release --target lib src/index.js",
     "lint": "vue-cli-service lint",
     "lint-example": "vue-cli-service lint example",
     "test:unit": "vue-cli-service test:unit",
+    "cover": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test:unit",
     "ui": "vue ui",
     "gh": "node deploy",
     "publish": "npm publish"
@@ -34,9 +35,9 @@
     "url": "https://github.com/mirari/v-viewer/issues"
   },
   "homepage": "https://github.com/mirari/v-viewer#readme",
-  "engines": {
-    "node": ">=4",
-    "npm": ">=3"
+  "nyc": {
+    "instrument": false,
+    "sourceMap": false
   },
   "dependencies": {
     "gh-pages": "^2.1.1",
@@ -52,13 +53,17 @@
     "@vue/eslint-config-standard": "^4.0.0",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-eslint": "^10.0.1",
+    "babel-plugin-istanbul": "^5.2.0",
     "bulma": "^0.7.5",
     "chai": "^4.1.2",
     "core-js": "^2.6.5",
+    "cross-env": "^5.2.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "github-markdown-css": "^3.0.1",
+    "istanbul-instrumenter-loader": "^3.0.1",
     "node-sass": "^4.9.0",
+    "nyc": "^14.1.1",
     "register-service-worker": "^1.6.2",
     "sass-loader": "^7.1.0",
     "uglifyjs-webpack-plugin": "^2.2.0",

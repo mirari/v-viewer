@@ -1,9 +1,11 @@
 import { expect } from 'chai'
 import { shallowMount } from '@vue/test-utils'
 import ViewerComponent from '@/component.vue'
+import Viewer from '@'
+import Vue from 'vue'
 
 describe('Viewer', () => {
-  it('component.vue', done => {
+  it('component', done => {
     const sourceImages = []
     const base = parseInt((Math.random() * 60), 10) + 10
     for (let i = 0; i < 10; i++) {
@@ -20,5 +22,11 @@ describe('Viewer', () => {
       expect(wrapper.vm).to.have.property('$viewer')
       done()
     })
+  })
+
+  it('plugin', () => {
+    Vue.use(Viewer)
+    expect(Vue.directive('viewer')).to.exist
+    expect(Vue.component('viewer')).to.exist
   })
 })
