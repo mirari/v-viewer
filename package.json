@@ -1,17 +1,47 @@
 {
   "name": "v-viewer",
-  "version": "0.1.0",
+  "version": "2.0.0-alpha",
   "private": true,
+  "description": "Image viewer component for vue, supports rotation, scale, zoom and so on, based on viewer.js",
+  "main": "dist/v-viewer.umd.min.js",
+  "types": "types/index.d.ts",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "dev": "vue-cli-service serve --mode example",
+    "example": "vue-cli-service build --mode example",
+    "release": "vue-cli-service build --target lib src/index.js",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "lint-example": "vue-cli-service lint example",
+    "test:unit": "vue-cli-service test:unit",
+    "ui": "vue ui",
+    "gh": "node deploy",
+    "publish": "npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mirari/v-viewer.git"
+  },
+  "keywords": [
+    "vue",
+    "viewer",
+    "gallery",
+    "picture",
+    "img",
+    "image"
+  ],
+  "author": "mirari",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mirari/v-viewer/issues"
+  },
+  "homepage": "https://github.com/mirari/v-viewer#readme",
+  "engines": {
+    "node": ">=4",
+    "npm": ">=3"
   },
   "dependencies": {
-    "core-js": "^2.6.5",
-    "register-service-worker": "^1.6.2",
-    "vue": "^2.6.10"
+    "gh-pages": "^2.1.1",
+    "throttle-debounce": "^2.1.0",
+    "viewerjs": "^1.3.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
@@ -22,11 +52,18 @@
     "@vue/eslint-config-standard": "^4.0.0",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-eslint": "^10.0.1",
+    "bulma": "^0.7.5",
     "chai": "^4.1.2",
+    "core-js": "^2.6.5",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "github-markdown-css": "^3.0.1",
     "node-sass": "^4.9.0",
+    "register-service-worker": "^1.6.2",
     "sass-loader": "^7.1.0",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "vue": "^2.6.10",
+    "vue-markdown-loader": "^2.4.1",
     "vue-template-compiler": "^2.6.10"
   }
 }
