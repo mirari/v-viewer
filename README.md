@@ -6,9 +6,14 @@ Image viewer component for vue, supports rotation, scale, zoom and so on, based 
 
 ## [Live demo](https://mirari.github.io/v-viewer/)
 
-## Quick Example
-- [CodePen](https://codepen.io/mirari/pen/PePrVq)
-- [JSFiddle](https://jsfiddle.net/mirari/n1L0gxtv/)
+## Examples
+- [directive](https://codepen.io/mirari/pen/PePrVq)
+- [component](https://codepen.io/mirari/pen/PowNyEY)
+- [thumbnail & source](https://codepen.io/mirari/pen/LYENgMM)
+- [viewer callback](https://codepen.io/mirari/pen/ZwpGBO)
+- [hide img tags](https://codepen.io/mirari/pen/vjjXwj)
+- [filtered images](https://codepen.io/mirari/pen/vvPoQb)
+- [**click buttons to show different images**](https://codesandbox.io/s/v-viewer-zhezr)
 
 ## [中文文档](https://mirari.cc/2017/08/27/Vue%E5%9B%BE%E7%89%87%E6%B5%8F%E8%A7%88%E7%BB%84%E4%BB%B6v-viewer%EF%BC%8C%E6%94%AF%E6%8C%81%E6%97%8B%E8%BD%AC%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E7%BF%BB%E8%BD%AC%E7%AD%89%E6%93%8D%E4%BD%9C/)
 
