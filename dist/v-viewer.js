@@ -100,14 +100,21 @@ var install = function install(Vue, _ref) {
       debug = _ref$debug === undefined ? false : _ref$debug;
 
   function createViewer(el, options) {
+    var rebuild = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
     Vue.nextTick(function () {
-      destroyViewer(el);
-      el['$' + name] = new __WEBPACK_IMPORTED_MODULE_0_viewerjs___default.a(el, options);
-      log('viewer created');
+      if (rebuild || !el['$' + name]) {
+        destroyViewer(el);
+        el['$' + name] = new __WEBPACK_IMPORTED_MODULE_0_viewerjs___default.a(el, options);
+        log('viewer created');
+      } else {
+        el['$' + name].update();
+        log('viewer updated');
+      }
     });
   }
 
-  function createObserver(el, options, debouncedCreateViewer) {
+  function createObserver(el, options, debouncedCreateViewer, rebuild) {
     destroyObserver(el);
     var MutationObserver = global.MutationObserver || global.WebKitMutationObserver || global.MozMutationObserver;
     if (!MutationObserver) {
@@ -117,7 +124,7 @@ var install = function install(Vue, _ref) {
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
         log('viewer mutation:' + mutation.type);
-        debouncedCreateViewer(el, options);
+        debouncedCreateViewer(el, options, rebuild);
       });
     });
     var config = { attributes: true, childList: true, characterData: true, subtree: true };
@@ -136,7 +143,7 @@ var install = function install(Vue, _ref) {
     }
     el['$viewerUnwatch'] = vnode.context.$watch(expression, function (newVal, oldVal) {
       log('change detected by watcher: ', expression);
-      debouncedCreateViewer(el, newVal);
+      debouncedCreateViewer(el, newVal, true);
     }, {
       deep: true
     });
@@ -185,7 +192,7 @@ var install = function install(Vue, _ref) {
       createWatcher(el, binding, vnode, debouncedCreateViewer);
 
       if (!binding.modifiers.static) {
-        createObserver(el, binding.value, debouncedCreateViewer);
+        createObserver(el, binding.value, debouncedCreateViewer, binding.modifiers.rebuild);
       }
     },
     unbind: function unbind(el, binding) {
@@ -257,7 +264,7 @@ var Component = __webpack_require__(8)(
   /* cssModules */
   null
 )
-Component.options.__file = "D:\\Workspaces\\Web\\Git\\v-viewer\\src\\component.vue"
+Component.options.__file = "C:\\Workspaces\\Web\\Git\\v-viewer\\src\\component.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] component.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -322,51 +329,68 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return debounce; });
 
 function throttle(delay, noTrailing, callback, debounceMode) {
-	var timeoutID;
+  var timeoutID;
+  var cancelled = false;
 
-	var lastExec = 0;
+  var lastExec = 0;
 
-	if (typeof noTrailing !== 'boolean') {
-		debounceMode = callback;
-		callback = noTrailing;
-		noTrailing = undefined;
-	}
+  function clearExistingTimeout() {
+    if (timeoutID) {
+      clearTimeout(timeoutID);
+    }
+  }
 
-	function wrapper() {
+  function cancel() {
+    clearExistingTimeout();
+    cancelled = true;
+  }
 
-		var self = this;
-		var elapsed = Number(new Date()) - lastExec;
-		var args = arguments;
+  if (typeof noTrailing !== 'boolean') {
+    debounceMode = callback;
+    callback = noTrailing;
+    noTrailing = undefined;
+  }
 
-		function exec() {
-			lastExec = Number(new Date());
-			callback.apply(self, args);
-		}
 
-		function clear() {
-			timeoutID = undefined;
-		}
+  function wrapper() {
+    var self = this;
+    var elapsed = Date.now() - lastExec;
+    var args = arguments;
 
-		if (debounceMode && !timeoutID) {
-			exec();
-		}
+    if (cancelled) {
+      return;
+    }
 
-		if (timeoutID) {
-			clearTimeout(timeoutID);
-		}
+    function exec() {
+      lastExec = Date.now();
+      callback.apply(self, args);
+    }
 
-		if (debounceMode === undefined && elapsed > delay) {
-			exec();
-		} else if (noTrailing !== true) {
-			timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
-		}
-	}
 
-	return wrapper;
+    function clear() {
+      timeoutID = undefined;
+    }
+
+    if (debounceMode && !timeoutID) {
+      exec();
+    }
+
+    clearExistingTimeout();
+
+    if (debounceMode === undefined && elapsed > delay) {
+      exec();
+    } else if (noTrailing !== true) {
+      timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
+    }
+  }
+
+  wrapper.cancel = cancel;
+
+  return wrapper;
 }
 
 function debounce(delay, atBegin, callback) {
-	return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
+  return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
 }
 
 
@@ -388,6 +412,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     images: {
       type: Array
     },
+    rebuild: {
+      type: Boolean,
+      default: false
+    },
     trigger: {},
     options: {
       type: Object
@@ -402,8 +430,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   computed: {},
 
   methods: {
-    createViewer: function createViewer() {
+    onChange: function onChange() {
+      if (this.rebuild) {
+        this.rebuildViewer();
+      } else {
+        this.updateViewer();
+      }
+    },
+    rebuildViewer: function rebuildViewer() {
+      this.destroyViewer();
+      this.createViewer();
+    },
+    updateViewer: function updateViewer() {
+      if (this.$viewer) {
+        this.$viewer.update();
+      } else {
+        this.createViewer();
+      }
+    },
+    destroyViewer: function destroyViewer() {
       this.$viewer && this.$viewer.destroy();
+    },
+    createViewer: function createViewer() {
       this.$viewer = new __WEBPACK_IMPORTED_MODULE_0_viewerjs___default.a(this.$el, this.options);
       this.$emit('inited', this.$viewer);
     }
@@ -414,7 +462,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this = this;
 
       this.$nextTick(function () {
-        _this.createViewer();
+        _this.onChange();
       });
     },
 
@@ -423,9 +471,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this2 = this;
 
         this.$nextTick(function () {
-          _this2.createViewer();
+          _this2.onChange();
         });
       },
+
       deep: true
     },
     options: {
@@ -433,9 +482,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this3 = this;
 
         this.$nextTick(function () {
-          _this3.createViewer();
+          _this3.rebuildViewer();
         });
       },
+
       deep: true
     }
   },
@@ -444,7 +494,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.createViewer();
   },
   destroyed: function destroyed() {
-    this.$viewer && this.$viewer.destroy();
+    this.destroyViewer();
   }
 });
 
@@ -531,8 +581,8 @@ module.exports = function normalizeComponent (
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_vm._t("default", null, {
-    images: _vm.images,
-    options: _vm.options
+    "images": _vm.images,
+    "options": _vm.options
   })], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true

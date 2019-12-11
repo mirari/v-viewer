@@ -2,16 +2,21 @@ import Viewer from 'viewerjs'
 import { debounce } from 'throttle-debounce'
 
 const install = (Vue, {name = 'viewer', debug = false}) => {
-  function createViewer (el, options) {
+  function createViewer (el, options, rebuild = false) {
     // nextTick执行，否则可能漏掉未渲染完的子元素
     Vue.nextTick(() => {
-      destroyViewer(el)
-      el[`$${name}`] = new Viewer(el, options)
-      log('viewer created')
+      if (rebuild || !el[`$${name}`]) {
+        destroyViewer(el)
+        el[`$${name}`] = new Viewer(el, options)
+        log('viewer created')
+      } else {
+        el[`$${name}`].update()
+        log('viewer updated')
+      }
     })
   }
 
-  function createObserver (el, options, debouncedCreateViewer) {
+  function createObserver (el, options, debouncedCreateViewer, rebuild) {
     destroyObserver(el)
     const MutationObserver = global.MutationObserver || global.WebKitMutationObserver || global.MozMutationObserver
     if (!MutationObserver) {
@@ -21,7 +26,7 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
     const observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
         log('viewer mutation:' + mutation.type)
-        debouncedCreateViewer(el, options)
+        debouncedCreateViewer(el, options, rebuild)
       })
     })
     const config = { attributes: true, childList: true, characterData: true, subtree: true }
@@ -38,7 +43,7 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
     }
     el['$viewerUnwatch'] = vnode.context.$watch(expression, function (newVal, oldVal) {
       log('change detected by watcher: ', expression)
-      debouncedCreateViewer(el, newVal)
+      debouncedCreateViewer(el, newVal, true)
     }, {
       deep: true
     })
@@ -88,7 +93,7 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
       // 是否监听dom变化
       if (!binding.modifiers.static) {
         // 增加dom变化监听
-        createObserver(el, binding.value, debouncedCreateViewer)
+        createObserver(el, binding.value, debouncedCreateViewer, binding.modifiers.rebuild)
       }
     },
     unbind (el, binding) {

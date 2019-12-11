@@ -1,4 +1,5 @@
 # v-viewer
+
 Image viewer component for vue, supports rotation, scale, zoom and so on, based on [viewer.js](https://github.com/fengyuanchen/viewerjs)
 
 [![npm version](https://badge.fury.io/js/v-viewer.svg)](https://badge.fury.io/js/v-viewer)
@@ -17,8 +18,10 @@ Image viewer component for vue, supports rotation, scale, zoom and so on, based 
 import 'viewerjs/dist/viewer.css'
 ```
 
-## Installation 
+## Installation
+
 Install from GitHub via NPM
+
 ```bash
 npm install v-viewer
 ```
@@ -116,8 +119,9 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
 ```
 
 #### Direcitve modifiers
+
 ##### static
-The `viewer` renderer will be executed only once after the directive binded.
+The `viewer` instance will be created only once after the directive binded.
 
 If you're sure the images inside this element won't change again, use it to avoid unnecessary re-render.
 
@@ -127,12 +131,23 @@ If you're sure the images inside this element won't change again, use it to avoi
 </div>
 ```
 
+##### rebuild
+
+The `viewer` instance will be updated by `update` method when the source images changed (added, removed or sorted) by default.
+
+If you encounter any display problems, try rebuilding instead of updating.
+
+```
+<div class="images" v-viewer.rebuild="{inline: true}">
+  <img v-for="src in images" :src="src" :key="src">
+</div>
+```
+
 ### Usage of component
+
 You can simply import the component and register it locally too.
 
 Use [scoped slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) to customize the presentation of your images.
-
-Listen for the `inited` event to get the `viewer` instance, or use `this.refs.xxx.$viewer`.
 
 ```html
 <template>
@@ -171,19 +186,64 @@ Listen for the `inited` event to get the `viewer` instance, or use `this.refs.xx
 </script>
 ```
 
+#### Component props
+
+##### images
+
+- Type: `Array`
+
+##### trigger
+
+- Type: `Array`
+
 You can replace `images` with `trigger`, to accept any type of prop.
 when the `trigger` changes, the component will re-render the viewer.
+
 ```html
 <viewer :trigger="externallyGeneratedHtmlWithImages">
   <div v-html="externallyGeneratedHtmlWithImages"/>
 </viewer>
 ```
 
-## Options & Methods 
+##### rebuild
+
+- Type: `Boolean`
+- Default: `false`
+
+The viewer instance will be updated by `update` method when the source images changed (added, removed or sorted) by default.
+
+If you encounter any display problems, try rebuilding instead of updating.
+
+```html
+<viewer
+  ref="viewer"
+  :options="options"
+  :images="images"
+  rebuild
+  class="viewer"
+  @inited="inited"
+>
+  <template slot-scope="scope">
+    <img v-for="src in scope.images" :src="src" :key="src">
+    {{scope.options}}
+  </template>
+</viewer>
+```
+
+#### Component events
+
+##### inited
+
+- viewer: `Viewer`
+
+Listen for the `inited` event to get the `viewer` instance, or use `this.refs.xxx.$viewer`.
+
+## Options & Methods of Viewer
 
 Refer to [viewer.js](https://github.com/fengyuanchen/viewerjs).
 
 ## Plugin options
+
 ### name
 
 - Type: `String`

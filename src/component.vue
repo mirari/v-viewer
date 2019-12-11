@@ -12,6 +12,10 @@ export default {
     images: {
       type: Array
     },
+    rebuild: {
+      type: Boolean,
+      default: false
+    },
     trigger: {},
     options: {
       type: Object
@@ -27,8 +31,28 @@ export default {
   },
 
   methods: {
-    createViewer () {
+    onChange () {
+      if (this.rebuild) {
+        this.rebuildViewer()
+      } else {
+        this.updateViewer()
+      }
+    },
+    rebuildViewer () {
+      this.destroyViewer()
+      this.createViewer()
+    },
+    updateViewer () {
+      if (this.$viewer) {
+        this.$viewer.update()
+      } else {
+        this.createViewer()
+      }
+    },
+    destroyViewer () {
       this.$viewer && this.$viewer.destroy()
+    },
+    createViewer () {
       this.$viewer = new Viewer(this.$el, this.options)
       this.$emit('inited', this.$viewer)
     }
@@ -37,21 +61,21 @@ export default {
   watch: {
     images () {
       this.$nextTick(() => {
-        this.createViewer()
+        this.onChange()
       })
     },
     trigger: {
-      handler: function () {
+      handler () {
         this.$nextTick(() => {
-          this.createViewer()
+          this.onChange()
         })
       },
       deep: true
     },
     options: {
-      handler: function () {
+      handler () {
         this.$nextTick(() => {
-          this.createViewer()
+          this.rebuildViewer()
         })
       },
       deep: true
@@ -63,7 +87,7 @@ export default {
   },
 
   destroyed () {
-    this.$viewer && this.$viewer.destroy()
+    this.destroyViewer()
   }
 }
 </script>
