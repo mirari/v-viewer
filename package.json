@@ -1,6 +1,6 @@
 {
   "name": "v-viewer",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Image viewer component for vue, supports rotation, scale, zoom and so on, based on viewer.js",
   "main": "dist/v-viewer.js",
   "types": "types/index.d.ts",
@@ -74,6 +74,7 @@
     "progress-bar-webpack-plugin": "^1.9.1",
     "sass-loader": "^6.0.3",
     "serve-favicon": "^2.4.1",
+    "shelljs": "^0.8.3",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",

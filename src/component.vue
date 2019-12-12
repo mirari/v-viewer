@@ -45,6 +45,7 @@ export default {
     updateViewer () {
       if (this.$viewer) {
         this.$viewer.update()
+        this.$emit('inited', this.$viewer)
       } else {
         this.createViewer()
       }

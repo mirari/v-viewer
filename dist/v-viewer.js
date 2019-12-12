@@ -444,6 +444,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     updateViewer: function updateViewer() {
       if (this.$viewer) {
         this.$viewer.update();
+        this.$emit('inited', this.$viewer);
       } else {
         this.createViewer();
       }
