@@ -260,7 +260,7 @@ If you need to avoid name conflict, you can import it like this:
 ```html
 <template>
   <div id="app">
-    <div class="images" v-vuer="{movable: false}">
+    <div class="images" v-viewer="{movable: false}">
       <img v-for="src in images" :src="src" :key="src">
     </div>
     <button type="button" @click="show">Show</button>
