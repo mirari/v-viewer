@@ -124,7 +124,7 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
 </script>
 ```
 
-#### Direcitve modifiers
+#### Directive modifiers
 
 ##### static
 The `viewer` instance will be created only once after the directive binded.
