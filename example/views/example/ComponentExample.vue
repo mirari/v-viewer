@@ -364,6 +364,7 @@ import {
 // app.use(VueViewer)
 VueViewer.setDefaults({
   zIndexInline: 2017,
+  focus: false,
 })
 
 class ImageData {
@@ -376,7 +377,7 @@ class ImageData {
   }
 }
 
-const sourceImages:ImageData[] = []
+const sourceImages: ImageData[] = []
 const base = Math.floor(Math.random() * 60) + 10
 for (let i = 0; i < 10; i++) {
   const data = new ImageData(`https://picsum.photos/id/${base + i}/1440/900`, `https://picsum.photos/id/${base + i}/346/216`)
@@ -386,7 +387,7 @@ for (let i = 0; i < 10; i++) {
 export default defineComponent({
   name: 'ComponentExample',
   setup () {
-    let $viewer:Viewer
+    let $viewer: Viewer
 
     const state = reactive({
       form: {
@@ -445,19 +446,19 @@ export default defineComponent({
         $viewer.view(state.form.view)
       }
     }
-    function zoom (value:number) {
+    function zoom (value: number) {
       $viewer.zoom(value || state.form.zoom)
     }
     function zoomTo () {
       $viewer.zoomTo(state.form.zoomTo)
     }
-    function rotate (value:number) {
+    function rotate (value: number) {
       $viewer.rotate(value || state.form.rotate)
     }
     function rotateTo () {
       $viewer.rotateTo(state.form.rotateTo)
     }
-    function scaleX (value:number) {
+    function scaleX (value: number) {
       if (value) {
         $viewer.scaleX(value)
       } else {
@@ -465,7 +466,7 @@ export default defineComponent({
         $viewer.scaleX(state.form.scaleX)
       }
     }
-    function scaleY (value:number) {
+    function scaleY (value: number) {
       if (value) {
         $viewer.scaleY(value)
       } else {
@@ -473,7 +474,7 @@ export default defineComponent({
         $viewer.scaleY(state.form.scaleY)
       }
     }
-    function move (x:number, y:number) {
+    function move (x: number, y: number) {
       $viewer.move(x, y)
     }
     function prev () {

@@ -40,7 +40,7 @@ export default defineComponent({
   emits: ['inited'],
 
   setup (props, { emit }) {
-    let $viewer:Viewer
+    let $viewer: Viewer
     const root = ref()
     function onChange (): void {
       if (props.rebuild) {

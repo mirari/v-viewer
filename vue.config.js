@@ -8,7 +8,8 @@ const mode = process.env.mode
 // || process.env.NODE_ENV === 'test'
 
 const releaseConfig = {
-  // css: { extract: true },
+  // 将css打包入js
+  css: { extract: false },
 
   lintOnSave: process.env.NODE_ENV !== 'production' ? 'error' : false,
 
