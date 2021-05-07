@@ -2,35 +2,72 @@
   <div>
     <div class="field is-grouped is-grouped-multiline">
       <p class="control">
-        <button type="button" class="button" @click="add" :disabled="images.length===10">Add</button>
+        <button
+          type="button"
+          class="button"
+          @click="add"
+          :disabled="images.length===10"
+        >
+          Add
+        </button>
       </p>
       <p class="control">
-        <button type="button" class="button" @click="remove" :disabled="images.length===0">Remove</button>
+        <button
+          type="button"
+          class="button"
+          @click="remove"
+          :disabled="images.length===0"
+        >
+          Remove
+        </button>
       </p>
       <p class="control">
-        <button type="button" class="button" @click="show">Show</button>
+        <button
+          type="button"
+          class="button"
+          @click="show"
+        >
+          Show
+        </button>
       </p>
       <div class="field has-addons">
         <p class="control">
-          <button type="button" class="button is-primary"
-                  @click="toggleToolbar(true)"
-                  :class="{' is-active': options.toolbar}"
-          >Show Toolbar</button>
+          <button
+            type="button"
+            class="button is-primary"
+            @click="toggleToolbar(true)"
+            :class="{' is-active': options.toolbar}"
+          >
+            Show Toolbar
+          </button>
         </p>
         <p class="control">
-          <button type="button" class="button is-primary"
-                  @click="toggleToolbar(false)"
-                  :class="{' is-active': !options.toolbar}"
-          >Hide Toolbar</button>
+          <button
+            type="button"
+            class="button is-primary"
+            @click="toggleToolbar(false)"
+            :class="{' is-active': !options.toolbar}"
+          >
+            Hide Toolbar
+          </button>
         </p>
       </div>
     </div>
     <p>
       To show the viewer, you can click these images too.
     </p>
-    <div v-viewer="options" class="images clearfix">
+    <div
+      v-viewer="options"
+      class="images clearfix"
+    >
       <template v-for="{source, thumbnail} in images">
-        <img :src="thumbnail" :data-source="source" class="image" :key="source" :alt="source.split('?image=').pop()">
+        <img
+          :src="thumbnail"
+          :data-source="source"
+          class="image"
+          :key="source"
+          :alt="source.split('?image=').pop()"
+        >
       </template>
     </div>
   </div>
@@ -38,7 +75,7 @@
 
 <script>
 import 'viewerjs/dist/viewer.css'
-import Viewer from '@'
+import Viewer from 'src'
 import Vue from 'vue'
 Vue.use(Viewer, {
   debug: true,

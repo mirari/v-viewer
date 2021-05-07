@@ -1,16 +1,20 @@
-import Vue from "vue";
-import ViewerJS from "viewerjs";
+import { App } from 'vue'
+import Viewer from 'viewerjs'
 
-declare namespace Viewer {
+declare namespace VueViewer {
   export interface InstallationOptions {
     name: string;
     debug: boolean;
-    defaultOptions: ViewerJS.Options;
+    defaultOptions: Viewer.Options;
   }
 
-  export function install(vue: typeof Vue, options?: InstallationOptions): void;
+  export function install(app: App, options?: InstallationOptions): void;
 
-  export function setDefaults(defaultOptions: ViewerJS.Options): void;
+  export function setDefaults(defaultOptions: Viewer.Options): void;
+
+  export {
+    Viewer,
+  }
 }
 
-export default Viewer;
+export default VueViewer

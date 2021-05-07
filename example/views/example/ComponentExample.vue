@@ -3,119 +3,297 @@
     <div class="methods is-flex">
       <div class="field has-addons">
         <p class="control">
-          <button type="button" class="button is-primary"
-                  @click="toggleInline(false)"
-                  :class="{' is-active': !options.inline}"
-          >Modal</button>
+          <button
+            type="button"
+            class="button is-primary"
+            @click="toggleInline(false)"
+            :class="{' is-active': !options.inline}"
+          >
+            Modal
+          </button>
         </p>
         <p class="control">
-          <button type="button" class="button is-primary"
-                  @click="toggleInline(true)"
-                  :class="{' is-active': options.inline}"
-          >Inline</button>
+          <button
+            type="button"
+            class="button is-primary"
+            @click="toggleInline(true)"
+            :class="{' is-active': options.inline}"
+          >
+            Inline
+          </button>
         </p>
       </div>
-      <button type="button" class="button" @click="add" :disabled="images.length===9">Add</button>
-      <button type="button" class="button" @click="remove" :disabled="images.length===1">Remove</button>
+      <button
+        type="button"
+        class="button"
+        @click="add"
+        :disabled="images.length===9"
+      >
+        Add
+      </button>
+      <button
+        type="button"
+        class="button"
+        @click="remove"
+        :disabled="images.length===1"
+      >
+        Remove
+      </button>
       <template v-if="options.inline">
-        <div class="field has-addons" style="width: 110px">
+        <div
+          class="field has-addons"
+          style="width: 110px"
+        >
           <div class="control">
             <span class="button is-static">View</span>
           </div>
           <div class="control">
-            <input class="input" type="text" v-model.number="form.view" @keyup="view">
+            <input
+              class="input"
+              type="text"
+              v-model.number="form.view"
+              @keyup="view"
+            >
           </div>
         </div>
-        <div class="field has-addons" style="width: 120px">
+        <div
+          class="field has-addons"
+          style="width: 140px"
+        >
           <div class="control">
-            <input class="input" type="text" v-model.number="form.zoom">
+            <input
+              class="input"
+              type="text"
+              v-model.number="form.zoom"
+            >
           </div>
           <div class="control">
-            <span class="button" @click="zoom()">Zoom</span>
-          </div>
-        </div>
-        <div class="field has-addons" style="width: 140px">
-          <div class="control">
-            <input class="input" type="text" v-model.number="form.zoomTo">
-          </div>
-          <div class="control">
-            <span class="button" @click="zoomTo">Zoom to</span>
-          </div>
-        </div>
-        <div class="field has-addons" style="width: 120px">
-          <div class="control">
-            <input class="input" type="text" v-model.number="form.rotate">
-          </div>
-          <div class="control">
-            <span class="button" @click="rotate()">Rotate</span>
+            <span
+              class="button"
+              @click="zoom()"
+            >Zoom</span>
           </div>
         </div>
-        <div class="field has-addons" style="width: 140px">
+        <div
+          class="field has-addons"
+          style="width: 140px"
+        >
           <div class="control">
-            <input class="input" type="text" v-model.number="form.rotateTo">
+            <input
+              class="input"
+              type="text"
+              v-model.number="form.zoomTo"
+            >
           </div>
           <div class="control">
-            <span class="button" @click="rotateTo">Rotate to</span>
+            <span
+              class="button"
+              @click="zoomTo"
+            >Zoom to</span>
+          </div>
+        </div>
+        <div
+          class="field has-addons"
+          style="width: 140px"
+        >
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              v-model.number="form.rotate"
+            >
+          </div>
+          <div class="control">
+            <span
+              class="button"
+              @click="rotate()"
+            >Rotate</span>
+          </div>
+        </div>
+        <div
+          class="field has-addons"
+          style="width: 160px"
+        >
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              v-model.number="form.rotateTo"
+            >
+          </div>
+          <div class="control">
+            <span
+              class="button"
+              @click="rotateTo"
+            >Rotate to</span>
           </div>
         </div>
         <div class="field has-addons">
           <div class="control">
-            <button type="button" class="button" @click="zoom(0.5)">Zoom In</button>
+            <button
+              type="button"
+              class="button"
+              @click="zoom(0.5)"
+            >
+              Zoom In
+            </button>
           </div>
           <div class="control">
-            <button type="button" class="button" @click="zoom(-0.5)">Zoom Out</button>
+            <button
+              type="button"
+              class="button"
+              @click="zoom(-0.5)"
+            >
+              Zoom Out
+            </button>
           </div>
         </div>
         <div class="field has-addons">
           <div class="control">
-            <button type="button" class="button" @click="rotate(-90)">Rotate Left</button>
+            <button
+              type="button"
+              class="button"
+              @click="rotate(-90)"
+            >
+              Rotate Left
+            </button>
           </div>
           <div class="control">
-            <button type="button" class="button" @click="rotate(90)">Rotate Right</button>
+            <button
+              type="button"
+              class="button"
+              @click="rotate(90)"
+            >
+              Rotate Right
+            </button>
           </div>
         </div>
         <div class="field has-addons">
           <div class="control">
-            <button type="button" class="button" @click="scaleX()">Flip Horizontal</button>
+            <button
+              type="button"
+              class="button"
+              @click="scaleX()"
+            >
+              Flip Horizontal
+            </button>
           </div>
           <div class="control">
-            <button type="button" class="button" @click="scaleY()">Flip Vertical</button>
+            <button
+              type="button"
+              class="button"
+              @click="scaleY()"
+            >
+              Flip Vertical
+            </button>
           </div>
         </div>
         <div class="field has-addons">
           <div class="control">
-            <button type="button" class="button" @click="move(-10, 0)">Left</button>
+            <button
+              type="button"
+              class="button"
+              @click="move(-10, 0)"
+            >
+              Left
+            </button>
           </div>
           <div class="control">
-            <button type="button" class="button" @click="move(10, 0)">Right</button>
+            <button
+              type="button"
+              class="button"
+              @click="move(10, 0)"
+            >
+              Right
+            </button>
           </div>
           <div class="control">
-            <button type="button" class="button" @click="move(0, -10)">Up</button>
+            <button
+              type="button"
+              class="button"
+              @click="move(0, -10)"
+            >
+              Up
+            </button>
           </div>
           <div class="control">
-            <button type="button" class="button" @click="move(0, 10)">Down</button>
+            <button
+              type="button"
+              class="button"
+              @click="move(0, 10)"
+            >
+              Down
+            </button>
           </div>
         </div>
         <div class="field has-addons">
           <div class="control">
-            <button type="button" class="button" @click="prev">Prev</button>
+            <button
+              type="button"
+              class="button"
+              @click="prev"
+            >
+              Prev
+            </button>
           </div>
           <div class="control">
-            <button type="button" class="button" @click="next">Next</button>
+            <button
+              type="button"
+              class="button"
+              @click="next"
+            >
+              Next
+            </button>
           </div>
           <div class="control">
-            <button type="button" class="button" @click="play">Play</button>
+            <button
+              type="button"
+              class="button"
+              @click="play"
+            >
+              Play
+            </button>
           </div>
           <div class="control">
-            <button type="button" class="button" @click="stop">Stop</button>
+            <button
+              type="button"
+              class="button"
+              @click="stop"
+            >
+              Stop
+            </button>
           </div>
         </div>
-        <button type="button" class="button" @click="full">Full</button>
-        <button type="button" class="button" @click="tooltip">Tooltip</button>
-        <button type="button" class="button" @click="reset">Reset</button>
+        <button
+          type="button"
+          class="button"
+          @click="full"
+        >
+          Full
+        </button>
+        <button
+          type="button"
+          class="button"
+          @click="tooltip"
+        >
+          Tooltip
+        </button>
+        <button
+          type="button"
+          class="button"
+          @click="reset"
+        >
+          Reset
+        </button>
       </template>
       <template v-else>
-        <button type="button" class="button" @click="show">Show</button>
+        <button
+          type="button"
+          class="button"
+          @click="show"
+        >
+          Show
+        </button>
       </template>
     </div>
     <div class="tile is-ancestor">
@@ -125,9 +303,17 @@
             <p class="panel-heading">
               Options
             </p>
-            <div class="panel-block" v-for="item of toggleOptions" :key="item">
+            <div
+              class="panel-block"
+              v-for="item of toggleOptions"
+              :key="item"
+            >
               <label class="checkbox">
-                <input type="checkbox" name="button" v-model="options[item]"> {{item}}
+                <input
+                  type="checkbox"
+                  name="button"
+                  v-model="options[item]"
+                > {{ item }}
               </label>
             </div>
           </nav>
@@ -135,19 +321,30 @@
       </div>
       <div class="tile is-10 is-vertical is-parent">
         <div class="viewer-wrapper">
-          <viewer :options="options" :images="images"
-                  @inited="inited"
-                  class="viewer" ref="viewer"
+          <viewer
+            :options="options"
+            :images="images"
+            rebuild
+            @inited="inited"
+            class="viewer"
+            ref="viewer"
           >
-            <template slot-scope="scope">
+            <template #default="scope">
               <figure class="images">
-                <div class="image-wrapper" v-for="{source, thumbnail} in scope.images" :key="source">
-                  <img class="image"
-                       :src="thumbnail" :data-source="source" :alt="source.split('?image=').pop()"
+                <div
+                  class="image-wrapper"
+                  v-for="{source, thumbnail} in scope.images"
+                  :key="source"
+                >
+                  <img
+                    class="image"
+                    :src="thumbnail"
+                    :data-source="source"
+                    :alt="source.split('?image=').pop()"
                   >
                 </div>
               </figure>
-              <p><strong>Options: </strong>{{scope.options}}</p>
+              <p><strong>Options: </strong>{{ scope.options }}</p>
             </template>
           </viewer>
         </div>
@@ -156,28 +353,42 @@
   </div>
 </template>
 
-<script>
-import 'viewerjs/dist/viewer.css'
-import Viewer from '@'
-import Vue from 'vue'
-Vue.use(Viewer)
-Viewer.setDefaults({
+<script lang="ts">
+import VueViewer, { Viewer } from '@/main'
+import {
+  defineComponent,
+  toRefs,
+  reactive,
+} from 'vue'
+// import { app } from '../../main'
+// app.use(VueViewer)
+VueViewer.setDefaults({
   zIndexInline: 2017,
 })
 
-const sourceImages = []
-const base = parseInt((Math.random() * 60), 10) + 10
-for (let i = 0; i < 10; i++) {
-  sourceImages.push({
-    thumbnail: `https://picsum.photos/id/${base + i}/346/216`,
-    source: `https://picsum.photos/id/${base + i}/1440/900`,
-  })
+class ImageData {
+  thumbnail: string
+  source: string
+
+  constructor (source: string, thumbnail: string) {
+    this.source = source
+    this.thumbnail = thumbnail
+  }
 }
 
-export default {
+const sourceImages:ImageData[] = []
+const base = Math.floor(Math.random() * 60) + 10
+for (let i = 0; i < 10; i++) {
+  const data = new ImageData(`https://picsum.photos/id/${base + i}/1440/900`, `https://picsum.photos/id/${base + i}/346/216`)
+  sourceImages.push(data)
+}
 
-  data () {
-    return {
+export default defineComponent({
+  name: 'ComponentExample',
+  setup () {
+    let $viewer:Viewer
+
+    const state = reactive({
       form: {
         view: 2,
         zoom: -0.1,
@@ -218,87 +429,110 @@ export default {
         url: 'data-source',
       },
       images: [...sourceImages].splice(0, 5),
+    })
+
+    function inited (viewer: Viewer) {
+      $viewer = viewer
+    }
+    function add () {
+      state.images.push(sourceImages[state.images.length])
+    }
+    function remove () {
+      state.images.pop()
+    }
+    function view () {
+      if (state.form.view >= 0 && state.form.view < state.images.length) {
+        $viewer.view(state.form.view)
+      }
+    }
+    function zoom (value:number) {
+      $viewer.zoom(value || state.form.zoom)
+    }
+    function zoomTo () {
+      $viewer.zoomTo(state.form.zoomTo)
+    }
+    function rotate (value:number) {
+      $viewer.rotate(value || state.form.rotate)
+    }
+    function rotateTo () {
+      $viewer.rotateTo(state.form.rotateTo)
+    }
+    function scaleX (value:number) {
+      if (value) {
+        $viewer.scaleX(value)
+      } else {
+        state.form.scaleX = -state.form.scaleX
+        $viewer.scaleX(state.form.scaleX)
+      }
+    }
+    function scaleY (value:number) {
+      if (value) {
+        $viewer.scaleY(value)
+      } else {
+        state.form.scaleY = -state.form.scaleY
+        $viewer.scaleY(state.form.scaleY)
+      }
+    }
+    function move (x:number, y:number) {
+      $viewer.move(x, y)
+    }
+    function prev () {
+      $viewer.prev()
+    }
+    function next () {
+      $viewer.next()
+    }
+    function play () {
+      $viewer.play()
+    }
+    function stop () {
+      $viewer.stop()
+    }
+    function show () {
+      $viewer.show()
+    }
+    function full () {
+      $viewer.full()
+    }
+    function tooltip () {
+      $viewer.tooltip()
+    }
+    function reset () {
+      $viewer.reset()
+    }
+    function toggleInline (inline: boolean) {
+      state.options.inline = inline
+    }
+
+    return {
+      ...toRefs(state),
+      inited,
+      add,
+      remove,
+      view,
+      zoom,
+      zoomTo,
+      rotate,
+      rotateTo,
+      scaleX,
+      scaleY,
+      move,
+      prev,
+      next,
+      play,
+      stop,
+      show,
+      full,
+      tooltip,
+      reset,
+      toggleInline,
     }
   },
 
-  computed: {
-  },
-
   methods: {
-    inited (viewer) {
-      this.$viewer = viewer
-    },
-    add () {
-      this.images.push(sourceImages[this.images.length])
-    },
-    remove () {
-      this.images.pop()
-    },
-    view () {
-      if (this.form.view >= 0 && this.form.view < this.images.length) {
-        this.$viewer.view(this.form.view)
-      }
-    },
-    zoom (value) {
-      this.$viewer.zoom(value || this.form.zoom)
-    },
-    zoomTo () {
-      this.$viewer.zoomTo(this.form.zoomTo)
-    },
-    rotate (value) {
-      this.$viewer.rotate(value || this.form.rotate)
-    },
-    rotateTo () {
-      this.$viewer.rotateTo(this.form.rotateTo)
-    },
-    scaleX (value) {
-      if (value) {
-        this.$viewer.scaleX(value)
-      } else {
-        this.form.scaleX = -this.form.scaleX
-        this.$viewer.scaleX(this.form.scaleX)
-      }
-    },
-    scaleY (value) {
-      if (value) {
-        this.$viewer.scaleY(value)
-      } else {
-        this.form.scaleY = -this.form.scaleY
-        this.$viewer.scaleY(this.form.scaleY)
-      }
-    },
-    move (x, y) {
-      this.$viewer.move(x, y)
-    },
-    prev () {
-      this.$viewer.prev()
-    },
-    next () {
-      this.$viewer.next()
-    },
-    play () {
-      this.$viewer.play()
-    },
-    stop () {
-      this.$viewer.stop()
-    },
-    show () {
-      this.$viewer.show()
-    },
-    full () {
-      this.$viewer.full()
-    },
-    tooltip () {
-      this.$viewer.tooltip()
-    },
-    reset () {
-      this.$viewer.reset()
-    },
-    toggleInline (inline) {
-      this.options.inline = inline
-    },
+
   },
-}
+})
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>

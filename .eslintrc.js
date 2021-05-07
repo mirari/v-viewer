@@ -3,26 +3,17 @@ module.exports = {
   env: {
     node: true,
   },
-  'extends': [
-    'plugin:vue/essential',
+  extends: [
+    'plugin:vue/vue3-strongly-recommended',
     '@vue/standard',
+    '@vue/typescript/recommended',
   ],
-  rules: {
-    'no-console': 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'comma-dangle': ['error', 'always-multiline'],
-  },
   parserOptions: {
-    parser: 'babel-eslint',
+    ecmaVersion: 2020,
   },
-  overrides: [
-    {
-      files: [
-        '**/__tests__/*.{j,t}s?(x)',
-      ],
-      env: {
-        mocha: true,
-      },
-    },
-  ],
+  rules: {
+    'comma-dangle': [2, 'always-multiline'],
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+  },
 }

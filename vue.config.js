@@ -8,6 +8,8 @@ const mode = process.env.mode
 // || process.env.NODE_ENV === 'test'
 
 const releaseConfig = {
+  // css: { extract: true },
+
   lintOnSave: process.env.NODE_ENV !== 'production' ? 'error' : false,
 
   productionSourceMap: false,
@@ -18,6 +20,7 @@ const releaseConfig = {
       library: 'VueViewer',
       // libraryTarget: 'umd',
     },
+    /*  将viewerjs及css文件一同打包
     externals: [
       {
         viewerjs: {
@@ -29,6 +32,7 @@ const releaseConfig = {
       },
       /^viewerjs\/.+$/,
     ],
+    */
   },
 }
 
@@ -39,7 +43,7 @@ const exampleConfig = {
 
   pages: {
     index: {
-      entry: 'example/main.js',
+      entry: 'example/main.ts',
       template: 'public/index.html',
       filename: 'index.html',
       chunks: ['chunk-vendors', 'chunk-common', 'index'],
@@ -76,41 +80,39 @@ const exampleConfig = {
       })
     */
     // 支持载入md文件
-    config.module.rule('md')
-      .test(/\.md/)
-      .use('vue-loader')
-      .loader('vue-loader')
-      .end()
-      .use('vue-markdown-loader')
-      .loader('vue-markdown-loader/lib/markdown-compiler')
-      .options({
-        html: true,
-        preventExtract: true,
-        raw: true,
-      })
+    // config.module.rule('md')
+    //   .test(/\.md/)
+    //   .use('vue-loader')
+    //   .loader('vue-loader')
+    //   .end()
+    //   .use('vue-markdown-loader')
+    //   .loader('vue-markdown-loader/lib/markdown-compiler')
+    //   .options({
+    //     html: true,
+    //     preventExtract: true,
+    //     raw: true,
+    //   })
   },
 
   configureWebpack: {
     resolve: {
       alias: {
-        'assets': '@/assets',
-        'components': '@/components',
-        'package': resolve('package.json'),
+        package: resolve('package.json'),
       },
     },
   },
 }
 
 const defaultConfig = {
-  chainWebpack: config => {
-    if (process.env.NODE_ENV === 'coverage') {
-      config.module.rule('js')
-        .use('istanbul')
-        .loader('istanbul-instrumenter-loader')
-        .options({ esModules: true })
-        .before('babel-loader')
-    }
-  },
+  // chainWebpack: config => {
+  //   if (process.env.NODE_ENV === 'coverage') {
+  //     config.module.rule('js')
+  //       .use('istanbul')
+  //       .loader('istanbul-instrumenter-loader')
+  //       .options({ esModules: true })
+  //       .before('babel-loader')
+  //   }
+  // },
 }
 
 let exportConfig = defaultConfig

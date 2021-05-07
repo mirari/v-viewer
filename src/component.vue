@@ -1,69 +1,114 @@
 <template>
-  <div>
-    <slot :images="images" :options="options">
-    </slot>
+  <div ref="root">
+    <slot
+      :images="images"
+      :options="options"
+    />
   </div>
 </template>
-<script>
+<script lang="ts">
+import {
+  defineComponent,
+  nextTick,
+  onUnmounted,
+  onMounted,
+  PropType,
+  ref,
+  watch,
+} from 'vue'
 import Viewer from 'viewerjs'
 
-export default {
+export default defineComponent({
   props: {
     images: {
       type: Array,
+      default: () => [],
     },
-    trigger: {},
-    options: {
-      type: Object,
-    },
-  },
-
-  data () {
-    return {
-    }
-  },
-
-  computed: {
-  },
-
-  methods: {
-    createViewer () {
-      this.$viewer && this.$viewer.destroy()
-      this.$viewer = new Viewer(this.$el, this.options)
-      this.$emit('inited', this.$viewer)
-    },
-  },
-
-  watch: {
-    images () {
-      this.$nextTick(() => {
-        this.createViewer()
-      })
+    rebuild: {
+      type: Boolean,
+      default: false,
     },
     trigger: {
-      handler: function () {
-        this.$nextTick(() => {
-          this.createViewer()
-        })
-      },
-      deep: true,
+      type: Object,
+      default: null,
     },
     options: {
-      handler: function () {
-        this.$nextTick(() => {
-          this.createViewer()
-        })
-      },
-      deep: true,
+      type: Object as PropType<Viewer.Options>,
+      default: () => null,
     },
   },
+  emits: ['inited'],
 
-  mounted () {
-    this.createViewer()
-  },
+  setup (props, { emit }) {
+    let $viewer:Viewer
+    const root = ref()
+    function onChange (): void {
+      if (props.rebuild) {
+        rebuildViewer()
+      } else {
+        updateViewer()
+      }
+    }
+    function rebuildViewer (): void {
+      destroyViewer()
+      createViewer()
+    }
+    function updateViewer (): void {
+      if ($viewer) {
+        $viewer.update()
+        emit('inited', $viewer)
+      } else {
+        createViewer()
+      }
+    }
+    function destroyViewer (): void {
+      $viewer && $viewer.destroy()
+    }
+    function createViewer (): void {
+      $viewer = new Viewer(root.value, props.options)
+      emit('inited', $viewer)
+    }
 
-  destroyed () {
-    this.$viewer && this.$viewer.destroy()
+    onMounted(() => {
+      createViewer()
+    })
+    onUnmounted(() => {
+      destroyViewer()
+    })
+    watch(
+      () => props.images,
+      async () => {
+        nextTick(async () => {
+          onChange()
+        })
+      },
+      { deep: true },
+    )
+    watch(
+      () => props.trigger,
+      async () => {
+        nextTick(async () => {
+          onChange()
+        })
+      },
+      { deep: true },
+    )
+    watch(
+      () => props.options,
+      async () => {
+        nextTick(async () => {
+          onChange()
+        })
+      },
+      { deep: true },
+    )
+    return {
+      root,
+      createViewer,
+      rebuildViewer,
+      updateViewer,
+      destroyViewer,
+    }
   },
-}
+})
 </script>
