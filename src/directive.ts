@@ -3,29 +3,30 @@ import debounce from 'lodash/debounce'
 import { App, nextTick } from 'vue'
 
 const install = (app: App, { name = 'viewer', debug = false }) => {
-  async function createViewer (el: HTMLElement, options: Viewer.Options, rebuild = false) {
+  async function createViewer(el: HTMLElement, options: Viewer.Options, rebuild = false) {
     // nextTick执行，否则可能漏掉未渲染完的子元素
     await nextTick()
     if (rebuild || !el[`$${name}`]) {
       destroyViewer(el)
       el[`$${name}`] = new Viewer(el, options)
       log('viewer created')
-    } else {
+    }
+    else {
       el[`$${name}`].update()
       log('viewer updated')
     }
   }
 
-  function createObserver (el: HTMLElement, options: Viewer.Options, debouncedCreateViewer, rebuild: boolean) {
+  function createObserver(el: HTMLElement, options: Viewer.Options, debouncedCreateViewer, rebuild: boolean) {
     destroyObserver(el)
-    const MutationObserver = global.MutationObserver || global.WebKitMutationObserver || global.MozMutationObserver
+    const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
     if (!MutationObserver) {
       log('observer not supported')
       return
     }
-    const observer = new MutationObserver(function (mutations) {
-      mutations.forEach(function (mutation) {
-        log('viewer mutation:' + mutation.type)
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        log(`viewer mutation:${mutation.type}`)
         debouncedCreateViewer(el, options, rebuild)
       })
     })
@@ -35,13 +36,13 @@ const install = (app: App, { name = 'viewer', debug = false }) => {
     log('observer created')
   }
 
-  function createWatcher (el: HTMLElement, { expression }, vnode, debouncedCreateViewer) {
+  function createWatcher(el: HTMLElement, { expression }, vnode, debouncedCreateViewer) {
     const simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/
     if (!expression || !simplePathRE.test(expression)) {
       log('only simple dot-delimited paths can create watcher')
       return
     }
-    el.$viewerUnwatch = vnode.context.$watch(expression, function (newVal, oldVal) {
+    el.$viewerUnwatch = vnode.context.$watch(expression, (newVal, oldVal) => {
       log('change detected by watcher: ', expression)
       debouncedCreateViewer(el, newVal, true)
     }, {
@@ -50,7 +51,7 @@ const install = (app: App, { name = 'viewer', debug = false }) => {
     log('watcher created, expression: ', expression)
   }
 
-  function destroyViewer (el: HTMLElement) {
+  function destroyViewer(el: HTMLElement) {
     if (!el[`$${name}`]) {
       return
     }
@@ -59,7 +60,7 @@ const install = (app: App, { name = 'viewer', debug = false }) => {
     log('viewer destroyed')
   }
 
-  function destroyObserver (el: HTMLElement) {
+  function destroyObserver(el: HTMLElement) {
     if (!el.$viewerMutationObserver) {
       return
     }
@@ -68,7 +69,7 @@ const install = (app: App, { name = 'viewer', debug = false }) => {
     log('observer destroyed')
   }
 
-  function destroyWatcher (el: HTMLElement) {
+  function destroyWatcher(el: HTMLElement) {
     if (!el.$viewerUnwatch) {
       return
     }
@@ -77,12 +78,12 @@ const install = (app: App, { name = 'viewer', debug = false }) => {
     log('watcher destroyed')
   }
 
-  function log (...args: any[]) {
+  function log(...args: any[]) {
     debug && console.log(...args)
   }
 
-  Vue.directive('viewer', {
-    bind (el: HTMLElement, binding, vnode) {
+  app.directive('viewer', {
+    mounted(el: HTMLElement, binding, vnode) {
       log('viewer bind')
       const debouncedCreateViewer = debounce(createViewer, 50)
       debouncedCreateViewer(el, binding.value)
@@ -96,7 +97,7 @@ const install = (app: App, { name = 'viewer', debug = false }) => {
         createObserver(el, binding.value, debouncedCreateViewer, binding.modifiers.rebuild)
       }
     },
-    unbind (el: HTMLElement, binding) {
+    unmounted(el: HTMLElement, binding) {
       log('viewer unbind')
       // 销毁dom变化监听
       destroyObserver(el)

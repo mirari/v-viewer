@@ -14,7 +14,7 @@
           target="_blank"
         >Source</a>
       </p>
-      <!--      <directive-example />-->
+      <directive-example />
     </div>
     <div>
       <h2 class="title is-4">
@@ -32,17 +32,14 @@
 </template>
 
 <script lang="ts">
-// import DirectiveExample from './DirectiveExample.vue'
-import ComponentExample from './ComponentExample.vue'
 import { defineComponent } from 'vue'
+import DirectiveExample from './DirectiveExample.vue'
+import ComponentExample from './ComponentExample.vue'
 
 export default defineComponent({
   components: {
+    DirectiveExample,
     ComponentExample,
-    // DirectiveExample,
   },
 })
 </script>
-
-<style lang="scss" rel="stylesheet/scss" scoped>
-</style>

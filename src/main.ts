@@ -1,15 +1,13 @@
 import { App } from 'vue'
 import defaults from 'lodash/defaults'
-import Component from './component.vue'
-// import directive from './directive'
-
 import Viewer from 'viewerjs'
-import 'viewerjs/dist/viewer.css'
+import Component from './component'
+import Directive from './directive'
 
 export interface InstallationOptions {
-  name?: string;
-  debug?: boolean;
-  defaultOptions?: Viewer.Options;
+  name?: string
+  debug?: boolean
+  defaultOptions?: Viewer.Options
 }
 
 export {
@@ -18,15 +16,15 @@ export {
 }
 
 export default {
-  install (app: App, { name = 'viewer', debug = false, defaultOptions }: InstallationOptions = {}): void {
+  install(app: App, { name = 'viewer', debug = false, defaultOptions }: InstallationOptions = {}): void {
     if (defaultOptions) {
       Viewer.setDefaults(defaultOptions)
     }
+
     app.component(name, defaults(Component, { name }))
-    // Vue.use(directive, { name, debug })
-    console.log(debug)
+    app.use(Directive, { name, debug })
   },
-  setDefaults (defaultOptions: Viewer.Options): void {
+  setDefaults(defaultOptions: Viewer.Options): void {
     Viewer.setDefaults(defaultOptions)
   },
 }

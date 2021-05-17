@@ -5,8 +5,8 @@
         <button
           type="button"
           class="button"
-          @click="add"
           :disabled="images.length===10"
+          @click="add"
         >
           Add
         </button>
@@ -15,8 +15,8 @@
         <button
           type="button"
           class="button"
-          @click="remove"
           :disabled="images.length===0"
+          @click="remove"
         >
           Remove
         </button>
@@ -35,8 +35,8 @@
           <button
             type="button"
             class="button is-primary"
-            @click="toggleToolbar(true)"
             :class="{' is-active': options.toolbar}"
+            @click="toggleToolbar(true)"
           >
             Show Toolbar
           </button>
@@ -45,8 +45,8 @@
           <button
             type="button"
             class="button is-primary"
-            @click="toggleToolbar(false)"
             :class="{' is-active': !options.toolbar}"
+            @click="toggleToolbar(false)"
           >
             Hide Toolbar
           </button>
@@ -57,77 +57,97 @@
       To show the viewer, you can click these images too.
     </p>
     <div
+      ref="el"
       v-viewer="options"
       class="images clearfix"
     >
-      <template v-for="{source, thumbnail} in images">
+      <template v-for="{source, thumbnail} in images" :key="source">
         <img
+          class="image"
           :src="thumbnail"
           :data-source="source"
-          class="image"
-          :key="source"
           :alt="source.split('?image=').pop()"
         >
       </template>
     </div>
   </div>
 </template>
+<script lang="ts">
+import {
+  defineComponent,
+  toRefs,
+  reactive,
+  ref,
+} from 'vue'
+import VueViewer, { Viewer } from '../../../src/main'
 
-<script>
-import 'viewerjs/dist/viewer.css'
-import Viewer from 'src'
-import Vue from 'vue'
-Vue.use(Viewer, {
-  debug: true,
-  defaultOptions: {
-    zIndex: 9999,
-  },
-})
-
-const sourceImages = []
-const base = parseInt((Math.random() * 60), 10) + 10
-for (let i = 0; i < 10; i++) {
-  sourceImages.push({
-    thumbnail: `https://picsum.photos/id/${base + i}/346/216`,
-    source: `https://picsum.photos/id/${base + i}/1440/900`,
-  })
+interface ElementExtends extends Element {
+  $viewer: Viewer
 }
 
-export default {
+VueViewer.setDefaults({
+  zIndexInline: 2017,
+})
 
-  data () {
-    return {
+class ImageData {
+  thumbnail: string
+  source: string
+
+  constructor(source: string, thumbnail: string) {
+    this.source = source
+    this.thumbnail = thumbnail
+  }
+}
+
+const sourceImages: ImageData[] = []
+const base = Math.floor(Math.random() * 60) + 10
+for (let i = 0; i < 10; i++) {
+  const data = new ImageData(`https://picsum.photos/id/${base + i}/1440/900`, `https://picsum.photos/id/${base + i}/346/216`)
+  sourceImages.push(data)
+}
+
+export default defineComponent({
+  name: 'DirectiveExample',
+  setup() {
+    const el = ref<ElementExtends | null>(null)
+    const state = reactive({
       options: {
         toolbar: true,
         url: 'data-source',
       },
       images: [...sourceImages].splice(0, 5),
+    })
+
+    function toggleToolbar(toolbar: boolean) {
+      state.options.toolbar = toolbar
+    }
+
+    function add() {
+      state.images.push(sourceImages[state.images.length])
+    }
+
+    function remove() {
+      state.images.pop()
+    }
+
+    function show() {
+      el.value && el.value.$viewer.show()
+    }
+
+    return {
+      ...toRefs(state),
+      el,
+      add,
+      remove,
+      stop,
+      show,
+      toggleToolbar,
     }
   },
-
-  computed: {
-  },
-
-  methods: {
-    toggleToolbar (toolbar) {
-      // this.options = Object.assign({}, this.options, {toolbar})
-      this.options.toolbar = toolbar
-    },
-    add () {
-      this.images.push(sourceImages[this.images.length])
-    },
-    remove () {
-      this.images.pop()
-    },
-    show () {
-      const viewer = this.$el.querySelector('.images').$viewer
-      viewer.show()
-    },
-  },
-}
+})
 </script>
 
-<style lang="scss" rel="stylesheet/scss" scoped>
+<style lang="scss" scoped>
   .image {
     width: calc(20% - 10px);
     cursor: pointer;

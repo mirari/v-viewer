@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 export const inBrowser = typeof window !== 'undefined' && window !== null
 
 export const hasIntersectionObserver = checkIntersectionObserver()
@@ -11,7 +10,7 @@ const getSymbols = Object.getOwnPropertySymbols
  * @param {*} val
  * @returns {boolean}
  */
-export function isObject (val: any): boolean {
+export function isObject(val: any): boolean {
   return typeof val === 'function' || toString.call(val) === '[object Object]'
 }
 
@@ -21,7 +20,7 @@ export function isObject (val: any): boolean {
  * @param {*} val
  * @returns {boolean}
  */
-export function isPrimitive (val: any): boolean {
+export function isPrimitive(val: any): boolean {
   return typeof val === 'object' ? val === null : typeof val !== 'function'
 }
 
@@ -32,7 +31,7 @@ export function isPrimitive (val: any): boolean {
  * @param {*} key
  * @returns {boolean}
  */
-export function isValidKey (key: any): boolean {
+export function isValidKey(key: any): boolean {
   return key !== '__proto__' && key !== 'constructor' && key !== 'prototype'
 }
 
@@ -41,17 +40,17 @@ export function isValidKey (key: any): boolean {
  *
  * @returns {boolean}
  */
-export function checkIntersectionObserver (): boolean {
-  if (inBrowser &&
-    'IntersectionObserver' in window &&
-    'IntersectionObserverEntry' in window &&
-    'intersectionRatio' in window.IntersectionObserverEntry.prototype) {
+export function checkIntersectionObserver(): boolean {
+  if (inBrowser
+    && 'IntersectionObserver' in window
+    && 'IntersectionObserverEntry' in window
+    && 'intersectionRatio' in window.IntersectionObserverEntry.prototype) {
     // Minimal polyfill for Edge 15's lack of `isIntersecting`
     // See: https://github.com/w3c/IntersectionObserver/issues/211
     if (!('isIntersecting' in window.IntersectionObserverEntry.prototype)) {
       Object.defineProperty(window.IntersectionObserverEntry.prototype,
         'isIntersecting', {
-          get () {
+          get() {
             return this.intersectionRatio > 0
           },
         })
@@ -73,7 +72,7 @@ export function checkIntersectionObserver (): boolean {
  * @param {...any[]} args
  * @returns
  */
-function assignSymbols (target: any, ...args: any[]) {
+function assignSymbols(target: any, ...args: any[]) {
   if (!isObject(target)) {
     throw new TypeError('expected the first argument to be an object')
   }
@@ -103,7 +102,7 @@ function assignSymbols (target: any, ...args: any[]) {
  * @param {...any[]} args
  * @returns
  */
-export function assign (target: any, ...args: any[]): any {
+export function assign(target: any, ...args: any[]): any {
   let i = 0
   if (isPrimitive(target)) target = args[i++]
   if (!target) target = {}
@@ -113,7 +112,8 @@ export function assign (target: any, ...args: any[]): any {
         if (isValidKey(key)) {
           if (isObject(target[key]) && isObject(args[i][key])) {
             assign(target[key], args[i][key])
-          } else {
+          }
+          else {
             target[key] = args[i][key]
           }
         }
