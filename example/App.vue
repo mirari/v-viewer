@@ -68,9 +68,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style lang="sass" rel="stylesheet/sass">
-  @import "~bulma/sass/utilities/initial-variables"
-  $primary: #41b883
-  @import "~bulma"
-</style>

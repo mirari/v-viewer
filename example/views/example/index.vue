@@ -3,7 +3,7 @@
     <h1 class="title">
       Demo
     </h1>
-    <hr>
+    <hr />
     <div style="margin-bottom: 3em">
       <h2 class="title is-4">
         Directive
@@ -14,9 +14,9 @@
           target="_blank"
         >Source</a>
       </p>
-      <!--      <directive-example />-->
+      <directive-example />
     </div>
-    <div>
+    <div style="margin-bottom: 6em">
       <h2 class="title is-4">
         Component
       </h2>
@@ -28,21 +28,32 @@
       </p>
       <component-example />
     </div>
+    <div>
+      <h2 class="title is-4">
+        Function
+      </h2>
+      <p class="subtitle">
+        <a
+          href="https://github.com/mirari/v-viewer/blob/master/example/views/example/ViewerExample.vue"
+          target="_blank"
+        >Source</a>
+      </p>
+      <viewer-example></viewer-example>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-// import DirectiveExample from './DirectiveExample.vue'
-import ComponentExample from './ComponentExample.vue'
 import { defineComponent } from 'vue'
+import DirectiveExample from './DirectiveExample.vue'
+import ComponentExample from './ComponentExample.vue'
+import ViewerExample from './ViewerExample.vue'
 
 export default defineComponent({
   components: {
+    DirectiveExample,
     ComponentExample,
-    // DirectiveExample,
+    ViewerExample,
   },
 })
 </script>
-
-<style lang="scss" rel="stylesheet/scss" scoped>
-</style>
