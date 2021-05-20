@@ -1,16 +1,19 @@
-import {extend} from './utils'
-import Component from './component.vue'
+import { extend } from './utils'
+import ViewerJs from 'viewerjs'
+import component from './component.vue'
 import directive from './directive'
-import Viewer from 'viewerjs'
+import viewer from './viewer'
 
 export default {
   install (Vue, {name = 'viewer', debug = false, defaultOptions} = {}) {
-    Viewer.setDefaults(defaultOptions)
+    ViewerJs.setDefaults(defaultOptions)
 
-    Vue.component(name, extend(Component, { name }))
+    Vue.component(name, extend(component, { name }))
     Vue.use(directive, {name, debug})
+
+    Vue.prototype.$viewer = viewer(Vue)
   },
   setDefaults (defaultOptions) {
-    Viewer.setDefaults(defaultOptions)
+    ViewerJs.setDefaults(defaultOptions)
   }
 }
