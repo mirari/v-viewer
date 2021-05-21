@@ -2,9 +2,11 @@ import Viewer from 'viewerjs'
 import { debounce } from 'throttle-debounce'
 
 const install = (Vue, {name = 'viewer', debug = false}) => {
-  function createViewer (el, options, rebuild = false) {
+  function createViewer (el, options, rebuild = false, observer = false) {
     // nextTick执行，否则可能漏掉未渲染完的子元素
     Vue.nextTick(() => {
+      // 如果无图片或者和上次比较没有变化，那么就没有必要重新初始化或更新
+      if (observer && !isImageChange(el)) return
       if (rebuild || !el[`$${name}`]) {
         destroyViewer(el)
         el[`$${name}`] = new Viewer(el, options)
@@ -14,6 +16,24 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
         log('viewer updated')
       }
     })
+  }
+
+  function isImageChange (el) {
+    const matchImage = el.innerHTML.match(/<img([\w\W]+?)[\\/]?>/g)
+    // When there is no image, it is not recreated.
+    if (matchImage === null) {
+      log('observer no image')
+      return false
+    }
+    // When there is no change, it is not recreated.
+    const $viewerNewImage = matchImage.join('')
+    if (el.$viewerImage === $viewerNewImage) {
+      log('observer no change')
+      return false
+    } else {
+      el.$viewerImage = $viewerNewImage
+      return true
+    }
   }
 
   function createObserver (el, options, debouncedCreateViewer, rebuild) {
@@ -26,7 +46,7 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
     const observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
         log('viewer mutation:' + mutation.type)
-        debouncedCreateViewer(el, options, rebuild)
+        debouncedCreateViewer(el, options, rebuild, true)
       })
     })
     const config = { attributes: true, childList: true, characterData: true, subtree: true }
