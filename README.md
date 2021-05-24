@@ -64,7 +64,6 @@ To use `v-viewer`, simply import it and the `css` file, and call `Vue.use()` to 
 </script>
 ```
 
-
 ### Support UMD
 
 #### Browser
@@ -243,6 +242,53 @@ If you encounter any display problems, try rebuilding instead of updating.
 - viewer: `Viewer`
 
 Listen for the `inited` event to get the `viewer` instance, or use `this.refs.xxx.$viewer`.
+
+### Usage of function
+
+> Only available in modal mode.
+
+You can call the function: `this.$viewer({options: {}, images: []})`.
+
+The function `this.$viewer` returns the current viewer instance.
+
+```html
+<template>
+  <div id="app">
+    <button type="button" class="button" @click="previewLink">Use image link preview</button>
+    <button type="button" class="button" @click="previewAttribute">Use image attribute preview</button>
+  </div>
+</template>
+<script>
+  import 'viewerjs/dist/viewer.css'
+  import Viewer from 'v-viewer'
+  import Vue from 'vue'
+  Vue.use(Viewer)
+  export default {
+    data() {
+      sourceImagesLink: ['1.png', '2.png'],
+      sourceImagesAttribute: [{'src':'thumbnail.png', 'data-source':'source.png'}]
+    },
+    methods: {
+      previewLink () {
+        const $viewer = this.$viewer({
+          options: {},
+          images: this.sourceImagesLink
+        })
+      },
+      previewAttribute () {
+        const $viewer = this.$viewer({
+          options: {
+            toolbar: true,
+            url: 'data-source',
+            initialViewIndex: 2
+          },
+          images: this.sourceImagesAttribute
+        })
+      }
+    }
+  }
+</script>
+```
 
 ## Options & Methods of Viewer
 
