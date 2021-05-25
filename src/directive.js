@@ -6,32 +6,27 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
     // nextTick执行，否则可能漏掉未渲染完的子元素
     Vue.nextTick(() => {
       // 如果无图片或者和上次比较没有变化，那么就没有必要重新初始化或更新
-      if (observer && !isImageChange(el)) return
+      if (observer && !imageDiff(el)) return
       if (rebuild || !el[`$${name}`]) {
         destroyViewer(el)
         el[`$${name}`] = new Viewer(el, options)
-        log('viewer created')
+        log('Viewer created')
       } else {
         el[`$${name}`].update()
-        log('viewer updated')
+        log('Viewer updated')
       }
     })
   }
 
-  function isImageChange (el) {
-    const matchImage = el.innerHTML.match(/<img([\w\W]+?)[\\/]?>/g)
-    // When there is no image, it is not recreated.
-    if (matchImage === null) {
-      log('observer no image')
-      return false
-    }
-    // When there is no change, it is not recreated.
-    const $viewerNewImage = matchImage.join('')
-    if (el.$viewerImage === $viewerNewImage) {
-      log('observer no change')
+  function imageDiff (el) {
+    const imageContent = el.innerHTML.match(/<img([\w\W]+?)[\\/]?>/g)
+    const viewerImageText = imageContent ? imageContent.join('') : undefined
+    if (el.__viewerImageDiffCache === viewerImageText) {
+      log('Element change detected, but image(s) has not changed')
       return false
     } else {
-      el.$viewerImage = $viewerNewImage
+      log('Image change detected')
+      el.__viewerImageDiffCache = viewerImageText
       return true
     }
   }
@@ -40,34 +35,34 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
     destroyObserver(el)
     const MutationObserver = global.MutationObserver || global.WebKitMutationObserver || global.MozMutationObserver
     if (!MutationObserver) {
-      log('observer not supported')
+      log('Observer not supported')
       return
     }
     const observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
-        log('viewer mutation:' + mutation.type)
+        log('Viewer mutation:' + mutation.type)
         debouncedCreateViewer(el, options, rebuild, true)
       })
     })
     const config = { attributes: true, childList: true, characterData: true, subtree: true }
     observer.observe(el, config)
-    el['$viewerMutationObserver'] = observer
-    log('observer created')
+    el.__viewerMutationObserver = observer
+    log('Observer created')
   }
 
   function createWatcher (el, {expression}, vnode, debouncedCreateViewer) {
     const simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/
     if (!expression || !simplePathRE.test(expression)) {
-      log('only simple dot-delimited paths can create watcher')
+      log('Only simple dot-delimited paths can create watcher')
       return
     }
-    el['$viewerUnwatch'] = vnode.context.$watch(expression, function (newVal, oldVal) {
-      log('change detected by watcher: ', expression)
+    el.__viewerUnwatch = vnode.context.$watch(expression, function (newVal, oldVal) {
+      log('Change detected by watcher: ', expression)
       debouncedCreateViewer(el, newVal, true)
     }, {
       deep: true
     })
-    log('watcher created, expression: ', expression)
+    log('Watcher created, expression: ', expression)
   }
 
   function destroyViewer (el) {
@@ -76,25 +71,25 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
     }
     el[`$${name}`].destroy()
     delete el[`$${name}`]
-    log('viewer destroyed')
+    log('Viewer destroyed')
   }
 
   function destroyObserver (el) {
-    if (!el['$viewerMutationObserver']) {
+    if (!el.__viewerMutationObserver) {
       return
     }
-    el['$viewerMutationObserver'].disconnect()
-    delete el['$viewerMutationObserver']
-    log('observer destroyed')
+    el.__viewerMutationObserver.disconnect()
+    delete el.__viewerMutationObserver
+    log('Observer destroyed')
   }
 
   function destroyWatcher (el) {
-    if (!el['$viewerUnwatch']) {
+    if (!el.__viewerUnwatch) {
       return
     }
-    el['$viewerUnwatch']()
-    delete el['$viewerUnwatch']
-    log('watcher destroyed')
+    el.__viewerUnwatch()
+    delete el.__viewerUnwatch
+    log('Watcher destroyed')
   }
 
   function log () {
@@ -103,7 +98,7 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
 
   Vue.directive('viewer', {
     bind (el, binding, vnode) {
-      log('viewer bind')
+      log('Viewer bind')
       const debouncedCreateViewer = debounce(50, createViewer)
       debouncedCreateViewer(el, binding.value)
 
@@ -117,7 +112,7 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
       }
     },
     unbind (el, binding) {
-      log('viewer unbind')
+      log('Viewer unbind')
       // 销毁dom变化监听
       destroyObserver(el)
       // 销毁指令表达式监听
