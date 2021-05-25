@@ -141,9 +141,9 @@
           >
             <template slot-scope="scope">
               <figure class="images">
-                <div class="image-wrapper" v-for="{source, thumbnail} in scope.images" :key="source">
+                <div class="image-wrapper" v-for="{source, thumbnail, alt} in scope.images" :key="source">
                   <img class="image"
-                       :src="thumbnail" :data-source="source" :alt="source.split('?image=').pop()"
+                       :src="thumbnail" :data-source="source" :alt="alt"
                   >
                 </div>
               </figure>
@@ -166,11 +166,12 @@ Viewer.setDefaults({
 })
 
 const sourceImages = []
-const base = parseInt((Math.random() * 60), 10) + 10
+const base = Math.floor(Math.random() * 60) + 10
 for (let i = 0; i < 10; i++) {
   sourceImages.push({
     thumbnail: `https://picsum.photos/id/${base + i}/346/216`,
-    source: `https://picsum.photos/id/${base + i}/1440/900`
+    source: `https://picsum.photos/id/${base + i}/1440/900`,
+    alt: `Image: ${base + i}`
   })
 }
 

@@ -70,3 +70,8 @@ export default {
   $primary: #41b883
   @import "~bulma"
 </style>
+<style lang="scss" rel="stylesheet/scss">
+.viewer-loading > img {
+  display: none;
+}
+</style>

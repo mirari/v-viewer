@@ -243,19 +243,19 @@ If you encounter any display problems, try rebuilding instead of updating.
 
 Listen for the `inited` event to get the `viewer` instance, or use `this.refs.xxx.$viewer`.
 
-### Usage of function
+### Usage of api
 
 > Only available in modal mode.
 
-You can call the function: `this.$viewer({options: {}, images: []})`.
+You can call the function: `this.$viewerApi({options: {}, images: []})` to show gallery without rendering the `img` elements yourself.
 
 The function `this.$viewer` returns the current viewer instance.
 
 ```html
 <template>
   <div id="app">
-    <button type="button" class="button" @click="previewLink">Use image link preview</button>
-    <button type="button" class="button" @click="previewAttribute">Use image attribute preview</button>
+    <button type="button" class="button" @click="previewURL">URL Array</button>
+    <button type="button" class="button" @click="previewImgObject">Img-Object Array</button>
   </div>
 </template>
 <script>
@@ -265,24 +265,23 @@ The function `this.$viewer` returns the current viewer instance.
   Vue.use(Viewer)
   export default {
     data() {
-      sourceImagesLink: ['1.png', '2.png'],
-      sourceImagesAttribute: [{'src':'thumbnail.png', 'data-source':'source.png'}]
+      sourceImageURLs: ['1.png', '2.png'],
+      sourceImageObjects: [{'src':'thumbnail.png', 'data-source':'source.png'}]
     },
     methods: {
-      previewLink () {
-        const $viewer = this.$viewer({
-          options: {},
-          images: this.sourceImagesLink
+      previewURL () {
+        const $viewer = this.$viewerApi({
+          images: this.sourceImageURLs
         })
       },
-      previewAttribute () {
-        const $viewer = this.$viewer({
+      previewImgObject () {
+        const $viewer = this.$viewerApi({
           options: {
             toolbar: true,
             url: 'data-source',
             initialViewIndex: 2
           },
-          images: this.sourceImagesAttribute
+          images: this.sourceImageObjects
         })
       }
     }
@@ -306,10 +305,15 @@ If you need to avoid name conflict, you can import it like this:
 ```html
 <template>
   <div id="app">
+    <!-- directive name -->
     <div class="images" v-vuer="{movable: false}">
       <img v-for="src in images" :src="src" :key="src">
     </div>
     <button type="button" @click="show">Show</button>
+    <!-- component name -->
+    <vuer :images="images">
+      <img v-for="src in images" :src="src" :key="src">
+    </vuer>
   </div>
 </template>
 <script>
@@ -323,8 +327,13 @@ If you need to avoid name conflict, you can import it like this:
     },
     methods: {
       show () {
+        // viewerjs instance name
         const vuer = this.$el.querySelector('.images').$vuer
         vuer.show()
+        // api name
+        this.$vuerApi({
+          images: this.images
+        })
       }
     }
   }
