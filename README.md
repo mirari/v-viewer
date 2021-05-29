@@ -1,18 +1,24 @@
 # v-viewer
+
 Image viewer component for vue, supports rotation, scale, zoom and so on, based on [viewer.js](https://github.com/fengyuanchen/viewerjs)
 
-[![CircleCI](https://circleci.com/gh/mirari/v-viewer/tree/cli3.svg?style=svg)](https://circleci.com/gh/mirari/v-viewer/tree/cli3)
-[![code coverage](https://codecov.io/gh/mirari/v-viewer/branch/cli3/graph/badge.svg)](https://codecov.io/gh/mirari/v-viewer)
 [![npm version](https://img.shields.io/npm/v/v-viewer.svg)](https://www.npmjs.com/package/v-viewer)
 [![npm download](https://img.shields.io/npm/dw/v-viewer.svg)](https://www.npmjs.com/package/v-viewer)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://mit-license.org/) 
 [![language](https://img.shields.io/badge/language-Vue2-brightgreen.svg)](https://www.npmjs.com/package/v-viewer)
+[![language](https://img.shields.io/badge/language-Vue3-brightgreen.svg)](https://www.npmjs.com/package/v-viewer)
 
 ## [Live demo](https://mirari.github.io/v-viewer/)
 
 ## Quick Example
-- [CodePen](https://codepen.io/mirari/pen/PePrVq)
-- [JSFiddle](https://jsfiddle.net/mirari/n1L0gxtv/)
+- [directive](https://codepen.io/mirari/pen/PePrVq)
+- [component](https://codepen.io/mirari/pen/PowNyEY)
+- [thumbnail & source](https://codepen.io/mirari/pen/LYENgMM)
+- [viewer callback](https://codepen.io/mirari/pen/ZwpGBO)
+- [hide img tags](https://codepen.io/mirari/pen/vjjXwj)
+- [filter images](https://codepen.io/mirari/pen/vvPoQb)
+- [change images](https://codepen.io/mirari/pen/ZdMbOK)
+- [**click buttons to show different images**](https://codesandbox.io/s/v-viewer-zhezr)
 
 ## [中文文档](https://mirari.cc/2017/08/27/Vue%E5%9B%BE%E7%89%87%E6%B5%8F%E8%A7%88%E7%BB%84%E4%BB%B6v-viewer%EF%BC%8C%E6%94%AF%E6%8C%81%E6%97%8B%E8%BD%AC%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E7%BF%BB%E8%BD%AC%E7%AD%89%E6%93%8D%E4%BD%9C/)
 
@@ -22,8 +28,10 @@ Image viewer component for vue, supports rotation, scale, zoom and so on, based 
 import 'viewerjs/dist/viewer.css'
 ```
 
-## Installation 
+## Installation
+
 Install from GitHub via NPM
+
 ```bash
 npm install v-viewer
 ```
@@ -59,7 +67,6 @@ To use `v-viewer`, simply import it and the `css` file, and call `Vue.use()` to 
   }
 </script>
 ```
-
 
 ### Support UMD
 
@@ -120,9 +127,10 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
 </script>
 ```
 
-#### Direcitve modifiers
+#### Directive modifiers
+
 ##### static
-The `viewer` renderer will be executed only once after the directive binded.
+The `viewer` instance will be created only once after the directive binded.
 
 If you're sure the images inside this element won't change again, use it to avoid unnecessary re-render.
 
@@ -132,12 +140,23 @@ If you're sure the images inside this element won't change again, use it to avoi
 </div>
 ```
 
+##### rebuild
+
+The `viewer` instance will be updated by `update` method when the source images changed (added, removed or sorted) by default.
+
+If you encounter any display problems, try rebuilding instead of updating.
+
+```
+<div class="images" v-viewer.rebuild="{inline: true}">
+  <img v-for="src in images" :src="src" :key="src">
+</div>
+```
+
 ### Usage of component
+
 You can simply import the component and register it locally too.
 
 Use [scoped slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) to customize the presentation of your images.
-
-Listen for the `inited` event to get the `viewer` instance, or use `this.refs.xxx.$viewer`.
 
 ```html
 <template>
@@ -176,19 +195,110 @@ Listen for the `inited` event to get the `viewer` instance, or use `this.refs.xx
 </script>
 ```
 
+#### Component props
+
+##### images
+
+- Type: `Array`
+
+##### trigger
+
+- Type: `Array`
+
 You can replace `images` with `trigger`, to accept any type of prop.
 when the `trigger` changes, the component will re-render the viewer.
+
 ```html
 <viewer :trigger="externallyGeneratedHtmlWithImages">
   <div v-html="externallyGeneratedHtmlWithImages"/>
 </viewer>
 ```
 
-## Options & Methods 
+##### rebuild
+
+- Type: `Boolean`
+- Default: `false`
+
+The viewer instance will be updated by `update` method when the source images changed (added, removed or sorted) by default.
+
+If you encounter any display problems, try rebuilding instead of updating.
+
+```html
+<viewer
+  ref="viewer"
+  :options="options"
+  :images="images"
+  rebuild
+  class="viewer"
+  @inited="inited"
+>
+  <template slot-scope="scope">
+    <img v-for="src in scope.images" :src="src" :key="src">
+    {{scope.options}}
+  </template>
+</viewer>
+```
+
+#### Component events
+
+##### inited
+
+- viewer: `Viewer`
+
+Listen for the `inited` event to get the `viewer` instance, or use `this.refs.xxx.$viewer`.
+
+### Usage of api
+
+> Only available in modal mode.
+
+You can call the function: `this.$viewerApi({options: {}, images: []})` to show gallery without rendering the `img` elements yourself.
+
+The function `this.$viewer` returns the current viewer instance.
+
+```html
+<template>
+  <div id="app">
+    <button type="button" class="button" @click="previewURL">URL Array</button>
+    <button type="button" class="button" @click="previewImgObject">Img-Object Array</button>
+  </div>
+</template>
+<script>
+  import 'viewerjs/dist/viewer.css'
+  import Viewer from 'v-viewer'
+  import Vue from 'vue'
+  Vue.use(Viewer)
+  export default {
+    data() {
+      sourceImageURLs: ['1.png', '2.png'],
+      sourceImageObjects: [{'src':'thumbnail.png', 'data-source':'source.png'}]
+    },
+    methods: {
+      previewURL () {
+        const $viewer = this.$viewerApi({
+          images: this.sourceImageURLs
+        })
+      },
+      previewImgObject () {
+        const $viewer = this.$viewerApi({
+          options: {
+            toolbar: true,
+            url: 'data-source',
+            initialViewIndex: 2
+          },
+          images: this.sourceImageObjects
+        })
+      }
+    }
+  }
+</script>
+```
+
+## Options & Methods of Viewer
 
 Refer to [viewer.js](https://github.com/fengyuanchen/viewerjs).
 
 ## Plugin options
+
 ### name
 
 - Type: `String`
@@ -199,10 +309,15 @@ If you need to avoid name conflict, you can import it like this:
 ```html
 <template>
   <div id="app">
+    <!-- directive name -->
     <div class="images" v-vuer="{movable: false}">
       <img v-for="src in images" :src="src" :key="src">
     </div>
     <button type="button" @click="show">Show</button>
+    <!-- component name -->
+    <vuer :images="images">
+      <img v-for="src in images" :src="src" :key="src">
+    </vuer>
   </div>
 </template>
 <script>
@@ -216,8 +331,13 @@ If you need to avoid name conflict, you can import it like this:
     },
     methods: {
       show () {
+        // viewerjs instance name
         const vuer = this.$el.querySelector('.images').$vuer
         vuer.show()
+        // api name
+        this.$vuerApi({
+          images: this.images
+        })
       }
     }
   }
@@ -246,6 +366,6 @@ import Viewer from 'v-viewer'
 import Vue from 'vue'
 Vue.use(Viewer)
 Viewer.setDefaults({
-  zIndexInline: 2017
+  zIndexInline: 2021
 })
 ```

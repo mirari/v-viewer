@@ -8,6 +8,11 @@ declare namespace VueViewer {
     defaultOptions: ViewerJs.Options
   }
 
+  export interface ViewerApiOptions {
+    images: Array<string | object>
+    options?: ViewerJs.Options
+  }
+
   export function install(app: App, options?: InstallationOptions): void
 
   export function setDefaults(defaultOptions: ViewerJs.Options): void

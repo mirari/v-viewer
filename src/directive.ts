@@ -3,67 +3,68 @@ import debounce from 'lodash/debounce'
 import { nextTick, watch } from 'vue'
 import type { Directive, DirectiveBinding, VNode } from 'vue'
 
-export type IcreateViewer = (el: HTMLElement, options: ViewerJs.Options, rebuild: boolean) => void
+export type ICreateViewer = (el: HTMLElement, options: ViewerJs.Options, rebuild: boolean, observer: boolean) => void
 
 const directive = ({ name = 'viewer', debug = false }) => {
-  async function createViewer(el: HTMLElement, options: ViewerJs.Options, rebuild = false) {
+  async function createViewer(el: HTMLElement, options: ViewerJs.Options, rebuild = false, observer = false) {
     await nextTick()
+    // 如果启用了元素监听，但和上次比较没有变化，就不重新初始化或更新
+    if (observer && !imageDiff(el)) return
     if (rebuild || !el[`$${name}`]) {
       destroyViewer(el)
       el[`$${name}`] = new ViewerJs(el, options)
-      log('viewer created')
+      log('Viewer created')
     }
     else {
       el[`$${name}`].update()
-      log('viewer updated')
+      log('Viewer updated')
     }
   }
 
-  function createObserver(el: HTMLElement, options: ViewerJs.Options, debouncedCreateViewer: IcreateViewer, rebuild: boolean) {
+  function imageDiff(el: HTMLElement) {
+    const imageContent = el.innerHTML.match(/<img([\w\W]+?)[\\/]?>/g)
+    const viewerImageText = imageContent ? imageContent.join('') : undefined
+    if (el.__viewerImageDiffCache === viewerImageText) {
+      log('Element change detected, but image(s) has not changed')
+      return false
+    }
+    else {
+      log('Image change detected')
+      el.__viewerImageDiffCache = viewerImageText
+      return true
+    }
+  }
+
+  function createObserver(el: HTMLElement, options: ViewerJs.Options, debouncedCreateViewer: ICreateViewer, rebuild: boolean) {
     destroyObserver(el)
     const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
     if (!MutationObserver) {
-      log('observer not supported')
+      log('Observer not supported')
       return
     }
     const observer = new MutationObserver((mutations) => {
-      const matchImage = el.innerHTML.match(/<img([\w\W]+?)[\\/]?>/g)
-      // When there is no image, it is not recreated.
-      if (matchImage === null) {
-        log('observer no image')
-        return
-      }
-      // When there is no change, it is not recreated.
-      const $viewerNewImage = matchImage.join('')
-      if (el.$viewerOldImage === $viewerNewImage) {
-        log('observer no change')
-        return
-      }
-      else {
-        el.$viewerOldImage = $viewerNewImage
-      }
       mutations.forEach((mutation) => {
-        log(`viewer mutation:${mutation.type}`)
-        debouncedCreateViewer(el, options, rebuild)
+        log(`Viewer mutation:${mutation.type}`)
+        debouncedCreateViewer(el, options, rebuild, true)
       })
     })
     const config = { attributes: true, childList: true, characterData: true, subtree: true }
     observer.observe(el, config)
-    el.$viewerMutationObserver = observer
-    log('observer created')
+    el.__viewerMutationObserver = observer
+    log('Observer created')
   }
 
-  function createWatcher(el: HTMLElement, binding: DirectiveBinding, vnode: VNode, debouncedCreateViewer: IcreateViewer) {
+  function createWatcher(el: HTMLElement, binding: DirectiveBinding, vnode: VNode, debouncedCreateViewer: ICreateViewer) {
     // const simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/
     // if (!binding.value || !simplePathRE.test(binding.value)) {
-    //   log('only simple dot-delimited paths can create watcher')
+    //   log('Only simple dot-delimited paths can create watcher')
     //   return
     // }
-    el.$viewerUnwatch = watch(() => binding.value, (newVal, oldVal) => {
-      log('change detected by watcher: ', binding.value)
-      debouncedCreateViewer(el, newVal, true)
+    el.__viewerUnwatch = watch(() => binding.value, (newVal, oldVal) => {
+      log('Change detected by watcher: ', binding.value)
+      debouncedCreateViewer(el, newVal, true, false)
     }, { deep: true })
-    log('watcher created, expression: ', binding.value)
+    log('Watcher created, expression: ', binding.value)
   }
 
   function destroyViewer(el: HTMLElement) {
@@ -72,25 +73,25 @@ const directive = ({ name = 'viewer', debug = false }) => {
     }
     el[`$${name}`].destroy()
     delete el[`$${name}`]
-    log('viewer destroyed')
+    log('Viewer destroyed')
   }
 
   function destroyObserver(el: HTMLElement) {
-    if (!el.$viewerMutationObserver) {
+    if (!el.__viewerMutationObserver) {
       return
     }
-    el.$viewerMutationObserver.disconnect()
-    delete el.$viewerMutationObserver
+    el.__viewerMutationObserver.disconnect()
+    delete el.__viewerMutationObserver
     log('observer destroyed')
   }
 
   function destroyWatcher(el: HTMLElement) {
-    if (!el.$viewerUnwatch) {
+    if (!el.__viewerUnwatch) {
       return
     }
-    el.$viewerUnwatch()
-    delete el.$viewerUnwatch
-    log('watcher destroyed')
+    el.__viewerUnwatch()
+    delete el.__viewerUnwatch
+    log('Watcher destroyed')
   }
 
   function log(...args: any[]) {
@@ -99,7 +100,7 @@ const directive = ({ name = 'viewer', debug = false }) => {
 
   const directive: Directive = {
     mounted(el, binding, vnode) {
-      log('viewer bind')
+      log('Viewer bind')
       const debouncedCreateViewer = debounce(createViewer, 50)
       debouncedCreateViewer(el, binding.value)
       // 创建watch监听options表达式变化
@@ -111,7 +112,7 @@ const directive = ({ name = 'viewer', debug = false }) => {
       }
     },
     unmounted(el) {
-      log('viewer unbind')
+      log('Viewer unbind')
       // 销毁dom变化监听
       destroyObserver(el)
       // 销毁指令表达式监听

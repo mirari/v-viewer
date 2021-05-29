@@ -30,15 +30,15 @@
     </div>
     <div>
       <h2 class="title is-4">
-        Function
+        Api
       </h2>
       <p class="subtitle">
         <a
-          href="https://github.com/mirari/v-viewer/blob/master/example/views/example/ViewerExample.vue"
+          href="https://github.com/mirari/v-viewer/blob/master/example/views/example/ApiExample.vue"
           target="_blank"
         >Source</a>
       </p>
-      <viewer-example></viewer-example>
+      <api-example />
     </div>
   </div>
 </template>
@@ -47,13 +47,13 @@
 import { defineComponent } from 'vue'
 import DirectiveExample from './DirectiveExample.vue'
 import ComponentExample from './ComponentExample.vue'
-import ViewerExample from './ViewerExample.vue'
+import ApiExample from './ApiExample.vue'
 
 export default defineComponent({
   components: {
     DirectiveExample,
     ComponentExample,
-    ViewerExample,
+    ApiExample,
   },
 })
 </script>

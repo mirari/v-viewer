@@ -61,12 +61,12 @@
       v-viewer="options"
       class="images clearfix"
     >
-      <template v-for="{source, thumbnail} in images" :key="source">
+      <template v-for="{source, thumbnail, title} in images" :key="source">
         <img
           class="image"
           :src="thumbnail"
           :data-source="source"
-          :alt="source.split('?image=').pop()"
+          :alt="title"
         >
       </template>
     </div>
@@ -89,17 +89,19 @@ VueViewer.setDefaults({
 class ImageData {
   thumbnail: string
   source: string
+  title: string
 
-  constructor(source: string, thumbnail: string) {
+  constructor(source: string, thumbnail: string, title: string) {
     this.source = source
     this.thumbnail = thumbnail
+    this.title = title
   }
 }
 
 const sourceImages: ImageData[] = []
 const base = Math.floor(Math.random() * 60) + 10
 for (let i = 0; i < 10; i++) {
-  const data = new ImageData(`https://picsum.photos/id/${base + i}/1440/900`, `https://picsum.photos/id/${base + i}/346/216`)
+  const data = new ImageData(`https://picsum.photos/id/${base + i}/1440/900`, `https://picsum.photos/id/${base + i}/346/216`, `Image: ${base + i}`)
   sourceImages.push(data)
 }
 

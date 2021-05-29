@@ -1,7 +1,7 @@
 import { App } from 'vue'
 import defaults from 'lodash/defaults'
 import ViewerJs from 'viewerjs'
-import viewer from './viewer'
+import api from './api'
 import directive from './directive'
 import component from './component.vue'
 
@@ -13,7 +13,7 @@ export interface InstallationOptions {
 
 export {
   ViewerJs,
-  viewer,
+  api as viewerApi,
   directive,
   component,
 }
@@ -24,7 +24,7 @@ export default {
       ViewerJs.setDefaults(defaultOptions)
     }
 
-    app.config.globalProperties.$viewer = viewer
+    app.config.globalProperties[`$${name}Api`] = api
     app.component(name, defaults(component, { name }))
     app.directive(name, directive({ name, debug }))
   },

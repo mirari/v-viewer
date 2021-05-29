@@ -3,7 +3,8 @@
   "scope": "VueViewer",
   "version": "3.0.0",
   "description": "Image viewer component for vue, supports rotation, scale, zoom and so on, based on viewer.js",
-  "main": "./dist/index.umd.js",
+  "main": "./dist/index.umd.min.js",
+  "unpkg": "./dist/index.umd.min.js",
   "module": "./dist/index.es.js",
   "types": "./types/index.d.ts",
   "exports": {
@@ -15,8 +16,8 @@
   "scripts": {
     "dev": "npm -C example run dev",
     "build": "vue-tsc --noEmit && vite build",
-    "preview:serve": "npm -C example run serve",
     "preview:build": "npm -C example run build",
+    "preview:serve": "npm -C example run serve",
     "commit": "npx git-cz",
     "release-f": "standard-version -f",
     "release-major": "standard-version -r major",

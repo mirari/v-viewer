@@ -332,7 +332,7 @@
             <template #default="scope">
               <figure class="images">
                 <div
-                  v-for="{source, thumbnail} in scope.images"
+                  v-for="{source, thumbnail, title} in scope.images"
                   :key="source"
                   class="image-wrapper"
                 >
@@ -340,7 +340,7 @@
                     class="image"
                     :src="thumbnail"
                     :data-source="source"
-                    :alt="source.split('?image=').pop()"
+                    :alt="title"
                   >
                 </div>
               </figure>
@@ -368,17 +368,19 @@ VueViewer.setDefaults({
 class ImageData {
   thumbnail: string
   source: string
+  title: string
 
-  constructor(source: string, thumbnail: string) {
+  constructor(source: string, thumbnail: string, title: string) {
     this.source = source
     this.thumbnail = thumbnail
+    this.title = title
   }
 }
 
 const sourceImages: ImageData[] = []
 const base = Math.floor(Math.random() * 60) + 10
 for (let i = 0; i < 10; i++) {
-  const data = new ImageData(`https://picsum.photos/id/${base + i}/1440/900`, `https://picsum.photos/id/${base + i}/346/216`)
+  const data = new ImageData(`https://picsum.photos/id/${base + i}/1440/900`, `https://picsum.photos/id/${base + i}/346/216`, `Image: ${base + i}`)
   sourceImages.push(data)
 }
 
