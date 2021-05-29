@@ -6,17 +6,18 @@
     />
   </div>
 </template>
+
 <script lang="ts">
 import {
-  defineComponent,
-  nextTick,
-  onUnmounted,
-  onMounted,
-  PropType,
   ref,
   watch,
+  nextTick,
+  onMounted,
+  onUnmounted,
+  defineComponent,
 } from 'vue'
-import Viewer from 'viewerjs'
+import ViewerJs from 'viewerjs'
+import type { PropType } from 'vue'
 
 export default defineComponent({
   props: {
@@ -33,75 +34,57 @@ export default defineComponent({
       default: null,
     },
     options: {
-      type: Object as PropType<Viewer.Options>,
+      type: Object as PropType<ViewerJs.Options>,
       default: () => null,
     },
   },
   emits: ['inited'],
-
-  setup (props, { emit }) {
-    let $viewer: Viewer
+  setup(props, { emit }) {
+    let $viewer: ViewerJs
     const root = ref()
-    function onChange (): void {
-      if (props.rebuild) {
-        rebuildViewer()
-      } else {
-        updateViewer()
-      }
+
+    // create、destroy
+    function createViewer() {
+      $viewer = new ViewerJs(root.value, props.options)
+      emit('inited', $viewer)
     }
-    function rebuildViewer (): void {
+    function destroyViewer() {
+      $viewer && $viewer.destroy()
+    }
+    function rebuildViewer() {
       destroyViewer()
       createViewer()
     }
-    function updateViewer (): void {
+
+    // create、update
+    function updateViewer() {
       if ($viewer) {
         $viewer.update()
         emit('inited', $viewer)
-      } else {
+      }
+      else {
         createViewer()
       }
     }
-    function destroyViewer (): void {
-      $viewer && $viewer.destroy()
-    }
-    function createViewer (): void {
-      $viewer = new Viewer(root.value, props.options)
-      emit('inited', $viewer)
+    function changeViewer() {
+      if (props.rebuild) {
+        rebuildViewer()
+      }
+      else {
+        updateViewer()
+      }
     }
 
-    onMounted(() => {
-      createViewer()
-    })
-    onUnmounted(() => {
-      destroyViewer()
-    })
-    watch(
-      () => props.images,
-      async () => {
-        nextTick(async () => {
-          onChange()
-        })
-      },
-      { deep: true },
-    )
-    watch(
-      () => props.trigger,
-      async () => {
-        nextTick(async () => {
-          onChange()
-        })
-      },
-      { deep: true },
-    )
-    watch(
-      () => props.options,
-      async () => {
-        nextTick(async () => {
-          onChange()
-        })
-      },
-      { deep: true },
-    )
+    // watch effect
+    const options = { deep: true }
+    watch(() => props.images, () => nextTick(() => changeViewer()), options)
+    watch(() => props.trigger, () => nextTick(() => changeViewer()), options)
+    watch(() => props.options, () => nextTick(() => changeViewer()), options)
+
+    // lifecycle hooks
+    onMounted(() => createViewer())
+    onUnmounted(() => destroyViewer())
+
     return {
       root,
       createViewer,

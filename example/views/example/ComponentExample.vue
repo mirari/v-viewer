@@ -6,8 +6,8 @@
           <button
             type="button"
             class="button is-primary"
-            @click="toggleInline(false)"
             :class="{' is-active': !options.inline}"
+            @click="toggleInline(false)"
           >
             Modal
           </button>
@@ -16,8 +16,8 @@
           <button
             type="button"
             class="button is-primary"
-            @click="toggleInline(true)"
             :class="{' is-active': options.inline}"
+            @click="toggleInline(true)"
           >
             Inline
           </button>
@@ -26,16 +26,16 @@
       <button
         type="button"
         class="button"
-        @click="add"
         :disabled="images.length===9"
+        @click="add"
       >
         Add
       </button>
       <button
         type="button"
         class="button"
-        @click="remove"
         :disabled="images.length===1"
+        @click="remove"
       >
         Remove
       </button>
@@ -49,9 +49,9 @@
           </div>
           <div class="control">
             <input
+              v-model.number="form.view"
               class="input"
               type="text"
-              v-model.number="form.view"
               @keyup="view"
             >
           </div>
@@ -62,9 +62,9 @@
         >
           <div class="control">
             <input
+              v-model.number="form.zoom"
               class="input"
               type="text"
-              v-model.number="form.zoom"
             >
           </div>
           <div class="control">
@@ -80,9 +80,9 @@
         >
           <div class="control">
             <input
+              v-model.number="form.zoomTo"
               class="input"
               type="text"
-              v-model.number="form.zoomTo"
             >
           </div>
           <div class="control">
@@ -98,9 +98,9 @@
         >
           <div class="control">
             <input
+              v-model.number="form.rotate"
               class="input"
               type="text"
-              v-model.number="form.rotate"
             >
           </div>
           <div class="control">
@@ -116,9 +116,9 @@
         >
           <div class="control">
             <input
+              v-model.number="form.rotateTo"
               class="input"
               type="text"
-              v-model.number="form.rotateTo"
             >
           </div>
           <div class="control">
@@ -304,15 +304,15 @@
               Options
             </p>
             <div
-              class="panel-block"
               v-for="item of toggleOptions"
               :key="item"
+              class="panel-block"
             >
               <label class="checkbox">
                 <input
+                  v-model="options[item]"
                   type="checkbox"
                   name="button"
-                  v-model="options[item]"
                 > {{ item }}
               </label>
             </div>
@@ -322,19 +322,19 @@
       <div class="tile is-10 is-vertical is-parent">
         <div class="viewer-wrapper">
           <viewer
+            ref="viewer"
             :options="options"
             :images="images"
             rebuild
-            @inited="inited"
             class="viewer"
-            ref="viewer"
+            @inited="inited"
           >
             <template #default="scope">
               <figure class="images">
                 <div
-                  class="image-wrapper"
                   v-for="{source, thumbnail} in scope.images"
                   :key="source"
+                  class="image-wrapper"
                 >
                   <img
                     class="image"
@@ -354,24 +354,22 @@
 </template>
 
 <script lang="ts">
-import VueViewer, { Viewer } from '@/main'
 import {
   defineComponent,
   toRefs,
   reactive,
 } from 'vue'
-// import { app } from '../../main'
-// app.use(VueViewer)
+import VueViewer, { ViewerJs } from '../../../src'
+
 VueViewer.setDefaults({
   zIndexInline: 2017,
-  focus: false,
 })
 
 class ImageData {
   thumbnail: string
   source: string
 
-  constructor (source: string, thumbnail: string) {
+  constructor(source: string, thumbnail: string) {
     this.source = source
     this.thumbnail = thumbnail
   }
@@ -386,8 +384,8 @@ for (let i = 0; i < 10; i++) {
 
 export default defineComponent({
   name: 'ComponentExample',
-  setup () {
-    let $viewer: Viewer
+  setup() {
+    let $viewer: ViewerJs
 
     const state = reactive({
       form: {
@@ -432,76 +430,96 @@ export default defineComponent({
       images: [...sourceImages].splice(0, 5),
     })
 
-    function inited (viewer: Viewer) {
+    function inited(viewer: ViewerJs) {
       $viewer = viewer
     }
-    function add () {
+
+    function add() {
       state.images.push(sourceImages[state.images.length])
     }
-    function remove () {
+
+    function remove() {
       state.images.pop()
     }
-    function view () {
-      if (state.form.view >= 0 && state.form.view < state.images.length) {
+
+    function view() {
+      if (state.form.view >= 0 && state.form.view < state.images.length)
         $viewer.view(state.form.view)
-      }
     }
-    function zoom (value: number) {
+
+    function zoom(value: number) {
       $viewer.zoom(value || state.form.zoom)
     }
-    function zoomTo () {
+
+    function zoomTo() {
       $viewer.zoomTo(state.form.zoomTo)
     }
-    function rotate (value: number) {
+
+    function rotate(value: number) {
       $viewer.rotate(value || state.form.rotate)
     }
-    function rotateTo () {
+
+    function rotateTo() {
       $viewer.rotateTo(state.form.rotateTo)
     }
-    function scaleX (value: number) {
+
+    function scaleX(value: number) {
       if (value) {
         $viewer.scaleX(value)
-      } else {
+      }
+      else {
         state.form.scaleX = -state.form.scaleX
         $viewer.scaleX(state.form.scaleX)
       }
     }
-    function scaleY (value: number) {
+
+    function scaleY(value: number) {
       if (value) {
         $viewer.scaleY(value)
-      } else {
+      }
+      else {
         state.form.scaleY = -state.form.scaleY
         $viewer.scaleY(state.form.scaleY)
       }
     }
-    function move (x: number, y: number) {
+
+    function move(x: number, y: number) {
       $viewer.move(x, y)
     }
-    function prev () {
+
+    function prev() {
       $viewer.prev()
     }
-    function next () {
+
+    function next() {
       $viewer.next()
     }
-    function play () {
+
+    function play() {
       $viewer.play()
     }
-    function stop () {
+
+    function stop() {
       $viewer.stop()
     }
-    function show () {
+
+    function show() {
       $viewer.show()
     }
-    function full () {
+
+    function full() {
       $viewer.full()
     }
-    function tooltip () {
+
+    function tooltip() {
       $viewer.tooltip()
     }
-    function reset () {
+
+    function reset() {
       $viewer.reset()
     }
-    function toggleInline (inline: boolean) {
+
+    function toggleInline(inline: boolean) {
       state.options.inline = inline
     }
 
@@ -529,14 +547,10 @@ export default defineComponent({
       toggleInline,
     }
   },
-
-  methods: {
-
-  },
 })
 </script>
 
-<style lang="scss" rel="stylesheet/scss" scoped>
+<style lang="scss" scoped>
   .viewer-wrapper {
     position: relative;
     background: #333;

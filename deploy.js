@@ -1,10 +1,11 @@
-var ghpages = require('gh-pages')
-var path = require('path')
+const path = require('path')
+const ghpages = require('gh-pages')
 
-ghpages.publish(path.join(__dirname, '../example-dist'), function (err) {
+ghpages.publish(path.join(__dirname, '../example-dist'), (err) => {
   if (err) {
     console.log(err)
-  } else {
+  }
+  else {
     console.log('publish to github page done')
   }
 })

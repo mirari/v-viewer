@@ -1,6 +1,9 @@
 import { createApp } from 'vue'
+import Viewer from '../src'
 import App from './App.vue'
-import Viewer from '../src/main'
+
+import 'bulma/bulma.sass'
+import 'viewerjs/dist/viewer.css'
 
 export const app = createApp(App)
 app.use(Viewer)
