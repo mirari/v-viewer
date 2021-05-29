@@ -14,6 +14,7 @@
     }
   },
   "scripts": {
+    "prepare": "husky install",
     "dev": "npm -C example run dev",
     "build": "vue-tsc --noEmit && vite build",
     "preview:build": "npm -C example run build",
@@ -60,8 +61,8 @@
     "create-banner": "^2.0.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.25.0",
-    "husky": "^4.3.8",
-    "lint-staged": "^10.5.4",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
     "sass": "^1.32.13",
     "standard-version": "^9.3.0",
     "typescript": "^4.1.3",
