@@ -1,7 +1,7 @@
 const path = require('path')
 const ghpages = require('gh-pages')
 
-ghpages.publish(path.join(__dirname, '../example-dist'), (err) => {
+ghpages.publish(path.join(__dirname, '../example/dist'), (err) => {
   if (err) {
     console.log(err)
   }
