@@ -83,7 +83,7 @@ import {
 import VueViewer, { ViewerJs, directive as viewer } from '../../../src'
 
 VueViewer.setDefaults({
-  zIndexInline: 2021,
+  zIndex: 2021,
 })
 
 class ImageData {

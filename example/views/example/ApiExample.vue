@@ -29,7 +29,7 @@ import {
 import VueViewer, { api as viewerApi } from '../../../src'
 
 VueViewer.setDefaults({
-  zIndexInline: 2021,
+  zIndex: 2021,
 })
 
 const sourceImageURLs = []
