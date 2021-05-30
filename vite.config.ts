@@ -18,8 +18,8 @@ export default defineConfig({
       output: {
         banner,
         globals: {
-          vue: 'vue',
-          Viewer: 'viewerjs',
+          vue: 'Vue',
+          viewerjs: 'Viewer',
         },
       },
       external: ['vue', 'viewerjs'],
