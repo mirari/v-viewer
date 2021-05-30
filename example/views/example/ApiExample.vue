@@ -49,7 +49,6 @@ export default defineComponent({
   setup() {
     function previewURL() {
       const $viewer = viewerApi({
-        options: {},
         images: sourceImageURLs,
       })
       console.log($viewer)

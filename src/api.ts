@@ -7,7 +7,7 @@ export interface ViewerApiOptions {
   options?: ViewerJs.Options
 }
 
-const api = ({ images = [], options = [] }: ViewerApiOptions) => {
+const api = ({ images = [], options }: ViewerApiOptions) => {
   options = assign(options, {
     inline: false, // 只能使用modal模式
   })
