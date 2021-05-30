@@ -2,7 +2,16 @@
 
 Image viewer component for vue, supports rotation, scale, zoom and so on, based on [viewer.js](https://github.com/fengyuanchen/viewerjs)
 
-[![npm version](https://badge.fury.io/js/v-viewer.svg)](https://badge.fury.io/js/v-viewer)
+[![npm version](https://img.shields.io/npm/v/v-viewer.svg)](https://www.npmjs.com/package/v-viewer)
+[![language](https://img.shields.io/badge/language-Vue2-brightgreen.svg)](https://www.npmjs.com/package/v-viewer)
+
+[![npm version](https://img.shields.io/npm/v/v-viewer/next.svg)](https://www.npmjs.com/package/v-viewer)
+[![language](https://img.shields.io/badge/language-Vue3-brightgreen.svg)](https://www.npmjs.com/package/v-viewer)
+
+[![npm download](https://img.shields.io/npm/dw/v-viewer.svg)](https://www.npmjs.com/package/v-viewer)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://mit-license.org/)
+
+## [v-viewer for vue3](https://github.com/mirari/v-viewer/tree/v3)
 
 ## [Live demo](https://mirari.github.io/v-viewer/)
 
@@ -19,7 +28,9 @@ Image viewer component for vue, supports rotation, scale, zoom and so on, based 
 ## [中文文档](https://mirari.cc/2017/08/27/Vue%E5%9B%BE%E7%89%87%E6%B5%8F%E8%A7%88%E7%BB%84%E4%BB%B6v-viewer%EF%BC%8C%E6%94%AF%E6%8C%81%E6%97%8B%E8%BD%AC%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E7%BF%BB%E8%BD%AC%E7%AD%89%E6%93%8D%E4%BD%9C/)
 
 ## Migration from 0.x
+
 - The only change you have to make is to manually import the `.css` file:
+
 ```
 import 'viewerjs/dist/viewer.css'
 ```
@@ -126,6 +137,7 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
 #### Directive modifiers
 
 ##### static
+
 The `viewer` instance will be created only once after the directive binded.
 
 If you're sure the images inside this element won't change again, use it to avoid unnecessary re-render.
