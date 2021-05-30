@@ -13,7 +13,7 @@ export interface InstallationOptions {
 
 export {
   ViewerJs,
-  api as viewerApi,
+  api,
   directive,
   component,
 }

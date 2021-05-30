@@ -359,10 +359,10 @@ import {
   toRefs,
   reactive,
 } from 'vue'
-import VueViewer, { ViewerJs } from '../../../src'
+import VueViewer, { ViewerJs, component as Viewer } from '../../../src'
 
 VueViewer.setDefaults({
-  zIndexInline: 2017,
+  zIndexInline: 2021,
 })
 
 class ImageData {
@@ -386,6 +386,9 @@ for (let i = 0; i < 10; i++) {
 
 export default defineComponent({
   name: 'ComponentExample',
+  components: {
+    Viewer,
+  },
   setup() {
     let $viewer: ViewerJs
 

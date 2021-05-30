@@ -80,10 +80,10 @@ import {
   reactive,
   ref,
 } from 'vue'
-import VueViewer, { ViewerJs } from '../../../src'
+import VueViewer, { ViewerJs, directive as viewer } from '../../../src'
 
 VueViewer.setDefaults({
-  zIndexInline: 2017,
+  zIndexInline: 2021,
 })
 
 class ImageData {
@@ -107,6 +107,11 @@ for (let i = 0; i < 10; i++) {
 
 export default defineComponent({
   name: 'DirectiveExample',
+  directives: {
+    viewer: viewer({
+      debug: true,
+    }),
+  },
   setup() {
     const el = ref<HTMLElement | null>(null)
     const state = reactive({
