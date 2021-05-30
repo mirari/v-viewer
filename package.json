@@ -23,7 +23,8 @@
     "release": "standard-version"
   },
   "files": [
-    "dist"
+    "dist",
+    "types"
   ],
   "keywords": [
     "vue",
