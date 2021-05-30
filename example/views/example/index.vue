@@ -10,7 +10,7 @@
       </h2>
       <p class="subtitle">
         <a
-          href="https://github.com/mirari/v-viewer/blob/master/example/views/example/DirectiveExample.vue"
+          href="https://github.com/mirari/v-viewer/blob/v3/example/views/example/DirectiveExample.vue"
           target="_blank"
         >Source</a>
       </p>
@@ -22,7 +22,7 @@
       </h2>
       <p class="subtitle">
         <a
-          href="https://github.com/mirari/v-viewer/blob/master/example/views/example/ComponentExample.vue"
+          href="https://github.com/mirari/v-viewer/blob/v3/example/views/example/ComponentExample.vue"
           target="_blank"
         >Source</a>
       </p>
@@ -34,7 +34,7 @@
       </h2>
       <p class="subtitle">
         <a
-          href="https://github.com/mirari/v-viewer/blob/master/example/views/example/ApiExample.vue"
+          href="https://github.com/mirari/v-viewer/blob/v3/example/views/example/ApiExample.vue"
           target="_blank"
         >Source</a>
       </p>

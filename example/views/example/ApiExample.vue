@@ -26,7 +26,7 @@
 import {
   defineComponent,
 } from 'vue'
-import VueViewer, { viewerApi } from '../../../src'
+import VueViewer, { api as viewerApi } from '../../../src'
 
 VueViewer.setDefaults({
   zIndexInline: 2021,

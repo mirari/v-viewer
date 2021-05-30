@@ -21,7 +21,7 @@ declare namespace VueViewer {
 
 export type ViewerJs = ViewerType
 
-export type viewerApi = (options: VueViewer.ViewerApiOptions) => ViewerType
+export type api = (options: VueViewer.ViewerApiOptions) => ViewerType
 
 export type directive = (options?: VueViewer.InstallationOptions) => Directive
 
