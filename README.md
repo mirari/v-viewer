@@ -2,7 +2,7 @@
 
 Image viewer component for vue, supports rotation, scale, zoom and so on, based on [viewer.js](https://github.com/fengyuanchen/viewerjs)
 
-[![npm version](https://img.shields.io/npm/v/v-viewer.svg)](https://www.npmjs.com/package/v-viewer)
+[![npm version](https://img.shields.io/npm/v/v-viewer/next.svg)](https://www.npmjs.com/package/v-viewer)
 [![npm download](https://img.shields.io/npm/dw/v-viewer.svg)](https://www.npmjs.com/package/v-viewer)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://mit-license.org/) 
 [![language](https://img.shields.io/badge/language-Vue2-brightgreen.svg)](https://www.npmjs.com/package/v-viewer)
@@ -11,35 +11,43 @@ Image viewer component for vue, supports rotation, scale, zoom and so on, based 
 ## [Live demo](https://mirari.github.io/v-viewer/)
 
 ## Quick Example
-- [directive](https://codepen.io/mirari/pen/PePrVq)
-- [component](https://codepen.io/mirari/pen/PowNyEY)
-- [thumbnail & source](https://codepen.io/mirari/pen/LYENgMM)
-- [viewer callback](https://codepen.io/mirari/pen/ZwpGBO)
-- [hide img tags](https://codepen.io/mirari/pen/vjjXwj)
-- [filter images](https://codepen.io/mirari/pen/vvPoQb)
-- [change images](https://codepen.io/mirari/pen/ZdMbOK)
-- [**click buttons to show different images**](https://codesandbox.io/s/v-viewer-zhezr)
+- [directive](https://codepen.io/mirari/pen/yLMPPWy)
+- [component](https://codepen.io/mirari/pen/ZEeaaWZ)
+- [api](https://codepen.io/mirari/pen/qBrVpNV)
+- [thumbnail & source](https://codepen.io/mirari/pen/Vwpryax)
+- [viewer callback](https://codepen.io/mirari/pen/eYveypz)
+- [filter images](https://codepen.io/mirari/pen/mdWqpwa)
+- [change images](https://codepen.io/mirari/pen/ExWbovw)
 
 ## [中文文档](https://mirari.cc/2017/08/27/Vue%E5%9B%BE%E7%89%87%E6%B5%8F%E8%A7%88%E7%BB%84%E4%BB%B6v-viewer%EF%BC%8C%E6%94%AF%E6%8C%81%E6%97%8B%E8%BD%AC%E3%80%81%E7%BC%A9%E6%94%BE%E3%80%81%E7%BF%BB%E8%BD%AC%E7%AD%89%E6%93%8D%E4%BD%9C/)
-
-## Migration from 0.x
-- The only change you have to make is to manually import the `.css` file:
-```
-import 'viewerjs/dist/viewer.css'
-```
 
 ## Installation
 
 Install from GitHub via NPM
 
 ```bash
-npm install v-viewer
+npm install v-viewer@next
 ```
 
 ## Usage
 
-To use `v-viewer`, simply import it and the `css` file, and call `Vue.use()` to install.
+To use `v-viewer`, simply import it and the `css` file, and call `app.use()` to install.
 
+The component, directive and api will be installed together in the global.
+
+```ts
+import { createApp } from 'vue'
+import 'viewerjs/dist/viewer.css'
+import VueViewer from 'v-viewer'
+import App from './App.vue'
+
+export const app = createApp(App)
+app.use(VueViewer, {
+  debug: true,
+})
+app.mount('#app')
+
+```
 ```html
 <template>
   <div id="app">
@@ -53,18 +61,25 @@ To use `v-viewer`, simply import it and the `css` file, and call `Vue.use()` to 
     <viewer :images="images">
       <img v-for="src in images" :src="src" :key="src">
     </viewer>
+    <!-- api -->
+    <button type="button" @click="show">Click to show</button>
   </div>
 </template>
-<script>
-  import 'viewerjs/dist/viewer.css'
-  import Viewer from 'v-viewer'
-  import Vue from 'vue'
-  Vue.use(Viewer)
-  export default {
+<script lang="ts">
+  import { defineComponent } from 'vue'
+  export default defineComponent({
+    name: 'App',
     data() {
       images: ['1.jpg', '2.jpg']
-    }
-  }
+    },
+    methods: {
+      show() {
+        this.$viewerApi({
+          images: this.images,
+        })
+      },
+    },
+  })
 </script>
 ```
 
@@ -93,6 +108,7 @@ require(['VueViewer'], function (VueViewer) {});
 ```
 
 ### Usage of directive
+
 Just add the directive `v-viewer` to any element, then all `img` elements in it will be handled by `viewer`.
 
 You can set the options like this: `v-viewer="{inline: true}"`
@@ -108,12 +124,15 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
     <button type="button" @click="show">Show</button>
   </div>
 </template>
-<script>
+<script lang="ts">
   import 'viewerjs/dist/viewer.css'
-  import Viewer from 'v-viewer'
-  import Vue from 'vue'
-  Vue.use(Viewer)
-  export default {
+  import { directive as viewer } from "v-viewer"
+  export default defineComponent({
+    directives: {
+      viewer: viewer({
+        debug: true,
+      }),
+    },
     data() {
       images: ['1.jpg', '2.jpg']
     },
@@ -123,13 +142,14 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
         viewer.show()
       }
     }
-  }
+  })
 </script>
 ```
 
 #### Directive modifiers
 
 ##### static
+
 The `viewer` instance will be created only once after the directive binded.
 
 If you're sure the images inside this element won't change again, use it to avoid unnecessary re-render.
@@ -156,8 +176,6 @@ If you encounter any display problems, try rebuilding instead of updating.
 
 You can simply import the component and register it locally too.
 
-Use [scoped slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) to customize the presentation of your images.
-
 ```html
 <template>
   <div id="app">
@@ -165,7 +183,7 @@ Use [scoped slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) to cu
             @inited="inited"
             class="viewer" ref="viewer"
     >
-      <template slot-scope="scope">
+      <template #default="scope">
         <img v-for="src in scope.images" :src="src" :key="src">
         {{scope.options}}
       </template>
@@ -173,12 +191,12 @@ Use [scoped slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) to cu
     <button type="button" @click="show">Show</button>
   </div>
 </template>
-<script>
+<script lang="ts">
   import 'viewerjs/dist/viewer.css'
-  import Viewer from "v-viewer/src/component.vue"
-  export default {
+  import { component as Viewer } from "v-viewer"
+  export default defineComponent({
     components: {
-      Viewer
+      Viewer,
     },
     data() {
       images: ['1.jpg', '2.jpg']
@@ -191,7 +209,7 @@ Use [scoped slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) to cu
         this.$viewer.show()
       }
     }
-  }
+  })
 </script>
 ```
 
@@ -232,7 +250,7 @@ If you encounter any display problems, try rebuilding instead of updating.
   class="viewer"
   @inited="inited"
 >
-  <template slot-scope="scope">
+  <template #default="scope">
     <img v-for="src in scope.images" :src="src" :key="src">
     {{scope.options}}
   </template>
@@ -262,24 +280,23 @@ The function `this.$viewer` returns the current viewer instance.
     <button type="button" class="button" @click="previewImgObject">Img-Object Array</button>
   </div>
 </template>
-<script>
+<script lang="ts">
   import 'viewerjs/dist/viewer.css'
-  import Viewer from 'v-viewer'
-  import Vue from 'vue'
-  Vue.use(Viewer)
-  export default {
+  import { api as viewerApi } from "v-viewer"
+  export default defineComponent({
     data() {
       sourceImageURLs: ['1.png', '2.png'],
       sourceImageObjects: [{'src':'thumbnail.png', 'data-source':'source.png'}]
     },
     methods: {
       previewURL () {
+        // If you use the `app.use` full installation, you can use `this.$viewerApi` directly like this
         const $viewer = this.$viewerApi({
           images: this.sourceImageURLs
         })
       },
       previewImgObject () {
-        const $viewer = this.$viewerApi({
+        const $viewer = viewerApi({
           options: {
             toolbar: true,
             url: 'data-source',
@@ -289,7 +306,7 @@ The function `this.$viewer` returns the current viewer instance.
         })
       }
     }
-  }
+  })
 </script>
 ```
 
@@ -305,6 +322,20 @@ Refer to [viewer.js](https://github.com/fengyuanchen/viewerjs).
 - Default: `viewer`
 
 If you need to avoid name conflict, you can import it like this:
+```ts
+import { createApp } from 'vue'
+import 'viewerjs/dist/viewer.css'
+import VueViewer from 'v-viewer'
+import App from './App.vue'
+
+export const app = createApp(App)
+app.use(VueViewer, {
+  name: 'vuer',
+  debug: true,
+})
+app.mount('#app')
+
+```
 
 ```html
 <template>
@@ -320,12 +351,9 @@ If you need to avoid name conflict, you can import it like this:
     </vuer>
   </div>
 </template>
-<script>
-  import 'viewerjs/dist/viewer.css'
-  import Vuer from 'v-viewer'
-  import Vue from 'vue'
-  Vue.use(Vuer, {name: 'vuer'})
-  export default {
+<script lang="ts">
+  import { defineComponent } from 'vue'
+  export default defineComponent({
     data() {
       images: ['1.jpg', '2.jpg']
     },
@@ -340,7 +368,7 @@ If you need to avoid name conflict, you can import it like this:
         })
       }
     }
-  }
+  })
 </script>
 ```
 
@@ -350,22 +378,27 @@ If you need to avoid name conflict, you can import it like this:
 - Default: `undefined`
 
 If you need to set the viewer default options, you can import it like this:
-```javascript
-import Viewer from 'v-viewer'
-import Vue from 'vue'
-Vue.use(Viewer, {
+```ts
+import { createApp } from 'vue'
+import 'viewerjs/dist/viewer.css'
+import VueViewer from 'v-viewer'
+import App from './App.vue'
+
+export const app = createApp(App)
+app.use(VueViewer, {
   defaultOptions: {
     zIndex: 9999
   }
 })
+app.mount('#app')
+
 ```
 
 And you can reset the default options at any other time:
 ```javascript
-import Viewer from 'v-viewer'
-import Vue from 'vue'
-Vue.use(Viewer)
-Viewer.setDefaults({
-  zIndexInline: 2021
+import VueViewer from 'v-viewer'
+
+VueViewer.setDefaults({
+  zIndexInline: 2021,
 })
 ```

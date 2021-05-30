@@ -20,7 +20,8 @@
     "preview:build": "npm -C example run build",
     "preview:serve": "npm -C example run serve",
     "commit": "npx git-cz",
-    "release": "standard-version"
+    "release": "standard-version",
+    "publish:next": "npm run build && npm publish --tag next"
   },
   "files": [
     "dist",
