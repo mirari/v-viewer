@@ -92,6 +92,7 @@ app.mount('#app')
 ### Support UMD
 
 #### Browser
+
 ```html
 <link href="//path/viewer.css" rel="stylesheet">
 <script src="//path/vue.js"></script>
@@ -104,11 +105,13 @@ app.mount('#app')
 ```
 
 #### CommonJS
+
 ```javascript
 var VueViewer = require('VueViewer')
 ```
 
 #### AMD
+
 ```javascript
 require(['VueViewer'], function (VueViewer) {});
 ```
@@ -277,7 +280,7 @@ Listen for the `inited` event to get the `viewer` instance, or use `this.refs.xx
 
 You can call the function: `this.$viewerApi({options: {}, images: []})` to show gallery without rendering the `img` elements yourself.
 
-The function `this.$viewer` returns the current viewer instance.
+The function returns the current viewer instance.
 
 ```html
 <template>
@@ -302,6 +305,7 @@ The function `this.$viewer` returns the current viewer instance.
         })
       },
       previewImgObject () {
+        // Or you can just import the api method and call it.
         const $viewer = viewerApi({
           options: {
             toolbar: true,
@@ -384,6 +388,7 @@ app.mount('#app')
 - Default: `undefined`
 
 If you need to set the viewer default options, you can import it like this:
+
 ```ts
 import { createApp } from 'vue'
 import 'viewerjs/dist/viewer.css'
@@ -397,10 +402,10 @@ app.use(VueViewer, {
   }
 })
 app.mount('#app')
-
 ```
 
 And you can reset the default options at any other time:
+
 ```javascript
 import VueViewer from 'v-viewer'
 
