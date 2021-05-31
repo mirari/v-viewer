@@ -5,7 +5,7 @@ import type { Directive, DirectiveBinding, VNode } from 'vue'
 
 export type ICreateViewer = (el: HTMLElement, options: ViewerJs.Options, rebuild: boolean, observer: boolean) => void
 
-const directive = ({ name = 'viewer', debug = false }) => {
+const directive = ({ name = 'viewer', debug = false } = {}) => {
   async function createViewer(el: HTMLElement, options: ViewerJs.Options, rebuild = false, observer = false) {
     await nextTick()
     // 如果启用了元素监听，但和上次比较没有变化，就不重新初始化或更新
