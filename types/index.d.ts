@@ -19,7 +19,7 @@ declare namespace VueViewer {
   export function setDefaults(defaultOptions: ViewerType.Options): void
 }
 
-export type ViewerJs = ViewerType
+export type Viewer = ViewerType
 
 export type api = (options: VueViewer.ViewerApiOptions) => ViewerType
 

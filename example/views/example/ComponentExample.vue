@@ -359,7 +359,7 @@ import {
   toRefs,
   reactive,
 } from 'vue'
-import VueViewer, { ViewerJs, component as Viewer } from '../../../src'
+import VueViewer, { Viewer, component } from '../../../src'
 
 VueViewer.setDefaults({
   zIndexInline: 2021,
@@ -387,10 +387,10 @@ for (let i = 0; i < 10; i++) {
 export default defineComponent({
   name: 'ComponentExample',
   components: {
-    Viewer,
+    viewer: component,
   },
   setup() {
-    let $viewer: ViewerJs
+    let $viewer: Viewer
 
     const state = reactive({
       form: {
@@ -435,7 +435,7 @@ export default defineComponent({
       images: [...sourceImages].splice(0, 5),
     })
 
-    function inited(viewer: ViewerJs) {
+    function inited(viewer: Viewer) {
       $viewer = viewer
     }
 

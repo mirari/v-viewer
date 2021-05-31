@@ -80,7 +80,7 @@ import {
   reactive,
   ref,
 } from 'vue'
-import VueViewer, { ViewerJs, directive as viewer } from '../../../src'
+import VueViewer, { Viewer, directive } from '../../../src'
 
 VueViewer.setDefaults({
   zIndex: 2021,
@@ -108,7 +108,7 @@ for (let i = 0; i < 10; i++) {
 export default defineComponent({
   name: 'DirectiveExample',
   directives: {
-    viewer: viewer({
+    viewer: directive({
       debug: true,
     }),
   },

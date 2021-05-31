@@ -1,10 +1,10 @@
 import { h, render } from 'vue'
-import ViewerJs from 'viewerjs'
+import Viewer from 'viewerjs'
 import { assign } from './util'
 
 export interface ViewerApiOptions {
   images: Array<string | object>
-  options?: ViewerJs.Options
+  options?: Viewer.Options
 }
 
 const api = ({ images = [], options }: ViewerApiOptions) => {
@@ -34,16 +34,16 @@ const api = ({ images = [], options }: ViewerApiOptions) => {
   document.body.appendChild(tokenElement)
 
   // init viewer
-  const $viewerJs = new ViewerJs(tokenElement, options)
+  const $viewerJs = new Viewer(tokenElement, options)
   const $destroy = $viewerJs.destroy.bind($viewerJs)
-  $viewerJs.destroy = function(): ViewerJs {
+  $viewerJs.destroy = function(): Viewer {
     $destroy()
     render(null, token)
     return $viewerJs
   }
   $viewerJs.show()
 
-  // 关闭ViewerJs模态窗口时，销毁token
+  // 关闭Viewer模态窗口时，销毁token
   tokenElement.addEventListener('hidden', function(this: HTMLElement) {
     if (this.viewer === $viewerJs) {
       $viewerJs.destroy()

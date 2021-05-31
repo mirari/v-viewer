@@ -16,10 +16,11 @@ import {
   onUnmounted,
   defineComponent,
 } from 'vue'
-import ViewerJs from 'viewerjs'
+import Viewer from 'viewerjs'
 import type { PropType } from 'vue'
 
 export default defineComponent({
+  name: 'Viewer',
   props: {
     images: {
       type: Array,
@@ -34,18 +35,18 @@ export default defineComponent({
       default: null,
     },
     options: {
-      type: Object as PropType<ViewerJs.Options>,
+      type: Object as PropType<Viewer.Options>,
       default: () => null,
     },
   },
   emits: ['inited'],
   setup(props, { emit }) {
-    let $viewer: ViewerJs
+    let $viewer: Viewer
     const root = ref()
 
     // create、destroy
     function createViewer() {
-      $viewer = new ViewerJs(root.value, props.options)
+      $viewer = new Viewer(root.value, props.options)
       emit('inited', $viewer)
     }
     function destroyViewer() {
