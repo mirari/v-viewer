@@ -78,6 +78,7 @@ To use `v-viewer`, simply import it and the `css` file, and call `Vue.use()` to 
 ### Support UMD
 
 #### Browser
+
 ```html
 <link href="//path/viewer.css" rel="stylesheet">
 <script src="//path/vue.js"></script>
@@ -90,16 +91,19 @@ To use `v-viewer`, simply import it and the `css` file, and call `Vue.use()` to 
 ```
 
 #### CommonJS
+
 ```javascript
 var VueViewer = require('VueViewer')
 ```
 
 #### AMD
+
 ```javascript
 require(['VueViewer'], function (VueViewer) {});
 ```
 
 ### Usage of directive
+
 Just add the directive `v-viewer` to any element, then all `img` elements in it will be handled by `viewer`.
 
 You can set the options like this: `v-viewer="{inline: true}"`
@@ -261,7 +265,7 @@ Listen for the `inited` event to get the `viewer` instance, or use `this.refs.xx
 
 You can call the function: `this.$viewerApi({options: {}, images: []})` to show gallery without rendering the `img` elements yourself.
 
-The function `this.$viewer` returns the current viewer instance.
+The function returns the current viewer instance.
 
 ```html
 <template>
@@ -272,9 +276,7 @@ The function `this.$viewer` returns the current viewer instance.
 </template>
 <script>
   import 'viewerjs/dist/viewer.css'
-  import Viewer from 'v-viewer'
-  import Vue from 'vue'
-  Vue.use(Viewer)
+  import { api as viewerApi } from "v-viewer"
   export default {
     data() {
       sourceImageURLs: ['1.png', '2.png'],
@@ -282,12 +284,14 @@ The function `this.$viewer` returns the current viewer instance.
     },
     methods: {
       previewURL () {
+        // If you use the `app.use` full installation, you can use `this.$viewerApi` directly like this
         const $viewer = this.$viewerApi({
           images: this.sourceImageURLs
         })
       },
       previewImgObject () {
-        const $viewer = this.$viewerApi({
+        // Or you can just import the api method and call it.
+        const $viewer = viewerApi({
           options: {
             toolbar: true,
             url: 'data-source',
@@ -358,6 +362,7 @@ If you need to avoid name conflict, you can import it like this:
 - Default: `undefined`
 
 If you need to set the viewer default options, you can import it like this:
+
 ```javascript
 import Viewer from 'v-viewer'
 import Vue from 'vue'
@@ -369,6 +374,7 @@ Vue.use(Viewer, {
 ```
 
 And you can reset the default options at any other time:
+
 ```javascript
 import Viewer from 'v-viewer'
 import Vue from 'vue'
