@@ -9,7 +9,8 @@
     "build": "webpack --progress --hide-modules --config  ./build/webpack.release.js && cross-env NODE_ENV=production webpack --progress --hide-modules --config  ./build/webpack.release.min.js",
     "example": "cross-env NODE_ENV=production node build/build.js",
     "gh": "node build/deploy",
-    "publish": "npm run build && npm publish"
+    "publish": "npm run build && npm publish",
+    "publish:beta": "npm run build && npm publish --tag beta"
   },
   "repository": {
     "type": "git",
