@@ -1,7 +1,8 @@
 import Viewer from 'viewerjs'
 import { debounce } from 'throttle-debounce'
+import Vue from 'vue'
 
-const install = (Vue, {name = 'viewer', debug = false}) => {
+const directive = ({name = 'viewer', debug = false} = {}) => {
   function createViewer (el, options, rebuild = false, observer = false) {
     // nextTick执行，否则可能漏掉未渲染完的子元素
     Vue.nextTick(() => {
@@ -96,7 +97,7 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
     debug && console.log(...arguments)
   }
 
-  Vue.directive('viewer', {
+  const directive = {
     bind (el, binding, vnode) {
       log('Viewer bind')
       const debouncedCreateViewer = debounce(50, createViewer)
@@ -120,9 +121,9 @@ const install = (Vue, {name = 'viewer', debug = false}) => {
       // 销毁viewer
       destroyViewer(el)
     }
-  })
+  }
+
+  return directive
 }
 
-export default {
-  install
-}
+export default directive

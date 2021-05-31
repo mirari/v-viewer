@@ -16,8 +16,7 @@ export default {
     ViewerJs.setDefaults(defaultOptions)
 
     Vue.component(name, extend(component, { name }))
-    Vue.use(directive, {name, debug})
-
+    Vue.directive(name, directive({ name, debug }))
     Vue.prototype[`$${name}Api`] = api(Vue)
   },
   setDefaults (defaultOptions) {

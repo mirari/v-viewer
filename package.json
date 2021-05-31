@@ -1,15 +1,15 @@
 {
   "name": "v-viewer",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "Image viewer component for vue, supports rotation, scale, zoom and so on, based on viewer.js",
   "main": "dist/v-viewer.js",
   "types": "types/index.d.ts",
   "scripts": {
     "dev": "cross-env NODE_ENV=development node build/dev-server.js",
-    "release": "webpack --progress --hide-modules --config  ./build/webpack.release.js && cross-env NODE_ENV=production webpack --progress --hide-modules --config  ./build/webpack.release.min.js",
+    "build": "webpack --progress --hide-modules --config  ./build/webpack.release.js && cross-env NODE_ENV=production webpack --progress --hide-modules --config  ./build/webpack.release.min.js",
     "example": "cross-env NODE_ENV=production node build/build.js",
     "gh": "node build/deploy",
-    "publish": "npm publish"
+    "publish": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
