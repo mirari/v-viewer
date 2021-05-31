@@ -31,7 +31,7 @@ const api = Vue => ({images = [], options = {}} = {}) => {
   token.$mount()
   document.body.appendChild(token.$el)
 
-  // 加载ViewerJs
+  // 加载Viewer
   const $viewer = new Viewer(token.$el, options)
   const $destroy = $viewer.destroy.bind($viewer)
   $viewer.destroy = function () {
@@ -42,7 +42,7 @@ const api = Vue => ({images = [], options = {}} = {}) => {
   }
   $viewer.show()
 
-  // 关闭ViewerJs模态窗口时，销毁token
+  // 关闭Viewer模态窗口时，销毁token
   token.$el.addEventListener('hidden', function () {
     if (this.viewer === $viewer) {
       $viewer.destroy()
