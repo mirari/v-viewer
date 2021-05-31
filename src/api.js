@@ -1,4 +1,4 @@
-import ViewerJs from 'viewerjs'
+import Viewer from 'viewerjs'
 import { extend } from './utils'
 
 const api = Vue => ({images = [], options = {}} = {}) => {
@@ -32,24 +32,24 @@ const api = Vue => ({images = [], options = {}} = {}) => {
   document.body.appendChild(token.$el)
 
   // 加载ViewerJs
-  const $viewerJs = new ViewerJs(token.$el, options)
-  const $destroy = $viewerJs.destroy.bind($viewerJs)
-  $viewerJs.destroy = function () {
+  const $viewer = new Viewer(token.$el, options)
+  const $destroy = $viewer.destroy.bind($viewer)
+  $viewer.destroy = function () {
     $destroy()
     token.$destroy()
     document.body.removeChild(token.$el)
-    return $viewerJs
+    return $viewer
   }
-  $viewerJs.show()
+  $viewer.show()
 
   // 关闭ViewerJs模态窗口时，销毁token
   token.$el.addEventListener('hidden', function () {
-    if (this.viewer === $viewerJs) {
-      $viewerJs.destroy()
+    if (this.viewer === $viewer) {
+      $viewer.destroy()
     }
   })
 
-  return $viewerJs
+  return $viewer
 }
 
 export default api
