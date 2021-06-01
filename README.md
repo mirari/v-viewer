@@ -36,7 +36,7 @@ import 'viewerjs/dist/viewer.css'
 
 ## Installation
 
-Install from GitHub via NPM
+Install from NPM
 
 ```bash
 npm install v-viewer
