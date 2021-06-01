@@ -29,7 +29,7 @@ Image viewer component for vue, supports rotation, scale, zoom and so on, based 
 
 ## Installation
 
-Install from GitHub via NPM
+Install from NPM
 
 ```bash
 npm install v-viewer@next
