@@ -385,7 +385,6 @@ var api = function api(Vue) {
 /* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_viewerjs__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_viewerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_viewerjs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_throttle_debounce__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_throttle_debounce___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_throttle_debounce__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue__ = __webpack_require__(12);
 
 
@@ -500,7 +499,7 @@ var directive = function directive() {
   var directive = {
     bind: function bind(el, binding, vnode) {
       log('Viewer bind');
-      var debouncedCreateViewer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_throttle_debounce__["debounce"])(50, createViewer);
+      var debouncedCreateViewer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_throttle_debounce__["a" /* debounce */])(50, createViewer);
       debouncedCreateViewer(el, binding.value);
 
       createWatcher(el, binding, vnode, debouncedCreateViewer);
@@ -540,7 +539,7 @@ var Component = __webpack_require__(13)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/mirari/works/web/v-viewer/src/component.vue"
+Component.options.__file = "D:\\Workspaces\\Git\\v-viewer\\src\\component.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] component.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -776,91 +775,78 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+"use strict";
+/* unused harmony export throttle */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return debounce; });
 
-(function (global, factory) {
-	( false ? 'undefined' : _typeof(exports)) === 'object' && typeof module !== 'undefined' ? factory(exports) :  true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : (global = global || self, factory(global.throttleDebounce = {}));
-})(this, function (exports) {
-	'use strict';
+function throttle(delay, noTrailing, callback, debounceMode) {
+  var timeoutID;
+  var cancelled = false;
 
-	function throttle(delay, noTrailing, callback, debounceMode) {
-		var timeoutID;
-		var cancelled = false;
+  var lastExec = 0;
 
-		var lastExec = 0;
+  function clearExistingTimeout() {
+    if (timeoutID) {
+      clearTimeout(timeoutID);
+    }
+  }
 
-		function clearExistingTimeout() {
-			if (timeoutID) {
-				clearTimeout(timeoutID);
-			}
-		}
+  function cancel() {
+    clearExistingTimeout();
+    cancelled = true;
+  }
 
-		function cancel() {
-			clearExistingTimeout();
-			cancelled = true;
-		}
-
-		if (typeof noTrailing !== 'boolean') {
-			debounceMode = callback;
-			callback = noTrailing;
-			noTrailing = undefined;
-		}
+  if (typeof noTrailing !== 'boolean') {
+    debounceMode = callback;
+    callback = noTrailing;
+    noTrailing = undefined;
+  }
 
 
-		function wrapper() {
-			for (var _len = arguments.length, arguments_ = new Array(_len), _key = 0; _key < _len; _key++) {
-				arguments_[_key] = arguments[_key];
-			}
+  function wrapper() {
+    var self = this;
+    var elapsed = Date.now() - lastExec;
+    var args = arguments;
 
-			var self = this;
-			var elapsed = Date.now() - lastExec;
+    if (cancelled) {
+      return;
+    }
 
-			if (cancelled) {
-				return;
-			}
-
-			function exec() {
-				lastExec = Date.now();
-				callback.apply(self, arguments_);
-			}
+    function exec() {
+      lastExec = Date.now();
+      callback.apply(self, args);
+    }
 
 
-			function clear() {
-				timeoutID = undefined;
-			}
+    function clear() {
+      timeoutID = undefined;
+    }
 
-			if (debounceMode && !timeoutID) {
-				exec();
-			}
+    if (debounceMode && !timeoutID) {
+      exec();
+    }
 
-			clearExistingTimeout();
+    clearExistingTimeout();
 
-			if (debounceMode === undefined && elapsed > delay) {
-				exec();
-			} else if (noTrailing !== true) {
-				timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
-			}
-		}
+    if (debounceMode === undefined && elapsed > delay) {
+      exec();
+    } else if (noTrailing !== true) {
+      timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
+    }
+  }
 
-		wrapper.cancel = cancel;
+  wrapper.cancel = cancel;
 
-		return wrapper;
-	}
+  return wrapper;
+}
 
-	function debounce(delay, atBegin, callback) {
-		return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
-	}
+function debounce(delay, atBegin, callback) {
+  return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
+}
 
-	exports.debounce = debounce;
-	exports.throttle = throttle;
 
-	Object.defineProperty(exports, '__esModule', { value: true });
-});
 
 /***/ }),
 /* 10 */
@@ -5074,7 +5060,7 @@ Object.defineProperty(Vue, 'FunctionalRenderContext', {
   value: FunctionalRenderContext
 });
 
-Vue.version = '2.6.12';
+Vue.version = '2.6.11';
 
 var isReservedAttr = makeMap('style,class');
 
