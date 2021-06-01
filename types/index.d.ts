@@ -1,4 +1,4 @@
-import { App } from 'vue'
+import type Vue from 'vue'
 import type ViewerType from 'viewerjs'
 import type { DirectiveOptions, Component } from 'vue'
 
@@ -14,7 +14,7 @@ declare namespace VueViewer {
     options?: ViewerType.Options
   }
 
-  export function install(app: App, options?: InstallationOptions): void
+  export function install(app: Vue, options?: InstallationOptions): void
 
   export function setDefaults(defaultOptions: ViewerType.Options): void
 }
