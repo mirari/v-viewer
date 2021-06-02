@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.9](https://github.com/mirari/v-viewer/compare/v3.0.8...v3.0.9) (2021-06-02)
+
+
+### Bug Fixes
+
+* **common:** fix dts file ([f6163ff](https://github.com/mirari/v-viewer/commit/f6163ff5b316a940d70fb842605f220b7f378416))
+
 ### [3.0.8](https://github.com/mirari/v-viewer/compare/v3.0.7...v3.0.8) (2021-06-02)
 
 ### [3.0.7](https://github.com/mirari/v-viewer/compare/v3.0.6...v3.0.7) (2021-06-02)
