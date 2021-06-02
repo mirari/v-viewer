@@ -1,32 +1,36 @@
 import type Vue from 'vue'
-import type ViewerType from 'viewerjs'
+import ViewerJs from 'viewerjs'
 import type { DirectiveOptions, Component } from 'vue'
 
 declare namespace VueViewer {
   export interface InstallationOptions {
     name?: string
     debug?: boolean
-    defaultOptions?: ViewerType.Options
+    defaultOptions?: ViewerJs.Options
   }
 
   export interface ViewerApiOptions {
     images: Array<string | object>
-    options?: ViewerType.Options
+    options?: ViewerJs.Options
   }
-
 
   export function install(app: typeof Vue, options?: InstallationOptions): void
 
-
-  export function setDefaults(defaultOptions: ViewerType.Options): void
+  export function setDefaults(defaultOptions: ViewerJs.Options): void
 }
 
-export type Viewer = ViewerType
+export declare const Viewer: typeof ViewerJs
 
-export type api = (options: VueViewer.ViewerApiOptions) => ViewerType
+export declare const api: (options: VueViewer.ViewerApiOptions) => ViewerJs
 
-export type directive = (options?: VueViewer.InstallationOptions) => DirectiveOptions
+export declare const directive: (options?: VueViewer.InstallationOptions) => DirectiveOptions
 
-export type component = Component
+export declare const component: Component
 
 export default VueViewer
+
+declare module "vue/types/vue" {
+  interface Vue {
+    $viewerApi: typeof api;
+  }
+}

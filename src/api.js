@@ -1,7 +1,8 @@
 import Viewer from 'viewerjs'
 import { extend } from './utils'
+import Vue from 'vue'
 
-const api = Vue => ({images = [], options = {}} = {}) => {
+const api = ({images = [], options = {}} = {}) => {
   options = extend(options, {
     inline: false // 只能使用modal模式
   })

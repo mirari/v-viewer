@@ -49,7 +49,7 @@ To use `v-viewer`, simply import it and the `css` file, and call `Vue.use()` to 
 
 ```vue
 <template>
-  <div id="app">
+  <div>
     <!-- directive -->
     <div class="images" v-viewer>
       <img v-for="src in images" :key="src" :src="src">
@@ -64,9 +64,9 @@ To use `v-viewer`, simply import it and the `css` file, and call `Vue.use()` to 
 </template>
 <script>
   import 'viewerjs/dist/viewer.css'
-  import Viewer from 'v-viewer'
+  import VueViewer from 'v-viewer'
   import Vue from 'vue'
-  Vue.use(Viewer)
+  Vue.use(VueViewer)
   export default {
     data() {
       return {
@@ -124,7 +124,7 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
 
 ```vue
 <template>
-  <div id="app">
+  <div>
     <div class="images" v-viewer="{movable: false}">
       <img v-for="src in images" :src="src" :key="src">
     </div>
@@ -133,9 +133,9 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
 </template>
 <script>
   import 'viewerjs/dist/viewer.css'
-  import Viewer from 'v-viewer'
+  import VueViewer from 'v-viewer'
   import Vue from 'vue'
-  Vue.use(Viewer)
+  Vue.use(VueViewer)
   export default {
     data() {
       return {
@@ -190,7 +190,7 @@ Use [scoped slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) to cu
 
 ```vue
 <template>
-  <div id="app">
+  <div>
     <viewer :options="options" :images="images"
             @inited="inited"
             class="viewer" ref="viewer"
@@ -356,7 +356,7 @@ If you need to avoid name conflict, you can import it like this:
 
 ```vue
 <template>
-  <div id="app">
+  <div>
     <!-- directive name -->
     <div class="images" v-vuer="{movable: false}">
       <img v-for="src in images" :src="src" :key="src">
@@ -406,9 +406,9 @@ If you need to avoid name conflict, you can import it like this:
 If you need to set the viewer default options, you can import it like this:
 
 ```javascript
-import Viewer from 'v-viewer'
+import VueViewer from 'v-viewer'
 import Vue from 'vue'
-Vue.use(Viewer, {
+Vue.use(VueViewer, {
   defaultOptions: {
     zIndex: 9999
   }
@@ -418,9 +418,9 @@ Vue.use(Viewer, {
 And you can reset the default options at any other time:
 
 ```javascript
-import Viewer from 'v-viewer'
+import VueViewer from 'v-viewer'
 import Vue from 'vue'
-Vue.use(Viewer)
+Vue.use(VueViewer)
 Viewer.setDefaults({
   zIndexInline: 2017
 })

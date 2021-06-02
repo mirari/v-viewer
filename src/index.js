@@ -17,7 +17,7 @@ export default {
 
     Vue.component(name, extend(component, { name }))
     Vue.directive(name, directive({ name, debug }))
-    Vue.prototype[`$${name}Api`] = api(Vue)
+    Vue.prototype[`$${name}Api`] = api
   },
   setDefaults (defaultOptions) {
     Viewer.setDefaults(defaultOptions)
