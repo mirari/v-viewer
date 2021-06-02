@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.2](https://github.com/mirari/v-viewer/compare/v1.6.1...v1.6.2) (2021-06-02)
+
+
+### Bug Fixes
+
+* app type is typeof Vue not vue ([6eb5c64](https://github.com/mirari/v-viewer/commit/6eb5c640995517e63bc40ef2493a24bee9946521))
+
 ### [1.6.1](https://github.com/mirari/v-viewer/compare/v1.5.1...v1.6.1) (2021-06-02)
 
 
