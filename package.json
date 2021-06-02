@@ -5,10 +5,12 @@
   "main": "dist/v-viewer.js",
   "types": "types/index.d.ts",
   "scripts": {
+    "prepare": "husky install",
     "dev": "cross-env NODE_ENV=development node build/dev-server.js",
     "build": "webpack --progress --hide-modules --config  ./build/webpack.release.js && cross-env NODE_ENV=production webpack --progress --hide-modules --config  ./build/webpack.release.min.js",
     "example": "cross-env NODE_ENV=production node build/build.js",
-    "gh": "node build/deploy",
+    "release": "standard-version",
+    "release:beta": "standard-version -p beta",
     "publish": "npm run build && npm publish",
     "publish:beta": "npm run build && npm publish --tag beta"
   },
@@ -35,6 +37,8 @@
     "npm": ">=3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^12.1.1",
+    "@commitlint/config-conventional": "^12.1.1",
     "autoprefixer": "^6.7.7",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
@@ -67,7 +71,9 @@
     "github-markdown-css": "^2.8.0",
     "html-webpack-plugin": "^2.25.0",
     "http-proxy-middleware": "^0.17.4",
+    "husky": "^6.0.0",
     "imports-loader": "^0.7.0",
+    "lint-staged": "^11.0.0",
     "node-sass": "^4.13.1",
     "opn": "^4.0.2",
     "ora": "^1.1.0",
@@ -76,6 +82,7 @@
     "sass-loader": "^6.0.3",
     "serve-favicon": "^2.4.1",
     "shelljs": "^0.8.3",
+    "standard-version": "^9.3.0",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
