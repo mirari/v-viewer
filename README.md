@@ -47,19 +47,19 @@ npm install v-viewer
 
 To use `v-viewer`, simply import it and the `css` file, and call `Vue.use()` to install.
 
-```html
+```vue
 <template>
   <div id="app">
     <!-- directive -->
     <div class="images" v-viewer>
-      <img src="1.jpg">
-      <img src="2.jpg">
-      ...
+      <img v-for="src in images" :key="src" :src="src">
     </div>
     <!-- component -->
     <viewer :images="images">
-      <img v-for="src in images" :src="src" :key="src">
+      <img v-for="src in images" :key="src" :src="src">
     </viewer>
+    <!-- api -->
+    <button type="button" @click="show">Click to show</button>
   </div>
 </template>
 <script>
@@ -69,8 +69,21 @@ To use `v-viewer`, simply import it and the `css` file, and call `Vue.use()` to 
   Vue.use(Viewer)
   export default {
     data() {
-      images: ['1.jpg', '2.jpg']
-    }
+      return {
+        images: [
+          "https://picsum.photos/200/200",
+          "https://picsum.photos/300/200",
+          "https://picsum.photos/250/200"
+        ]
+      };
+    },
+    methods: {
+      show() {
+        this.$viewerApi({
+          images: this.images,
+        })
+      },
+    },
   }
 </script>
 ```
@@ -79,12 +92,11 @@ To use `v-viewer`, simply import it and the `css` file, and call `Vue.use()` to 
 
 #### Browser
 
-```html
-<link href="//path/viewer.css" rel="stylesheet">
-<script src="//path/vue.js"></script>
-<script src="//path/viewer.js"></script>
-<script src="//path/v-viewer.js"></script>
-...
+```vue
+<link href="//unpkg.com/viewerjs/dist/viewer.css" rel="stylesheet">
+<script src="//unpkg.com/vue/dist/vue.js"></script>
+<script src="//unpkg.com/viewerjs/dist/viewer.js"></script>
+<script src="//unpkg.com/v-viewer/dist/v-viewer.js"></script>
 <script>
   Vue.use(VueViewer.default)
 </script>
@@ -110,7 +122,7 @@ You can set the options like this: `v-viewer="{inline: true}"`
 
 Get the element by selector and then use `el.$viewer` to get the `viewer` instance if you need.
 
-```html
+```vue
 <template>
   <div id="app">
     <div class="images" v-viewer="{movable: false}">
@@ -126,7 +138,13 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
   Vue.use(Viewer)
   export default {
     data() {
-      images: ['1.jpg', '2.jpg']
+      return {
+        images: [
+          "https://picsum.photos/200/200",
+          "https://picsum.photos/300/200",
+          "https://picsum.photos/250/200"
+        ]
+      };
     },
     methods: {
       show () {
@@ -146,7 +164,7 @@ The `viewer` instance will be created only once after the directive binded.
 
 If you're sure the images inside this element won't change again, use it to avoid unnecessary re-render.
 
-```
+```vue
 <div class="images" v-viewer.static="{inline: true}">
   <img v-for="src in images" :src="src" :key="src">
 </div>
@@ -158,7 +176,7 @@ The `viewer` instance will be updated by `update` method when the source images 
 
 If you encounter any display problems, try rebuilding instead of updating.
 
-```
+```vue
 <div class="images" v-viewer.rebuild="{inline: true}">
   <img v-for="src in images" :src="src" :key="src">
 </div>
@@ -170,14 +188,14 @@ You can simply import the component and register it locally too.
 
 Use [scoped slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) to customize the presentation of your images.
 
-```html
+```vue
 <template>
   <div id="app">
     <viewer :options="options" :images="images"
             @inited="inited"
             class="viewer" ref="viewer"
     >
-      <template slot-scope="scope">
+      <template #default="scope">
         <img v-for="src in scope.images" :src="src" :key="src">
         {{scope.options}}
       </template>
@@ -193,7 +211,13 @@ Use [scoped slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) to cu
       Viewer
     },
     data() {
-      images: ['1.jpg', '2.jpg']
+      return {
+        images: [
+          "https://picsum.photos/200/200",
+          "https://picsum.photos/300/200",
+          "https://picsum.photos/250/200"
+        ]
+      };
     },
     methods: {
       inited (viewer) {
@@ -220,7 +244,7 @@ Use [scoped slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) to cu
 You can replace `images` with `trigger`, to accept any type of prop.
 when the `trigger` changes, the component will re-render the viewer.
 
-```html
+```vue
 <viewer :trigger="externallyGeneratedHtmlWithImages">
   <div v-html="externallyGeneratedHtmlWithImages"/>
 </viewer>
@@ -235,7 +259,7 @@ The viewer instance will be updated by `update` method when the source images ch
 
 If you encounter any display problems, try rebuilding instead of updating.
 
-```html
+```vue
 <viewer
   ref="viewer"
   :options="options"
@@ -244,7 +268,7 @@ If you encounter any display problems, try rebuilding instead of updating.
   class="viewer"
   @inited="inited"
 >
-  <template slot-scope="scope">
+  <template #default="scope">
     <img v-for="src in scope.images" :src="src" :key="src">
     {{scope.options}}
   </template>
@@ -267,9 +291,9 @@ You can call the function: `this.$viewerApi({options: {}, images: []})` to show 
 
 The function returns the current viewer instance.
 
-```html
+```vue
 <template>
-  <div id="app">
+  <div>
     <button type="button" class="button" @click="previewURL">URL Array</button>
     <button type="button" class="button" @click="previewImgObject">Img-Object Array</button>
   </div>
@@ -279,8 +303,20 @@ The function returns the current viewer instance.
   import { api as viewerApi } from "v-viewer"
   export default {
     data() {
-      sourceImageURLs: ['1.png', '2.png'],
-      sourceImageObjects: [{'src':'thumbnail.png', 'data-source':'source.png'}]
+      sourceImageURLs: [
+        'https://picsum.photos/200/200?random=1',
+        'https://picsum.photos/200/200?random=2',
+      ],
+      sourceImageObjects: [
+        {
+          'src':'https://picsum.photos/200/200?random=3',
+          'data-source':'https://picsum.photos/800/800?random=3'
+        },
+        {
+          'src':'https://picsum.photos/200/200?random=4',
+          'data-source':'https://picsum.photos/800/800?random=4'
+        }
+      ]
     },
     methods: {
       previewURL () {
@@ -295,7 +331,7 @@ The function returns the current viewer instance.
           options: {
             toolbar: true,
             url: 'data-source',
-            initialViewIndex: 2
+            initialViewIndex: 1
           },
           images: this.sourceImageObjects
         })
@@ -318,7 +354,7 @@ Refer to [viewer.js](https://github.com/fengyuanchen/viewerjs).
 
 If you need to avoid name conflict, you can import it like this:
 
-```html
+```vue
 <template>
   <div id="app">
     <!-- directive name -->
@@ -339,7 +375,13 @@ If you need to avoid name conflict, you can import it like this:
   Vue.use(Vuer, {name: 'vuer'})
   export default {
     data() {
-      images: ['1.jpg', '2.jpg']
+      return {
+        images: [
+          "https://picsum.photos/200/200",
+          "https://picsum.photos/300/200",
+          "https://picsum.photos/250/200"
+        ]
+      };
     },
     methods: {
       show () {
