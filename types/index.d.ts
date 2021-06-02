@@ -14,7 +14,9 @@ declare namespace VueViewer {
     options?: ViewerType.Options
   }
 
-  export function install(vue: Vue, options?: InstallationOptions): void
+
+  export function install(app: typeof Vue, options?: InstallationOptions): void
+
 
   export function setDefaults(defaultOptions: ViewerType.Options): void
 }
