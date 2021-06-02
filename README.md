@@ -125,7 +125,7 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
 
 ```vue
 <template>
-  <div id="app">
+  <div>
     <div class="images" v-viewer="{movable: false}">
       <img v-for="src in images" :src="src" :key="src">
     </div>
@@ -193,7 +193,7 @@ You can simply import the component and register it locally too.
 
 ```vue
 <template>
-  <div id="app">
+  <div>
     <viewer :options="options" :images="images"
             @inited="inited"
             class="viewer" ref="viewer"
@@ -297,9 +297,9 @@ The function returns the current viewer instance.
 
 ```vue
 <template>
-<div id="app">
-  <button type="button" class="button" @click="previewURL">URL Array</button>
-  <button type="button" class="button" @click="previewImgObject">Img-Object Array</button>
+  <div>
+    <button type="button" class="button" @click="previewURL">URL Array</button>
+    <button type="button" class="button" @click="previewImgObject">Img-Object Array</button>
   </div>
 </template>
 <script lang="ts">
@@ -375,7 +375,7 @@ app.mount('#app')
 
 ```vue
 <template>
-<div id="app">
+<div>
   <!-- directive name -->
   <div class="images" v-vuer="{movable: false}">
     <img v-for="src in images" :src="src" :key="src">
