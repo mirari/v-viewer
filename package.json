@@ -18,6 +18,11 @@
     "type": "git",
     "url": "git+https://github.com/mirari/v-viewer.git"
   },
+  "files": [
+    "dist",
+    "types",
+    "README.md"
+  ],
   "keywords": [
     "vue",
     "viewer",

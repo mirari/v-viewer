@@ -1,4 +1,4 @@
-import type Vue from 'vue'
+import Vue from 'vue'
 import ViewerJs from 'viewerjs'
 import type { DirectiveOptions, Component } from 'vue'
 
