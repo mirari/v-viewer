@@ -21,7 +21,7 @@ specifiers:
   typescript: ^4.1.3
   viewerjs: ^1.9.0
   vite: ^2.2.3
-  vue: ^3.0.5
+  vue: ^3.0.0
   vue-tsc: ^0.0.24
 
 dependencies:

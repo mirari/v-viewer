@@ -25,7 +25,8 @@
   },
   "files": [
     "dist",
-    "types"
+    "types",
+    "README.md"
   ],
   "keywords": [
     "vue",
@@ -47,8 +48,10 @@
   "homepage": "https://github.com/mirari/v-viewer#readme",
   "dependencies": {
     "lodash": "^4.17.21",
-    "viewerjs": "^1.9.0",
-    "vue": "^3.0.5"
+    "viewerjs": "^1.9.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.6.4",
@@ -57,7 +60,7 @@
     "@types/lodash-es": "^4.17.4",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@vitejs/plugin-vue": "^1.2.2",
-    "@vue/compiler-sfc": "^3.0.5",
+    "@vue/compiler-sfc": "^3.0.0",
     "bulma": "^0.9.2",
     "commitizen": "^4.2.3",
     "create-banner": "^2.0.0",

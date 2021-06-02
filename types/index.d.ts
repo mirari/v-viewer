@@ -28,3 +28,9 @@ export type directive = (options?: VueViewer.InstallationOptions) => Directive
 export type component = DefineComponent<{}, {}, any>
 
 export default VueViewer
+
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    $viewerApi: api
+  }
+}
