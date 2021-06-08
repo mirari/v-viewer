@@ -133,10 +133,13 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
 </template>
 <script>
   import 'viewerjs/dist/viewer.css'
-  import VueViewer from 'v-viewer'
-  import Vue from 'vue'
-  Vue.use(VueViewer)
+  import { directive as viewer } from "v-viewer"
   export default {
+    directives: {
+      viewer: viewer({
+        debug: true,
+      }),
+    },
     data() {
       return {
         images: [
@@ -205,7 +208,7 @@ Use [scoped slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) to cu
 </template>
 <script>
   import 'viewerjs/dist/viewer.css'
-  import Viewer from "v-viewer/src/component.vue"
+  import { component as Viewer } from "v-viewer"
   export default {
     components: {
       Viewer
