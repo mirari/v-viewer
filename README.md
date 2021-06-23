@@ -424,7 +424,7 @@ And you can reset the default options at any other time:
 import VueViewer from 'v-viewer'
 import Vue from 'vue'
 Vue.use(VueViewer)
-Viewer.setDefaults({
+VueViewer.setDefaults({
   zIndexInline: 2017
 })
 ```
