@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.4](https://github.com/mirari/v-viewer/compare/v1.6.3...v1.6.4) (2021-07-12)
+
+
+### Bug Fixes
+
+* **common:** fix the problem of accidental introduction of vue ([6d0cc4d](https://github.com/mirari/v-viewer/commit/6d0cc4d18facebaed90c9bb06fa294bf24cb8271))
+
 ### [1.6.3](https://github.com/mirari/v-viewer/compare/v1.6.2...v1.6.3) (2021-06-02)
 
 
