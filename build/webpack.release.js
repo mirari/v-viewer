@@ -1,9 +1,9 @@
 var path = require('path')
-var config = require('../config')
-var utils = require('./utils')
+// var config = require('../config')
+// var utils = require('./utils')
 var projectRoot = path.resolve(__dirname, '../')
-const webpack = require('webpack')
-const merge = require('webpack-merge')
+// const webpack = require('webpack')
+// const merge = require('webpack-merge')
 
 module.exports = {
   entry: {
@@ -21,6 +21,14 @@ module.exports = {
     // libraryExport: 'default'
   },
   externals: [
+    {
+      vue: {
+        commonjs: 'vue',
+        commonjs2: 'vue',
+        amd: 'vue',
+        root: 'Vue'
+      }
+    },
     {
       viewerjs: {
         commonjs: 'viewerjs',
