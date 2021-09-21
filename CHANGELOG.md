@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.10](https://github.com/mirari/v-viewer/compare/v3.0.9...v3.0.10) (2021-09-21)
+
+
+### Bug Fixes
+
+* **component:** fix the problem of not updating when changing options ([d7afcdb](https://github.com/mirari/v-viewer/commit/d7afcdbf5d597f3971e0bea43ce36f390972e312)), closes [#197](https://github.com/mirari/v-viewer/issues/197)
+
 ### [3.0.9](https://github.com/mirari/v-viewer/compare/v3.0.8...v3.0.9) (2021-06-02)
 
 
