@@ -80,7 +80,7 @@ export default defineComponent({
     const options = { deep: true }
     watch(() => props.images, () => nextTick(() => changeViewer()), options)
     watch(() => props.trigger, () => nextTick(() => changeViewer()), options)
-    watch(() => props.options, () => nextTick(() => changeViewer()), options)
+    watch(() => props.options, () => nextTick(() => rebuildViewer()), options)
 
     // lifecycle hooks
     onMounted(() => createViewer())
