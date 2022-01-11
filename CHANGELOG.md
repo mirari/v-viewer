@@ -2,37 +2,62 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.6.4](https://github.com/mirari/v-viewer/compare/v1.6.3...v1.6.4) (2021-07-12)
+### [3.0.10](https://github.com/mirari/v-viewer/compare/v3.0.9...v3.0.10) (2021-09-21)
 
 
 ### Bug Fixes
 
-* **common:** fix the problem of accidental introduction of vue ([6d0cc4d](https://github.com/mirari/v-viewer/commit/6d0cc4d18facebaed90c9bb06fa294bf24cb8271))
+* **component:** fix the problem of not updating when changing options ([d7afcdb](https://github.com/mirari/v-viewer/commit/d7afcdbf5d597f3971e0bea43ce36f390972e312)), closes [#197](https://github.com/mirari/v-viewer/issues/197)
 
-### [1.6.3](https://github.com/mirari/v-viewer/compare/v1.6.2...v1.6.3) (2021-06-02)
-
-
-### Bug Fixes
-
-* **common:** fix dts file ([8503e1e](https://github.com/mirari/v-viewer/commit/8503e1e1a294901551d3ffce8993d29c9ce25ca1))
-* **common:** fix dts file ([c73054e](https://github.com/mirari/v-viewer/commit/c73054eea44e94dc4d2accb1dafda76d86a6941a))
-
-### [1.6.2](https://github.com/mirari/v-viewer/compare/v1.6.1...v1.6.2) (2021-06-02)
+### [3.0.9](https://github.com/mirari/v-viewer/compare/v3.0.8...v3.0.9) (2021-06-02)
 
 
 ### Bug Fixes
 
-* app type is typeof Vue not vue ([6eb5c64](https://github.com/mirari/v-viewer/commit/6eb5c640995517e63bc40ef2493a24bee9946521))
+* **common:** fix dts file ([f6163ff](https://github.com/mirari/v-viewer/commit/f6163ff5b316a940d70fb842605f220b7f378416))
 
-### [1.6.1](https://github.com/mirari/v-viewer/compare/v1.5.1...v1.6.1) (2021-06-02)
+### [3.0.8](https://github.com/mirari/v-viewer/compare/v3.0.7...v3.0.8) (2021-06-02)
 
-
-### Features
-
-* api mode name modification ([04c2334](https://github.com/mirari/v-viewer/commit/04c2334c0f2acbc272b6f32b0bd0c572922b3006))
+### [3.0.7](https://github.com/mirari/v-viewer/compare/v3.0.6...v3.0.7) (2021-06-02)
 
 
 ### Bug Fixes
 
-* **common:** fix ts declaration ([4ab6583](https://github.com/mirari/v-viewer/commit/4ab65830c0d8fb82ebec60006936575c25fecee9))
-* **directive:** change directive install method ([6a387bb](https://github.com/mirari/v-viewer/commit/6a387bb035ed11a3edc19d3c389647b5c9fd7cb2))
+* **common:** fix tsd file; update readme ([2295dcc](https://github.com/mirari/v-viewer/commit/2295dcc338dfb296f4780542c6d38921284c6c9d))
+
+### [3.0.6](https://github.com/mirari/v-viewer/compare/v3.0.5...v3.0.6) (2021-05-31)
+
+### 3.0.5 (2021-05-31)
+
+
+### Bug Fixes
+
+* **api:** fix type declaration ([9987966](https://github.com/mirari/v-viewer/commit/9987966db12372186adc95a5b37643c9ce1587bb))
+* **common:** fix api option ([f54bcb2](https://github.com/mirari/v-viewer/commit/f54bcb266c4fa83492a9dfaa2e513960727b9873))
+* **common:** fix umd build config ([3fc6477](https://github.com/mirari/v-viewer/commit/3fc64772fc7b7271f233b239c2c26d39f16d3396))
+* **directive:** fix default options ([c7ffa87](https://github.com/mirari/v-viewer/commit/c7ffa87b6d9259e2f304f85467e1d5609f53e912))
+
+### [3.0.4](https://github.com/mirari/v-viewer/compare/v3.0.3...v3.0.4) (2021-05-30)
+
+
+### Bug Fixes
+
+* **api:** fix type declaration ([9987966](https://github.com/mirari/v-viewer/commit/9987966db12372186adc95a5b37643c9ce1587bb))
+
+### [3.0.3](https://github.com/mirari/v-viewer/compare/v3.0.2...v3.0.3) (2021-05-30)
+
+### [3.0.2](https://github.com/mirari/v-viewer/compare/v3.0.1...v3.0.2) (2021-05-30)
+
+
+### Bug Fixes
+
+* **common:** fix api option ([f54bcb2](https://github.com/mirari/v-viewer/commit/f54bcb266c4fa83492a9dfaa2e513960727b9873))
+
+### [3.0.1](https://github.com/mirari/v-viewer/compare/v3.0.0...v3.0.1) (2021-05-30)
+
+
+### Bug Fixes
+
+* **common:** fix umd build config ([3fc6477](https://github.com/mirari/v-viewer/commit/3fc64772fc7b7271f233b239c2c26d39f16d3396))
+
+## 3.0.0 (2021-05-30)

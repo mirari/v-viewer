@@ -1,5 +1,5 @@
-import { extend } from './utils'
 import Viewer from 'viewerjs'
+import { assign } from './util'
 import component from './component.vue'
 import directive from './directive'
 import api from './api'
@@ -8,18 +8,18 @@ export {
   component,
   directive,
   api,
-  Viewer
+  Viewer,
 }
 
 export default {
-  install (Vue, {name = 'viewer', debug = false, defaultOptions} = {}) {
+  install(Vue, { name = 'viewer', debug = false, defaultOptions } = {}) {
     Viewer.setDefaults(defaultOptions)
 
-    Vue.component(name, extend(component, { name }))
+    Vue.component(name, assign(component, { name }))
     Vue.directive(name, directive({ name, debug }))
     Vue.prototype[`$${name}Api`] = api
   },
-  setDefaults (defaultOptions) {
+  setDefaults(defaultOptions) {
     Viewer.setDefaults(defaultOptions)
-  }
+  },
 }

@@ -2,26 +2,40 @@
   <div>
     <div class="field is-grouped is-grouped-multiline">
       <p class="control">
-        <button type="button" class="button" @click="add" :disabled="images.length===10">Add</button>
+        <button type="button" class="button" :disabled="images.length===10" @click="add">
+          Add
+        </button>
       </p>
       <p class="control">
-        <button type="button" class="button" @click="remove" :disabled="images.length===0">Remove</button>
+        <button type="button" class="button" :disabled="images.length===0" @click="remove">
+          Remove
+        </button>
       </p>
       <p class="control">
-        <button type="button" class="button" @click="show">Show</button>
+        <button type="button" class="button" @click="show">
+          Show
+        </button>
       </p>
       <div class="field has-addons">
         <p class="control">
-          <button type="button" class="button is-primary"
-                  @click="toggleToolbar(true)"
-                  :class="{' is-active': options.toolbar}"
-          >Show Toolbar</button>
+          <button
+            type="button"
+            class="button is-primary"
+            :class="{' is-active': options.toolbar}"
+            @click="toggleToolbar(true)"
+          >
+            Show Toolbar
+          </button>
         </p>
         <p class="control">
-          <button type="button" class="button is-primary"
-                  @click="toggleToolbar(false)"
-                  :class="{' is-active': !options.toolbar}"
-          >Hide Toolbar</button>
+          <button
+            type="button"
+            class="button is-primary"
+            :class="{' is-active': !options.toolbar}"
+            @click="toggleToolbar(false)"
+          >
+            Hide Toolbar
+          </button>
         </p>
       </div>
     </div>
@@ -29,42 +43,43 @@
       To show the viewer, you can click these images too.
     </p>
     <div v-viewer="options" class="images clearfix">
-      <template v-for="{source, thumbnail} in images">
-        <img :src="thumbnail" :data-source="source" class="image" :key="source" :alt="source.split('?image=').pop()">
-      </template>
+      <img
+        v-for="{source, thumbnail} in images"
+        :key="source"
+        :src="thumbnail"
+        :data-source="source"
+        class="image"
+        :alt="source.split('?image=').pop()"
+      >
     </div>
   </div>
 </template>
 
 <script>
-import 'viewerjs/dist/viewer.css'
-import Viewer from 'src'
-import Vue from 'vue'
-Vue.use(Viewer, {
-  debug: true,
-  defaultOptions: {
-    zIndex: 9999
-  }
-})
+import { directive } from '../../../src'
 
 const sourceImages = []
 const base = Math.floor(Math.random() * 60) + 10
 for (let i = 0; i < 10; i++) {
   sourceImages.push({
     thumbnail: `https://picsum.photos/id/${base + i}/346/216`,
-    source: `https://picsum.photos/id/${base + i}/1440/900`
+    source: `https://picsum.photos/id/${base + i}/1440/900`,
   })
 }
 
 export default {
-
-  data () {
+  directives: {
+    viewer: directive({
+      debug: true,
+    }),
+  },
+  data() {
     return {
       options: {
         toolbar: true,
-        url: 'data-source'
+        url: 'data-source',
       },
-      images: [...sourceImages].splice(0, 5)
+      images: [...sourceImages].splice(0, 5),
     }
   },
 
@@ -72,21 +87,21 @@ export default {
   },
 
   methods: {
-    toggleToolbar (toolbar) {
+    toggleToolbar(toolbar) {
       // this.options = Object.assign({}, this.options, {toolbar})
       this.options.toolbar = toolbar
     },
-    add () {
+    add() {
       this.images.push(sourceImages[this.images.length])
     },
-    remove () {
+    remove() {
       this.images.pop()
     },
-    show () {
+    show() {
       const viewer = this.$el.querySelector('.images').$viewer
       viewer.show()
-    }
-  }
+    },
+  },
 }
 </script>
 

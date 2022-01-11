@@ -1,2 +1,3 @@
-build/build.js
-example/App.vue
+dist
+node_modules
+public

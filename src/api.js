@@ -1,32 +1,32 @@
-import Viewer from 'viewerjs'
-import { extend } from './utils'
 import Vue from 'vue'
+import Viewer from 'viewerjs'
+import { assign } from './util'
 
-const api = ({images = [], options = {}} = {}) => {
-  options = extend(options, {
-    inline: false // 只能使用modal模式
+const api = ({ images = [], options = {} } = {}) => {
+  options = assign(options, {
+    inline: false, // 只能使用modal模式
   })
   // 创建存放viewerjs加载所需图片的占位元素，无需实际展现
   const ViewerToken = Vue.extend({
-    render (h) {
+    render(h) {
       return h(
         'div',
         {
           style: {
-            display: 'none'
+            display: 'none',
           },
-          class: ['__viewer-token']
+          class: ['__viewer-token'],
         },
         images.map((attr) => {
           return h(
             'img',
             {
-              attrs: typeof attr === 'string' ? { src: attr } : attr
-            }
+              attrs: typeof attr === 'string' ? { src: attr } : attr,
+            },
           )
-        })
+        }),
       )
-    }
+    },
   })
   const token = new ViewerToken()
   token.$mount()
@@ -35,7 +35,7 @@ const api = ({images = [], options = {}} = {}) => {
   // 加载Viewer
   const $viewer = new Viewer(token.$el, options)
   const $destroy = $viewer.destroy.bind($viewer)
-  $viewer.destroy = function () {
+  $viewer.destroy = function() {
     $destroy()
     token.$destroy()
     document.body.removeChild(token.$el)
@@ -44,7 +44,7 @@ const api = ({images = [], options = {}} = {}) => {
   $viewer.show()
 
   // 关闭Viewer模态窗口时，销毁token
-  token.$el.addEventListener('hidden', function () {
+  token.$el.addEventListener('hidden', function() {
     if (this.viewer === $viewer) {
       $viewer.destroy()
     }

@@ -29,8 +29,8 @@ export declare const component: Component
 
 export default VueViewer
 
-declare module "vue/types/vue" {
+declare module 'vue/types/vue' {
   interface Vue {
-    $viewerApi: typeof api;
+    $viewerApi: typeof api
   }
 }

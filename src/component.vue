@@ -10,19 +10,19 @@ import Viewer from 'viewerjs'
 export default {
   props: {
     images: {
-      type: Array
+      type: Array,
     },
     rebuild: {
       type: Boolean,
-      default: false
+      default: false,
     },
     trigger: {},
     options: {
-      type: Object
-    }
+      type: Object,
+    },
   },
 
-  data () {
+  data() {
     return {
     }
   },
@@ -30,65 +30,67 @@ export default {
   computed: {
   },
 
-  methods: {
-    onChange () {
-      if (this.rebuild) {
-        this.rebuildViewer()
-      } else {
-        this.updateViewer()
-      }
-    },
-    rebuildViewer () {
-      this.destroyViewer()
-      this.createViewer()
-    },
-    updateViewer () {
-      if (this.$viewer) {
-        this.$viewer.update()
-        this.$emit('inited', this.$viewer)
-      } else {
-        this.createViewer()
-      }
-    },
-    destroyViewer () {
-      this.$viewer && this.$viewer.destroy()
-    },
-    createViewer () {
-      this.$viewer = new Viewer(this.$el, this.options)
-      this.$emit('inited', this.$viewer)
-    }
-  },
-
   watch: {
-    images () {
+    images() {
       this.$nextTick(() => {
         this.onChange()
       })
     },
     trigger: {
-      handler () {
+      handler() {
         this.$nextTick(() => {
           this.onChange()
         })
       },
-      deep: true
+      deep: true,
     },
     options: {
-      handler () {
+      handler() {
         this.$nextTick(() => {
           this.rebuildViewer()
         })
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
 
-  mounted () {
+  mounted() {
     this.createViewer()
   },
 
-  destroyed () {
+  unmounted() {
     this.destroyViewer()
-  }
+  },
+
+  methods: {
+    onChange() {
+      if (this.rebuild) {
+        this.rebuildViewer()
+      }
+      else {
+        this.updateViewer()
+      }
+    },
+    rebuildViewer() {
+      this.destroyViewer()
+      this.createViewer()
+    },
+    updateViewer() {
+      if (this.$viewer) {
+        this.$viewer.update()
+        this.$emit('inited', this.$viewer)
+      }
+      else {
+        this.createViewer()
+      }
+    },
+    destroyViewer() {
+      this.$viewer && this.$viewer.destroy()
+    },
+    createViewer() {
+      this.$viewer = new Viewer(this.$el, this.options)
+      this.$emit('inited', this.$viewer)
+    },
+  },
 }
 </script>

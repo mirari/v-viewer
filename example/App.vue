@@ -18,8 +18,7 @@
       </div>
     </section>
     <div class="container" style="margin-bottom: 30px">
-      <example style="margin-bottom: 100px;"></example>
-      <doc class="markdown-body"></doc>
+      <example />
     </div>
     <footer class="footer">
       <div class="container">
@@ -40,36 +39,14 @@
 </template>
 
 <script>
-import Doc from '../README.md'
-import Example from './views/example'
-import 'github-markdown-css'
-import 'highlight.js/styles/github.css'
+import Example from './views/example/index.vue'
 
 export default {
   components: {
-    Doc,
-    Example
-  }
+    Example,
+  },
 }
 </script>
-<style lang="scss" rel="stylesheet/scss">
-  .hero.is-primary {
-    margin-bottom: 2em;
-
-    .column {
-      padding: 4em;
-    }
-  }
-
-  a:not(.button) {
-    text-decoration: underline;
-  }
-</style>
-<style lang="sass" rel="stylesheet/sass">
-  @import "~bulma/sass/utilities/initial-variables"
-  $primary: #41b883
-  @import "~bulma"
-</style>
 <style lang="scss" rel="stylesheet/scss">
 .viewer-loading > img {
   display: none;
