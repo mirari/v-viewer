@@ -22,6 +22,7 @@ Image viewer component for vue, supports rotation, scale, zoom and so on, based 
 - [api](https://codepen.io/mirari/pen/NWpwVdd)
 - [thumbnail & source](https://codepen.io/mirari/pen/LYENgMM)
 - [viewer callback](https://codepen.io/mirari/pen/ZwpGBO)
+- [custom toolbar](https://codepen.io/mirari/pen/GRMBrBv)
 - [filter images](https://codepen.io/mirari/pen/vvPoQb)
 - [change images](https://codepen.io/mirari/pen/ZdMbOK)
 
