@@ -243,7 +243,7 @@ Use [scoped slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) to cu
 
 ##### trigger
 
-- Type: `Array`
+- Type: `Object`
 
 You can replace `images` with `trigger`, to accept any type of prop.
 when the `trigger` changes, the component will re-render the viewer.
