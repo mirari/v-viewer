@@ -244,7 +244,7 @@ You can simply import the component and register it locally too.
 
 ##### trigger
 
-- Type: `Array`
+- Type: `Object`
 
 You can replace `images` with `trigger`, to accept any type of prop.
 when the `trigger` changes, the component will re-render the viewer.
