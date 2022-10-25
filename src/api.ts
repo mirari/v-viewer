@@ -36,7 +36,7 @@ const api = ({ images = [], options }: ViewerApiOptions) => {
   // init viewer
   const $viewerJs = new Viewer(tokenElement, options)
   const $destroy = $viewerJs.destroy.bind($viewerJs)
-  $viewerJs.destroy = function(): Viewer {
+  $viewerJs.destroy = function (): Viewer {
     $destroy()
     render(null, token)
     return $viewerJs
@@ -44,7 +44,7 @@ const api = ({ images = [], options }: ViewerApiOptions) => {
   $viewerJs.show()
 
   // 关闭Viewer模态窗口时，销毁token
-  tokenElement.addEventListener('hidden', function(this: HTMLElement) {
+  tokenElement.addEventListener('hidden', function (this: HTMLElement) {
     if (this.viewer === $viewerJs) {
       $viewerJs.destroy()
     }

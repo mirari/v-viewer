@@ -1,84 +1,9 @@
-<template>
-  <div>
-    <div class="field is-grouped is-grouped-multiline">
-      <p class="control">
-        <button
-          type="button"
-          class="button"
-          :disabled="images.length===10"
-          @click="add"
-        >
-          Add
-        </button>
-      </p>
-      <p class="control">
-        <button
-          type="button"
-          class="button"
-          :disabled="images.length===0"
-          @click="remove"
-        >
-          Remove
-        </button>
-      </p>
-      <p class="control">
-        <button
-          type="button"
-          class="button"
-          @click="show"
-        >
-          Show
-        </button>
-      </p>
-      <div class="field has-addons">
-        <p class="control">
-          <button
-            type="button"
-            class="button is-primary"
-            :class="{' is-active': options.toolbar}"
-            @click="toggleToolbar(true)"
-          >
-            Show Toolbar
-          </button>
-        </p>
-        <p class="control">
-          <button
-            type="button"
-            class="button is-primary"
-            :class="{' is-active': !options.toolbar}"
-            @click="toggleToolbar(false)"
-          >
-            Hide Toolbar
-          </button>
-        </p>
-      </div>
-    </div>
-    <p>
-      To show the viewer, you can click these images too.
-    </p>
-    <div
-      ref="el"
-      v-viewer="options"
-      class="images clearfix"
-    >
-      <template v-for="{source, thumbnail, title} in images" :key="source">
-        <img
-          class="image"
-          :src="thumbnail"
-          :data-source="source"
-          :alt="title"
-        >
-      </template>
-    </div>
-  </div>
-</template>
-
 <script lang="ts">
 import {
   defineComponent,
-  toRefs,
   reactive,
   ref,
+  toRefs,
 } from 'vue'
 import VueViewer, { Viewer, directive } from '../../../src'
 
@@ -150,6 +75,81 @@ export default defineComponent({
   },
 })
 </script>
+
+<template>
+  <div>
+    <div class="field is-grouped is-grouped-multiline">
+      <p class="control">
+        <button
+          type="button"
+          class="button"
+          :disabled="images.length === 10"
+          @click="add"
+        >
+          Add
+        </button>
+      </p>
+      <p class="control">
+        <button
+          type="button"
+          class="button"
+          :disabled="images.length === 0"
+          @click="remove"
+        >
+          Remove
+        </button>
+      </p>
+      <p class="control">
+        <button
+          type="button"
+          class="button"
+          @click="show"
+        >
+          Show
+        </button>
+      </p>
+      <div class="field has-addons">
+        <p class="control">
+          <button
+            type="button"
+            class="button is-primary"
+            :class="{ ' is-active': options.toolbar }"
+            @click="toggleToolbar(true)"
+          >
+            Show Toolbar
+          </button>
+        </p>
+        <p class="control">
+          <button
+            type="button"
+            class="button is-primary"
+            :class="{ ' is-active': !options.toolbar }"
+            @click="toggleToolbar(false)"
+          >
+            Hide Toolbar
+          </button>
+        </p>
+      </div>
+    </div>
+    <p>
+      To show the viewer, you can click these images too.
+    </p>
+    <div
+      ref="el"
+      v-viewer="options"
+      class="images clearfix"
+    >
+      <template v-for="{ source, thumbnail, title } in images" :key="source">
+        <img
+          class="image"
+          :src="thumbnail"
+          :data-source="source"
+          :alt="title"
+        >
+      </template>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
   .image {

@@ -1,4 +1,4 @@
-import { App } from 'vue'
+import type { App } from 'vue'
 import defaults from 'lodash/defaults'
 import Viewer from 'viewerjs'
 import api from './api'

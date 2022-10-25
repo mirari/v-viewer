@@ -1,3 +1,15 @@
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Example from './views/example/index.vue'
+
+export default defineComponent({
+  name: 'App',
+  components: {
+    Example,
+  },
+})
+</script>
+
 <template>
   <a
     class="github-fork-ribbon"
@@ -30,7 +42,7 @@
     class="container"
     style="margin-bottom: 30px"
   >
-    <example />
+    <Example />
   </div>
   <footer class="footer">
     <div class="container">
@@ -56,15 +68,3 @@
     </div>
   </footer>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-import Example from './views/example/index.vue'
-
-export default defineComponent({
-  name: 'App',
-  components: {
-    Example,
-  },
-})
-</script>

@@ -104,8 +104,10 @@ function assignSymbols(target: any, ...args: any[]) {
  */
 export function assign(target: any, ...args: any[]): any {
   let i = 0
-  if (isPrimitive(target)) target = args[i++]
-  if (!target) target = {}
+  if (isPrimitive(target))
+    target = args[i++]
+  if (!target)
+    target = {}
   for (; i < args.length; i++) {
     if (isObject(args[i])) {
       for (const key of Object.keys(args[i])) {

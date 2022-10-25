@@ -1,12 +1,3 @@
-<template>
-  <div ref="root">
-    <slot
-      :images="images"
-      :options="options"
-    />
-  </div>
-</template>
-
 <script lang="ts">
 import {
   defineComponent,
@@ -108,3 +99,12 @@ export default defineComponent({
   },
 })
 </script>
+
+<template>
+  <div ref="root">
+    <slot
+      :images="images"
+      :options="options"
+    />
+  </div>
+</template>

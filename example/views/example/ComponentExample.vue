@@ -1,3 +1,206 @@
+<script lang="ts">
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+} from 'vue'
+import type { Viewer } from '../../../src'
+import VueViewer, { component } from '../../../src'
+
+VueViewer.setDefaults({
+  zIndexInline: 2021,
+})
+
+class ImageData {
+  thumbnail: string
+  source: string
+  title: string
+
+  constructor(source: string, thumbnail: string, title: string) {
+    this.source = source
+    this.thumbnail = thumbnail
+    this.title = title
+  }
+}
+
+const sourceImages: ImageData[] = []
+const base = Math.floor(Math.random() * 60) + 10
+for (let i = 0; i < 10; i++) {
+  const data = new ImageData(`https://picsum.photos/id/${base + i}/1440/900`, `https://picsum.photos/id/${base + i}/346/216`, `Image: ${base + i}`)
+  sourceImages.push(data)
+}
+
+export default defineComponent({
+  name: 'ComponentExample',
+  components: {
+    Viewer: component,
+  },
+  setup() {
+    let $viewer: Viewer
+
+    const state = reactive({
+      form: {
+        view: 2,
+        zoom: -0.1,
+        zoomTo: 0.8,
+        rotate: 90,
+        rotateTo: 180,
+        scaleX: 1,
+        scaleY: 1,
+      },
+      toggleOptions: [
+        'button',
+        'navbar',
+        'title',
+        'toolbar',
+        'tooltip',
+        'movable',
+        'zoomable',
+        'rotatable',
+        'scalable',
+        'transition',
+        'fullscreen',
+        'keyboard',
+      ],
+      options: {
+        inline: true,
+        button: true,
+        navbar: true,
+        title: true,
+        toolbar: true,
+        tooltip: true,
+        movable: true,
+        zoomable: true,
+        rotatable: true,
+        scalable: true,
+        transition: true,
+        fullscreen: true,
+        keyboard: true,
+        url: 'data-source',
+      },
+      images: [...sourceImages].splice(0, 5),
+    })
+
+    function inited(viewer: Viewer) {
+      $viewer = viewer
+    }
+
+    function add() {
+      state.images.push(sourceImages[state.images.length])
+    }
+
+    function remove() {
+      state.images.pop()
+    }
+
+    function view() {
+      if (state.form.view >= 0 && state.form.view < state.images.length)
+        $viewer.view(state.form.view)
+    }
+
+    function zoom(value: number) {
+      $viewer.zoom(value || state.form.zoom)
+    }
+
+    function zoomTo() {
+      $viewer.zoomTo(state.form.zoomTo)
+    }
+
+    function rotate(value: number) {
+      $viewer.rotate(value || state.form.rotate)
+    }
+
+    function rotateTo() {
+      $viewer.rotateTo(state.form.rotateTo)
+    }
+
+    function scaleX(value: number) {
+      if (value) {
+        $viewer.scaleX(value)
+      }
+      else {
+        state.form.scaleX = -state.form.scaleX
+        $viewer.scaleX(state.form.scaleX)
+      }
+    }
+
+    function scaleY(value: number) {
+      if (value) {
+        $viewer.scaleY(value)
+      }
+      else {
+        state.form.scaleY = -state.form.scaleY
+        $viewer.scaleY(state.form.scaleY)
+      }
+    }
+
+    function move(x: number, y: number) {
+      $viewer.move(x, y)
+    }
+
+    function prev() {
+      $viewer.prev()
+    }
+
+    function next() {
+      $viewer.next()
+    }
+
+    function play() {
+      $viewer.play()
+    }
+
+    function stop() {
+      $viewer.stop()
+    }
+
+    function show() {
+      $viewer.show()
+    }
+
+    function full() {
+      $viewer.full()
+    }
+
+    function tooltip() {
+      $viewer.tooltip()
+    }
+
+    function reset() {
+      $viewer.reset()
+    }
+
+    function toggleInline(inline: boolean) {
+      state.options.inline = inline
+    }
+
+    return {
+      ...toRefs(state),
+      inited,
+      add,
+      remove,
+      view,
+      zoom,
+      zoomTo,
+      rotate,
+      rotateTo,
+      scaleX,
+      scaleY,
+      move,
+      prev,
+      next,
+      play,
+      stop,
+      show,
+      full,
+      tooltip,
+      reset,
+      toggleInline,
+    }
+  },
+})
+</script>
+
 <template>
   <div>
     <div class="methods is-flex">
@@ -6,7 +209,7 @@
           <button
             type="button"
             class="button is-primary"
-            :class="{' is-active': !options.inline}"
+            :class="{ ' is-active': !options.inline }"
             @click="toggleInline(false)"
           >
             Modal
@@ -16,7 +219,7 @@
           <button
             type="button"
             class="button is-primary"
-            :class="{' is-active': options.inline}"
+            :class="{ ' is-active': options.inline }"
             @click="toggleInline(true)"
           >
             Inline
@@ -26,7 +229,7 @@
       <button
         type="button"
         class="button"
-        :disabled="images.length===9"
+        :disabled="images.length === 9"
         @click="add"
       >
         Add
@@ -34,7 +237,7 @@
       <button
         type="button"
         class="button"
-        :disabled="images.length===1"
+        :disabled="images.length === 1"
         @click="remove"
       >
         Remove
@@ -321,7 +524,7 @@
       </div>
       <div class="tile is-10 is-vertical is-parent">
         <div class="viewer-wrapper">
-          <viewer
+          <Viewer
             ref="viewer"
             :options="options"
             :images="images"
@@ -332,7 +535,7 @@
             <template #default="scope">
               <figure class="images">
                 <div
-                  v-for="{source, thumbnail, title} in scope.images"
+                  v-for="{ source, thumbnail, title } in scope.images"
                   :key="source"
                   class="image-wrapper"
                 >
@@ -346,214 +549,12 @@
               </figure>
               <p><strong>Options: </strong>{{ scope.options }}</p>
             </template>
-          </viewer>
+          </Viewer>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import {
-  defineComponent,
-  toRefs,
-  reactive,
-} from 'vue'
-import VueViewer, { Viewer, component } from '../../../src'
-
-VueViewer.setDefaults({
-  zIndexInline: 2021,
-})
-
-class ImageData {
-  thumbnail: string
-  source: string
-  title: string
-
-  constructor(source: string, thumbnail: string, title: string) {
-    this.source = source
-    this.thumbnail = thumbnail
-    this.title = title
-  }
-}
-
-const sourceImages: ImageData[] = []
-const base = Math.floor(Math.random() * 60) + 10
-for (let i = 0; i < 10; i++) {
-  const data = new ImageData(`https://picsum.photos/id/${base + i}/1440/900`, `https://picsum.photos/id/${base + i}/346/216`, `Image: ${base + i}`)
-  sourceImages.push(data)
-}
-
-export default defineComponent({
-  name: 'ComponentExample',
-  components: {
-    viewer: component,
-  },
-  setup() {
-    let $viewer: Viewer
-
-    const state = reactive({
-      form: {
-        view: 2,
-        zoom: -0.1,
-        zoomTo: 0.8,
-        rotate: 90,
-        rotateTo: 180,
-        scaleX: 1,
-        scaleY: 1,
-      },
-      toggleOptions: [
-        'button',
-        'navbar',
-        'title',
-        'toolbar',
-        'tooltip',
-        'movable',
-        'zoomable',
-        'rotatable',
-        'scalable',
-        'transition',
-        'fullscreen',
-        'keyboard',
-      ],
-      options: {
-        inline: true,
-        button: true,
-        navbar: true,
-        title: true,
-        toolbar: true,
-        tooltip: true,
-        movable: true,
-        zoomable: true,
-        rotatable: true,
-        scalable: true,
-        transition: true,
-        fullscreen: true,
-        keyboard: true,
-        url: 'data-source',
-      },
-      images: [...sourceImages].splice(0, 5),
-    })
-
-    function inited(viewer: Viewer) {
-      $viewer = viewer
-    }
-
-    function add() {
-      state.images.push(sourceImages[state.images.length])
-    }
-
-    function remove() {
-      state.images.pop()
-    }
-
-    function view() {
-      if (state.form.view >= 0 && state.form.view < state.images.length)
-        $viewer.view(state.form.view)
-    }
-
-    function zoom(value: number) {
-      $viewer.zoom(value || state.form.zoom)
-    }
-
-    function zoomTo() {
-      $viewer.zoomTo(state.form.zoomTo)
-    }
-
-    function rotate(value: number) {
-      $viewer.rotate(value || state.form.rotate)
-    }
-
-    function rotateTo() {
-      $viewer.rotateTo(state.form.rotateTo)
-    }
-
-    function scaleX(value: number) {
-      if (value) {
-        $viewer.scaleX(value)
-      }
-      else {
-        state.form.scaleX = -state.form.scaleX
-        $viewer.scaleX(state.form.scaleX)
-      }
-    }
-
-    function scaleY(value: number) {
-      if (value) {
-        $viewer.scaleY(value)
-      }
-      else {
-        state.form.scaleY = -state.form.scaleY
-        $viewer.scaleY(state.form.scaleY)
-      }
-    }
-
-    function move(x: number, y: number) {
-      $viewer.move(x, y)
-    }
-
-    function prev() {
-      $viewer.prev()
-    }
-
-    function next() {
-      $viewer.next()
-    }
-
-    function play() {
-      $viewer.play()
-    }
-
-    function stop() {
-      $viewer.stop()
-    }
-
-    function show() {
-      $viewer.show()
-    }
-
-    function full() {
-      $viewer.full()
-    }
-
-    function tooltip() {
-      $viewer.tooltip()
-    }
-
-    function reset() {
-      $viewer.reset()
-    }
-
-    function toggleInline(inline: boolean) {
-      state.options.inline = inline
-    }
-
-    return {
-      ...toRefs(state),
-      inited,
-      add,
-      remove,
-      view,
-      zoom,
-      zoomTo,
-      rotate,
-      rotateTo,
-      scaleX,
-      scaleY,
-      move,
-      prev,
-      next,
-      play,
-      stop,
-      show,
-      full,
-      tooltip,
-      reset,
-      toggleInline,
-    }
-  },
-})
-</script>
 
 <style lang="scss" scoped>
   .viewer-wrapper {

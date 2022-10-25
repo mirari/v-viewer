@@ -3,25 +3,16 @@
   "scope": "VueViewer",
   "version": "3.0.11",
   "description": "Image viewer component for vue, supports rotation, scale, zoom and so on, based on viewer.js",
-  "main": "./dist/index.umd.js",
-  "unpkg": "./dist/index.umd.js",
-  "module": "./dist/index.es.js",
-  "types": "./types/index.d.ts",
-  "scripts": {
-    "prepare": "husky install",
-    "dev": "npm -C example run dev",
-    "build": "vue-tsc --noEmit && vite build",
-    "preview:build": "npm -C example run build",
-    "preview:serve": "npm -C example run serve",
-    "commit": "npx git-cz",
-    "release": "standard-version",
-    "publish:next": "npm run build && npm publish --tag next"
+  "author": "mirari",
+  "license": "MIT",
+  "homepage": "https://github.com/mirari/v-viewer#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mirari/v-viewer.git"
   },
-  "files": [
-    "dist",
-    "types",
-    "README.md"
-  ],
+  "bugs": {
+    "url": "https://github.com/mirari/v-viewer/issues"
+  },
   "keywords": [
     "vue",
     "viewer",
@@ -30,48 +21,53 @@
     "img",
     "image"
   ],
-  "license": "MIT",
-  "author": "mirari",
-  "bugs": {
-    "url": "https://github.com/mirari/v-viewer/issues"
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "unpkg": "./dist/index.umd.js",
+  "types": "./types/index.d.ts",
+  "files": [
+    "dist",
+    "types",
+    "README.md"
+  ],
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mirari/v-viewer.git"
-  },
-  "homepage": "https://github.com/mirari/v-viewer#readme",
-  "dependencies": {
-    "lodash": "^4.17.21",
-    "viewerjs": "^1.9.0"
+  "scripts": {
+    "prepare": "husky install",
+    "dev": "npm -C example run dev",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview:build": "npm -C example run build",
+    "preview:serve": "npm -C example run serve",
+    "release": "standard-version",
+    "publish:next": "npm run build && npm publish --tag next"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
   },
-  "devDependencies": {
-    "@antfu/eslint-config": "^0.15.0",
-    "@commitlint/cli": "^12.1.1",
-    "@commitlint/config-conventional": "^12.1.1",
-    "@types/lodash-es": "^4.17.4",
-    "@typescript-eslint/eslint-plugin": "^4.22.1",
-    "@vitejs/plugin-vue": "^2.0.1",
-    "@vue/compiler-sfc": "^3.2.26",
-    "bulma": "^0.9.2",
-    "commitizen": "^4.2.3",
-    "create-banner": "^2.0.0",
-    "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.25.0",
-    "husky": "^6.0.0",
-    "lint-staged": "^11.0.0",
-    "sass": "^1.32.13",
-    "standard-version": "^9.3.0",
-    "typescript": "^4.5.4",
-    "vite": "^2.7.10",
-    "vue": "^3.2.26",
-    "vue-tsc": "^0.30.2"
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "viewerjs": "^1.11.0"
   },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.27.0",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "@types/lodash-es": "^4.17.6",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "@vue/compiler-sfc": "^3.2.26",
+    "eslint": "^8.26.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "standard-version": "^9.5.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.1.0",
+    "vue": "^3.2.37",
+    "vue-tsc": "^0.40.4"
   }
 }

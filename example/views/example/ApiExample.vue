@@ -1,27 +1,3 @@
-<template>
-  <div>
-    <p>
-      Click to show the gallery without rendering the images yourself. <strong>Only available in modal mode.</strong>
-    </p>
-    <div class="control">
-      <button type="button" class="button" @click="previewURL">
-        URL Array
-      </button>
-      <p>
-        ['1.png', '2.png']
-      </p>
-    </div>
-    <div class="control">
-      <button type="button" class="button" @click="previewImgObject">
-        Img-Object Array
-      </button>
-      <p>
-        [{'src':'thumbnail.png', 'data-source':'source.png'}, {'src':'thumbnail.png', 'data-source':'source.png'}]
-      </p>
-    </div>
-  </div>
-</template>
-
 <script lang="ts">
 import {
   defineComponent,
@@ -73,6 +49,30 @@ export default defineComponent({
   },
 })
 </script>
+
+<template>
+  <div>
+    <p>
+      Click to show the gallery without rendering the images yourself. <strong>Only available in modal mode.</strong>
+    </p>
+    <div class="control">
+      <button type="button" class="button" @click="previewURL">
+        URL Array
+      </button>
+      <p>
+        ['1.png', '2.png']
+      </p>
+    </div>
+    <div class="control">
+      <button type="button" class="button" @click="previewImgObject">
+        Img-Object Array
+      </button>
+      <p>
+        [{'src':'thumbnail.png', 'data-source':'source.png'}, {'src':'thumbnail.png', 'data-source':'source.png'}]
+      </p>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
   p {
