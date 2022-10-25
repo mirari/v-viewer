@@ -7,12 +7,6 @@
   "unpkg": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
   "types": "./types/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.umd.js"
-    }
-  },
   "scripts": {
     "prepare": "husky install",
     "dev": "npm -C example run dev",
