@@ -14,7 +14,9 @@ jobs:
           npm i pnpm -g
           pnpm i
           pnpm run build
-          pnpm run preview:build
+          cd example
+          pnpm i
+          pnpm run build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
