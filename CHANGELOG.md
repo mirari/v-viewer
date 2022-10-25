@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.11](https://github.com/mirari/v-viewer/compare/v3.0.9...v3.0.11) (2022-10-25)
+
+
+### Bug Fixes
+
+* **common:** remove unnecessary configuration to fit vite(SSR) correctly ([d8e2100](https://github.com/mirari/v-viewer/commit/d8e2100086b2058bbd8c225ddb5b990a45ea1149))
+* **component:** fix the problem of not updating when changing options ([1b2e3ae](https://github.com/mirari/v-viewer/commit/1b2e3ae26b947d80cbea3f4a25ea2ccf9e59b5fd)), closes [#197](https://github.com/mirari/v-viewer/issues/197)
+
 ### [3.0.10](https://github.com/mirari/v-viewer/compare/v3.0.9...v3.0.10) (2021-09-21)
 
 
