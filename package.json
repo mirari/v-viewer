@@ -22,7 +22,7 @@
     "image"
   ],
   "main": "./dist/index.umd.js",
-  "module": "./dist/index.es.js",
+  "module": "./dist/index.mjs",
   "unpkg": "./dist/index.umd.js",
   "types": "./types/index.d.ts",
   "files": [
@@ -30,20 +30,14 @@
     "types",
     "README.md"
   ],
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
-  },
   "scripts": {
     "prepare": "husky install",
-    "dev": "npm -C example run dev",
+    "dev": "vite serve example --config example/vite.config.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "build": "vue-tsc --noEmit && vite build",
-    "preview:build": "npm -C example run build",
-    "preview:serve": "npm -C example run serve",
+    "preview:build": "vite build example --config example/vite.config.ts",
+    "preview:serve": "vite preview example --config example/vite.config.ts",
     "release": "standard-version",
     "publish:next": "npm run build && npm publish --tag next"
   },
@@ -61,9 +55,11 @@
     "@types/lodash-es": "^4.17.6",
     "@vitejs/plugin-vue": "^3.1.0",
     "@vue/compiler-sfc": "^3.2.26",
+    "bulma": "^0.9.4",
     "eslint": "^8.26.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
+    "sass": "^1.55.0",
     "standard-version": "^9.5.0",
     "typescript": "^4.6.4",
     "vite": "^3.1.0",
