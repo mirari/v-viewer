@@ -9,12 +9,12 @@
 
 <script lang="ts">
 import {
-  ref,
-  watch,
+  defineComponent,
   nextTick,
   onMounted,
   onUnmounted,
-  defineComponent,
+  ref,
+  watch,
 } from 'vue'
 import Viewer from 'viewerjs'
 import type { PropType } from 'vue'
@@ -78,9 +78,21 @@ export default defineComponent({
 
     // watch effect
     const options = { deep: true }
-    watch(() => props.images, () => nextTick(() => changeViewer()), options)
-    watch(() => props.trigger, () => nextTick(() => changeViewer()), options)
-    watch(() => props.options, () => nextTick(() => rebuildViewer()), options)
+    watch(() => props.images, () => {
+      nextTick(() => {
+        changeViewer()
+      })
+    }, options)
+    watch(() => props.trigger, () => {
+      nextTick(() => {
+        changeViewer()
+      })
+    }, options)
+    watch(() => props.options, () => {
+      nextTick(() => {
+        rebuildViewer()
+      })
+    }, options)
 
     // lifecycle hooks
     onMounted(() => createViewer())
