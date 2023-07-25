@@ -41,7 +41,7 @@ import 'viewerjs/dist/viewer.css'
 Install from NPM
 
 ```bash
-npm install v-viewer@legacy
+npm install v-viewer@legacy viewerjs
 ```
 
 ## Usage
