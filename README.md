@@ -33,7 +33,7 @@ Image viewer component for vue, supports rotation, scale, zoom and so on, based 
 Install from NPM
 
 ```bash
-npm install v-viewer@next
+npm install v-viewer@next viewerjs
 ```
 
 ## Usage
