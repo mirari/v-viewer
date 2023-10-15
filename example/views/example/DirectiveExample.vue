@@ -1,3 +1,4 @@
+<!-- Options API -->
 <script lang="ts">
 import {
   defineComponent,
@@ -75,6 +76,62 @@ export default defineComponent({
   },
 })
 </script>
+<!-- Composition API -->
+<!-- <script lang="ts" setup>
+import {
+  ref,
+} from 'vue'
+import VueViewer, { directive as viewer } from '../../../src'
+
+VueViewer.setDefaults({
+  zIndex: 2021,
+})
+
+class ImageData {
+  thumbnail: string
+  source: string
+  title: string
+
+  constructor(source: string, thumbnail: string, title: string) {
+    this.source = source
+    this.thumbnail = thumbnail
+    this.title = title
+  }
+}
+
+const sourceImages: ImageData[] = []
+const base = Math.floor(Math.random() * 60) + 10
+for (let i = 0; i < 10; i++) {
+  const data = new ImageData(`https://picsum.photos/id/${base + i}/1440/900`, `https://picsum.photos/id/${base + i}/346/216`, `Image: ${base + i}`)
+  sourceImages.push(data)
+}
+const vViewer = viewer({
+  debug: true
+})
+
+const el = ref<HTMLElement | null>(null)
+const options = ref({
+  toolbar: true,
+  url: 'data-source',
+})
+const images = ref([...sourceImages].splice(0, 5))
+
+const toggleToolbar = (toolbar: boolean) => {
+  options.toolbar = toolbar
+}
+
+const add = () => {
+  images.push(sourceImages[images.length])
+}
+
+const remove = () => {
+  images.pop()
+}
+
+const show = () => {
+  el.value && el.value.$viewer.show()
+}
+</script> -->
 
 <template>
   <div>

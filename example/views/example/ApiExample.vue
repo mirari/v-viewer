@@ -1,3 +1,4 @@
+<!-- Options API -->
 <script lang="ts">
 import {
   defineComponent,
@@ -49,6 +50,45 @@ export default defineComponent({
   },
 })
 </script>
+<!-- Composition API -->
+<!-- <script lant="ts" setup>
+import VueViewer, { api as viewerApi } from '../../../src'
+
+VueViewer.setDefaults({
+  zIndex: 2021,
+})
+
+const sourceImageURLs = []
+const sourceImageObjects = []
+const base = Math.floor(Math.random() * 60) + 10
+for (let i = 0; i < 5; i++) {
+  sourceImageURLs.push(`https://picsum.photos/id/${base + i}/1440/900`)
+  sourceImageObjects.push({
+    'data-source': `https://picsum.photos/id/${base + i}/1440/900`,
+    'src': `https://picsum.photos/id/${base + i}/346/216`,
+    'alt': `Image: ${base + i}`,
+  })
+}
+
+const previewURL = () => {
+  const $viewer = viewerApi({
+    images: sourceImageURLs,
+  })
+  console.log($viewer)
+}
+
+const previewImgObject = () => {
+  const $viewer = viewerApi({
+    options: {
+      toolbar: true,
+      url: 'data-source',
+      initialViewIndex: 2,
+    },
+    images: sourceImageObjects,
+  })
+  console.log($viewer)
+}
+</script> -->
 
 <template>
   <div>

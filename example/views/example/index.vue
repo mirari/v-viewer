@@ -1,3 +1,4 @@
+<!-- Options API -->
 <script lang="ts">
 import { defineComponent } from 'vue'
 import DirectiveExample from './DirectiveExample.vue'
@@ -12,6 +13,12 @@ export default defineComponent({
   },
 })
 </script>
+<!-- Composition API -->
+<!-- <script lang="ts" setup>
+import DirectiveExample from './DirectiveExample.vue'
+import ComponentExample from './ComponentExample.vue'
+import ApiExample from './ApiExample.vue'
+</script> -->
 
 <template>
   <div>
