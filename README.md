@@ -42,6 +42,8 @@ To use `v-viewer`, simply import it and the `css` file, and call `app.use()` to 
 
 The component, directive and api will be installed together in the global.
 
+Two different API styles are both supported: **Options API** and **Composition API**.
+
 ```ts
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -67,6 +69,7 @@ app.mount('#app')
     <button type="button" @click="show">Click to show</button>
   </div>
 </template>
+<!-- Options API -->
 <script lang="ts">
   import { defineComponent } from 'vue'
   export default defineComponent({
@@ -77,17 +80,31 @@ app.mount('#app')
           "https://picsum.photos/300/200",
           "https://picsum.photos/250/200"
         ]
-      };
+      }
     },
     methods: {
       show() {
         this.$viewerApi({
-          images: this.images,
+          images: this.images
         })
-      },
-    },
+      }
+    }
   })
 </script>
+<!-- Composition API -->
+<!-- <script lang="ts" setup>
+  import { api as viewerApi } from 'v-viewer'
+  const images = [
+    "https://picsum.photos/200/200",
+    "https://picsum.photos/300/200",
+    "https://picsum.photos/250/200"
+  ]
+  const show = () => {
+    viewerApi({
+      images
+    })
+  }
+</script> -->
 ```
 
 ### Support UMD
@@ -133,6 +150,7 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
     <button type="button" @click="show">Show</button>
   </div>
 </template>
+<!-- Options API -->
 <script lang="ts">
   import { defineComponent } from 'vue'
   import 'viewerjs/dist/viewer.css'
@@ -140,8 +158,8 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
   export default defineComponent({
     directives: {
       viewer: viewer({
-        debug: true,
-      }),
+        debug: true
+      })
     },
     data() {
       return {
@@ -150,7 +168,7 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
           "https://picsum.photos/300/200",
           "https://picsum.photos/250/200"
         ]
-      };
+      }
     },
     methods: {
       show () {
@@ -160,6 +178,23 @@ Get the element by selector and then use `el.$viewer` to get the `viewer` instan
     }
   })
 </script>
+<!-- Composition API -->
+<!-- <script lang="ts" setup>
+  import 'viewerjs/dist/viewer.css'
+  import { directive as viewer } from "v-viewer"
+  const vViewer = viewer({
+    debug: true
+  })
+  const images = [
+    "https://picsum.photos/200/200",
+    "https://picsum.photos/300/200",
+    "https://picsum.photos/250/200"
+  ]
+  const show = () => {
+    const viewer = document.querySelector('.images').$viewer
+    viewer.show()
+  }
+</script> -->
 ```
 
 #### Directive modifiers
@@ -195,9 +230,10 @@ You can simply import the component and register it locally too.
 ```vue
 <template>
   <div>
-    <viewer :options="options" :images="images"
+    <viewer :images="images"
             @inited="inited"
-            class="viewer" ref="viewer"
+            class="viewer"
+            ref="viewer"
             >
       <template #default="scope">
         <img v-for="src in scope.images" :src="src" :key="src">
@@ -207,6 +243,7 @@ You can simply import the component and register it locally too.
     <button type="button" @click="show">Show</button>
   </div>
 </template>
+<!-- Options API -->
 <script lang="ts">
   import { defineComponent } from 'vue'
   import 'viewerjs/dist/viewer.css'
@@ -222,7 +259,7 @@ You can simply import the component and register it locally too.
           "https://picsum.photos/300/200",
           "https://picsum.photos/250/200"
         ]
-      };
+      }
     },
     methods: {
       inited (viewer) {
@@ -234,6 +271,23 @@ You can simply import the component and register it locally too.
     }
   })
 </script>
+<!-- Composition API -->
+<!-- <script lang="ts" setup>
+  import 'viewerjs/dist/viewer.css'
+  import { component as Viewer } from "v-viewer"
+  const images = [
+    "https://picsum.photos/200/200",
+    "https://picsum.photos/300/200",
+    "https://picsum.photos/250/200"
+  ]
+  let $viewer:any = null
+  const inited = (viewer) => {
+    $viewer = viewer
+  }
+  const show = () => {
+    $viewer.show()
+  }
+</script> -->
 ```
 
 #### Component props
@@ -303,26 +357,29 @@ The function returns the current viewer instance.
     <button type="button" class="button" @click="previewImgObject">Img-Object Array</button>
   </div>
 </template>
+<!-- Options API -->
 <script lang="ts">
   import { defineComponent } from 'vue'
   import 'viewerjs/dist/viewer.css'
   import { api as viewerApi } from "v-viewer"
   export default defineComponent({
     data() {
-      sourceImageURLs: [
-        'https://picsum.photos/200/200?random=1',
-        'https://picsum.photos/200/200?random=2',
-      ],
-      sourceImageObjects: [
-        {
-          'src':'https://picsum.photos/200/200?random=3',
-          'data-source':'https://picsum.photos/800/800?random=3'
-        },
-        {
-          'src':'https://picsum.photos/200/200?random=4',
-          'data-source':'https://picsum.photos/800/800?random=4'
-        }
-      ]
+      return {
+        sourceImageURLs: [
+          'https://picsum.photos/200/200?random=1',
+          'https://picsum.photos/200/200?random=2'
+        ],
+        sourceImageObjects: [
+          {
+            'src': 'https://picsum.photos/200/200?random=3',
+            'data-source': 'https://picsum.photos/800/800?random=3'
+          },
+          {
+            'src': 'https://picsum.photos/200/200?random=4',
+            'data-source': 'https://picsum.photos/800/800?random=4'
+          }
+        ]
+      }
     },
     methods: {
       previewURL () {
@@ -345,6 +402,42 @@ The function returns the current viewer instance.
     }
   })
 </script>
+<!-- Composition API -->
+<!-- <script lang="ts" setup>
+import 'viewerjs/dist/viewer.css'
+import { api as viewerApi } from 'v-viewer'
+const sourceImageURLs = [
+  'https://picsum.photos/200/200?random=1',
+  'https://picsum.photos/200/200?random=2'
+]
+const sourceImageObjects = [
+  {
+    src: 'https://picsum.photos/200/200?random=3',
+    'data-source': 'https://picsum.photos/800/800?random=3'
+  },
+  {
+    src: 'https://picsum.photos/200/200?random=4',
+    'data-source': 'https://picsum.photos/800/800?random=4'
+  }
+]
+const previewURL = () => {
+  // If you use the `app.use` full installation, you can use `this.$viewerApi` directly like this
+  const $viewer = this.$viewerApi({
+    images: sourceImageURLs
+  })
+}
+const previewImgObject = () => {
+  // Or you can just import the api method and call it.
+  const $viewer = viewerApi({
+    options: {
+      toolbar: true,
+      url: 'data-source',
+      initialViewIndex: 1
+    },
+    images: sourceImageObjects
+  })
+}
+</script> -->
 ```
 
 ## Options & Methods of Viewer
@@ -388,6 +481,7 @@ app.mount('#app')
   </vuer>
   </div>
 </template>
+<!-- Options API -->
 <script lang="ts">
   import { defineComponent } from 'vue'
   export default defineComponent({
@@ -412,6 +506,24 @@ app.mount('#app')
       }
     }
   })
+</script>
+<!-- Composition API -->
+<script lang="ts" setup>
+  import { api as vuerApi } from 'v-viewer'
+  const images = [
+    "https://picsum.photos/200/200",
+    "https://picsum.photos/300/200",
+    "https://picsum.photos/250/200"
+  ]
+  const show = () => {
+    // viewerjs instance name
+    const vuer = document.querySelector('.images').$vuer
+    vuer.show()
+    // api name
+    vuerApi({
+      images
+    })
+  }
 </script>
 ```
 

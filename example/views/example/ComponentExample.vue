@@ -1,3 +1,4 @@
+<!-- Options API -->
 <script lang="ts">
 import {
   defineComponent,
@@ -33,7 +34,7 @@ for (let i = 0; i < 10; i++) {
 export default defineComponent({
   name: 'ComponentExample',
   components: {
-    Viewer: component,
+    VViewer: component,
   },
   setup() {
     let $viewer: Viewer
@@ -200,6 +201,173 @@ export default defineComponent({
   },
 })
 </script>
+<!-- Composition API -->
+<!-- <script lang="ts" setup>
+import {
+  ref,
+} from 'vue'
+import type { Viewer } from '../../../src'
+import VueViewer, { component as vViewer } from '../../../src'
+
+VueViewer.setDefaults({
+  zIndexInline: 2021,
+})
+
+class ImageData {
+  thumbnail: string
+  source: string
+  title: string
+
+  constructor(source: string, thumbnail: string, title: string) {
+    this.source = source
+    this.thumbnail = thumbnail
+    this.title = title
+  }
+}
+
+const sourceImages: ImageData[] = []
+const base = Math.floor(Math.random() * 60) + 10
+for (let i = 0; i < 10; i++) {
+  const data = new ImageData(`https://picsum.photos/id/${base + i}/1440/900`, `https://picsum.photos/id/${base + i}/346/216`, `Image: ${base + i}`)
+  sourceImages.push(data)
+}
+
+let $viewer: Viewer
+
+const form = ref({
+  view: 2,
+    zoom: -0.1,
+    zoomTo: 0.8,
+    rotate: 90,
+    rotateTo: 180,
+    scaleX: 1,
+    scaleY: 1,
+})
+const toggleOptions =ref([
+  'button',
+  'navbar',
+  'title',
+  'toolbar',
+  'tooltip',
+  'movable',
+  'zoomable',
+  'rotatable',
+  'scalable',
+  'transition',
+  'fullscreen',
+  'keyboard',
+])
+const options =ref({
+  inline: true,
+  button: true,
+  navbar: true,
+  title: true,
+  toolbar: true,
+  tooltip: true,
+  movable: true,
+  zoomable: true,
+  rotatable: true,
+  scalable: true,
+  transition: true,
+  fullscreen: true,
+  keyboard: true,
+  url: 'data-source',
+})
+const images =ref([...sourceImages].splice(0, 5))
+
+const inited = (viewer: Viewer) => {
+  $viewer = viewer
+}
+
+const add = () => {
+  images.push(sourceImages[images.length])
+}
+
+const remove = () => {
+  images.pop()
+}
+
+const view = () => {
+  if (form.view >= 0 && form.view < images.length)
+    $viewer.view(form.view)
+}
+
+const zoom = (value: number) => {
+  $viewer.zoom(value || form.zoom)
+}
+
+const zoomTo = () => {
+  $viewer.zoomTo(form.zoomTo)
+}
+
+const rotate = (value: number) => {
+  $viewer.rotate(value || form.rotate)
+}
+
+const rotateTo = () => {
+  $viewer.rotateTo(form.rotateTo)
+}
+
+const scaleX = (value: number) => {
+  if (value) {
+    $viewer.scaleX(value)
+  }
+  else {
+    form.scaleX = -form.scaleX
+    $viewer.scaleX(form.scaleX)
+  }
+}
+
+const scaleY = (value: number) => {
+  if (value) {
+    $viewer.scaleY(value)
+  }
+  else {
+    form.scaleY = -form.scaleY
+    $viewer.scaleY(form.scaleY)
+  }
+}
+
+const move = (x: number, y: number) => {
+  $viewer.move(x, y)
+}
+
+const prev = () => {
+  $viewer.prev()
+}
+
+const next = () => {
+  $viewer.next()
+}
+
+const play = () => {
+  $viewer.play()
+}
+
+const stop = () => {
+  $viewer.stop()
+}
+
+const show = () => {
+  $viewer.show()
+}
+
+const full = () => {
+  $viewer.full()
+}
+
+const tooltip = () => {
+  $viewer.tooltip()
+}
+
+const reset = () => {
+  $viewer.reset()
+}
+
+const toggleInline = (inline: boolean) => {
+  options.inline = inline
+}
+</script> -->
 
 <template>
   <div>
@@ -524,7 +692,7 @@ export default defineComponent({
       </div>
       <div class="tile is-10 is-vertical is-parent">
         <div class="viewer-wrapper">
-          <Viewer
+          <VViewer
             ref="viewer"
             :options="options"
             :images="images"
@@ -549,7 +717,7 @@ export default defineComponent({
               </figure>
               <p><strong>Options: </strong>{{ scope.options }}</p>
             </template>
-          </Viewer>
+          </VViewer>
         </div>
       </div>
     </div>
