@@ -33,7 +33,7 @@ Image viewer component for vue, supports rotation, scale, zoom and so on, based 
 Install from NPM
 
 ```bash
-npm install v-viewer@next viewerjs
+npm install v-viewer viewerjs
 ```
 
 ## Usage
@@ -113,9 +113,9 @@ app.mount('#app')
 
 ```html
 <link href="//unpkg.com/viewerjs/dist/viewer.css" rel="stylesheet">
-<script src="//unpkg.com/vue@next"></script>
+<script src="//unpkg.com/vue"></script>
 <script src="//unpkg.com/viewerjs/dist/viewer.js"></script>
-<script src="//unpkg.com/v-viewer@next/dist/index.umd.js"></script>
+<script src="//unpkg.com/v-viewer/dist/index.umd.js"></script>
 <script>
   app.use(VueViewer.default)
 </script>

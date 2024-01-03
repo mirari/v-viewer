@@ -39,14 +39,15 @@
     "preview:build": "vite build example --config example/vite.config.ts",
     "preview:serve": "vite preview example --config example/vite.config.ts",
     "release": "standard-version",
+    "publish": "npm run build && npm publish",
     "publish:next": "npm run build && npm publish --tag next"
   },
   "peerDependencies": {
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "viewerjs": "^1.11.0"
   },
   "dependencies": {
-    "lodash": "^4.17.21",
-    "viewerjs": "^1.11.0"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.27.0",
