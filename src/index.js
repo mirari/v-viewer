@@ -1,5 +1,5 @@
 import Viewer from 'viewerjs'
-import { assign } from './util'
+import { assign } from 'lodash-es'
 import component from './component.vue'
 import directive from './directive'
 import api from './api'

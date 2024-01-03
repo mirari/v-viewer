@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Viewer from 'viewerjs'
-import { assign } from './util'
+import { assign } from 'lodash-es'
 
 const api = ({ images = [], options = {} } = {}) => {
   options = assign(options, {

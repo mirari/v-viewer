@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Viewer from 'viewerjs'
-import debounce from 'lodash/debounce'
+import { debounce } from 'lodash-es'
 
 const directive = ({ name = 'viewer', debug = false } = {}) => {
   function createViewer(el, options, rebuild = false, observer = false) {
