@@ -1,5 +1,5 @@
 import Viewer from 'viewerjs'
-import debounce from 'lodash/debounce'
+import { debounce } from 'lodash-es'
 import { nextTick, watch } from 'vue'
 import type { Directive, DirectiveBinding, VNode } from 'vue'
 

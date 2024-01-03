@@ -1,6 +1,6 @@
 import { h, render } from 'vue'
 import Viewer from 'viewerjs'
-import { assign } from './util'
+import { assign } from 'lodash-es'
 
 export interface ViewerApiOptions {
   images: Array<string | object>

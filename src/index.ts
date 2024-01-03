@@ -1,5 +1,5 @@
 import type { App } from 'vue'
-import defaults from 'lodash/defaults'
+import { defaults } from 'lodash-es'
 import Viewer from 'viewerjs'
 import api from './api'
 import directive from './directive'
