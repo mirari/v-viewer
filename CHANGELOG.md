@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.3](https://github.com/mirari/v-viewer/compare/v1.6.4...v1.7.3) (2024-01-03)
+
+
+### Bug Fixes
+
+* fix util function build error ([bfde730](https://github.com/mirari/v-viewer/commit/bfde730a94a6522e4f9f23b1520fda2fc36429c0))
+
 ### [1.7.2](https://github.com/mirari/v-viewer/compare/v1.7.1...v1.7.2) (2024-01-03)
 
 ### [1.7.1](https://github.com/mirari/v-viewer/compare/v1.7.0...v1.7.1) (2023-06-02)
