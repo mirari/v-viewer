@@ -11,9 +11,6 @@ dependencies:
   viewerjs:
     specifier: ^1.9.0
     version: 1.10.2
-  vue:
-    specifier: ^2.0.0
-    version: 2.0.0
 
 devDependencies:
   '@antfu/eslint-config':
@@ -85,8 +82,11 @@ devDependencies:
   vite-plugin-vue2:
     specifier: ^1.9.2
     version: 1.9.3(vite@2.9.16)(vue-template-compiler@2.7.16)
+  vue:
+    specifier: ^2.7.16
+    version: 2.7.16
   vue-template-compiler:
-    specifier: ^2.6.14
+    specifier: ^2.7.16
     version: 2.7.16
   vue-tsc:
     specifier: ^0.30.2
@@ -1337,6 +1337,16 @@ packages:
       '@vue/shared': 3.4.3
     dev: true
 
+  /@vue/compiler-sfc@2.7.16:
+    resolution: {integrity: sha512-KWhJ9k5nXuNtygPU7+t1rX6baZeqOYLEforUPjgNDBnLicfHCoi48H87Q8XyLZOrNNsmhuwKqtpDQWjEFe6Ekg==}
+    dependencies:
+      '@babel/parser': 7.23.6
+      postcss: 8.4.32
+      source-map: 0.6.1
+    optionalDependencies:
+      prettier: 2.8.8
+    dev: true
+
   /@vue/compiler-sfc@3.2.26:
     resolution: {integrity: sha512-ePpnfktV90UcLdsDQUh2JdiTuhV0Skv2iYXxfNMOK/F3Q+2BO0AulcVcfoksOpTJGmhhfosWfMyEaEf0UaWpIw==}
     dependencies:
@@ -2459,6 +2469,10 @@ packages:
 
   /csstype@2.6.19:
     resolution: {integrity: sha512-ZVxXaNy28/k3kJg0Fou5MiYpp88j7H9hLZp8PDC3jV0WFjfH5E9xHb56L0W59cPbKbcHXeP4qyT8PrHp8t6LcQ==}
+    dev: true
+
+  /csstype@3.1.3:
+    resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
     dev: true
 
   /dargs@7.0.0:
@@ -5811,9 +5825,13 @@ packages:
       vscode-vue-languageservice: 0.30.6
     dev: true
 
-  /vue@2.0.0:
-    resolution: {integrity: sha512-R3ofC6v51hVoSJ7t/lVg6RURSLZAcrf8pabotpFZVqaVEB6s7D+GFFobm/6HXQJU9P7/pNq43ZVFEQdt7PK6YQ==}
-    dev: false
+  /vue@2.7.16:
+    resolution: {integrity: sha512-4gCtFXaAA3zYZdTp5s4Hl2sozuySsgz4jy1EnpBHNfpMa9dK1ZCG7viqBPCwXtmgc8nHqUsAu3G4gtmXkkY3Sw==}
+    deprecated: Vue 2 has reached EOL and is no longer actively maintained. See https://v2.vuejs.org/eol/ for more details.
+    dependencies:
+      '@vue/compiler-sfc': 2.7.16
+      csstype: 3.1.3
+    dev: true
 
   /which-boxed-primitive@1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}
