@@ -8,9 +8,6 @@ dependencies:
   lodash-es:
     specifier: ^4.17.21
     version: 4.17.21
-  viewerjs:
-    specifier: ^1.9.0
-    version: 1.10.2
 
 devDependencies:
   '@antfu/eslint-config':
@@ -76,6 +73,9 @@ devDependencies:
   typescript:
     specifier: ^4.5.4
     version: 4.5.4
+  viewerjs:
+    specifier: ^1.11.6
+    version: 1.11.6
   vite:
     specifier: ^2.9.16
     version: 2.9.16(sass@1.47.0)
@@ -5557,9 +5557,9 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /viewerjs@1.10.2:
-    resolution: {integrity: sha512-v/4+OUF/71JthlvYuqfse+WGkMJO0LxvWiOLsAoxWw+RWjMdEBWn0ZQ5Mc+OhNIFd9uLhG62GzfFIplvix8odg==}
-    dev: false
+  /viewerjs@1.11.6:
+    resolution: {integrity: sha512-TlhdSp2oEOLFXvEp4psKaeTjR5zBjTRcM/sHUN8PkV1UWuY8HKC8n7GaVdW5Xqnwdr/F1OmzLik1QwDjI4w/nw==}
+    dev: true
 
   /vite-plugin-vue2@1.9.3(vite@2.9.16)(vue-template-compiler@2.7.16):
     resolution: {integrity: sha512-0KhHSEeht0VHJtt4Z2cJ9bWBq4dP3HoXpapqAHV+f+cUa6KywYdOd+z6sSGLpuGjN8F9YinrFIo8dfVmMOpc8Q==}
