@@ -36,6 +36,14 @@ Image viewer component for vue, supports rotation, scale, zoom and so on, based 
 import 'viewerjs/dist/viewer.css'
 ```
 
+## Migration from 1.6.x
+
+- If you were using the `npm` installer before, manually install `viewerjs`:
+
+```bash
+npm install v-viewer@legacy viewerjs
+```
+
 ## Installation
 
 Install from NPM
