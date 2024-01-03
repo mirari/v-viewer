@@ -3,15 +3,15 @@
 Image viewer component for vue, supports rotation, scale, zoom and so on, based on [viewer.js](https://github.com/fengyuanchen/viewerjs)
 
 [![npm version](https://img.shields.io/npm/v/v-viewer.svg)](https://www.npmjs.com/package/v-viewer)
-[![language](https://img.shields.io/badge/language-Vue2-brightgreen.svg)](https://www.npmjs.com/package/v-viewer)
-
-[![npm version](https://img.shields.io/npm/v/v-viewer/next.svg)](https://www.npmjs.com/package/v-viewer)
 [![language](https://img.shields.io/badge/language-Vue3-brightgreen.svg)](https://www.npmjs.com/package/v-viewer)
+
+[![npm version](https://img.shields.io/npm/v/v-viewer/legacy.svg)](https://www.npmjs.com/package/v-viewer)
+[![language](https://img.shields.io/badge/language-Vue2-brightgreen.svg)](https://www.npmjs.com/package/v-viewer)
 
 [![npm download](https://img.shields.io/npm/dw/v-viewer.svg)](https://www.npmjs.com/package/v-viewer)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://mit-license.org/) 
 
-## [v-viewer for vue2](https://github.com/mirari/v-viewer)
+## [v-viewer for vue2](https://github.com/mirari/v-viewer/tree/v2)
 
 ## [Live demo](https://mirari.github.io/vue3-viewer/)
 
