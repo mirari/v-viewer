@@ -9,7 +9,7 @@
         Directive
       </h2>
       <p class="subtitle">
-        <a href="https://github.com/mirari/v-viewer/blob/master/example/views/example/DirectiveExample.vue" target="_blank">Source</a>
+        <a href="https://github.com/mirari/v-viewer/blob/v2/example/views/example/DirectiveExample.vue" target="_blank">Source</a>
       </p>
       <directive-example />
     </div>
@@ -18,7 +18,7 @@
         Component
       </h2>
       <p class="subtitle">
-        <a href="https://github.com/mirari/v-viewer/blob/master/example/views/example/ComponentExample.vue" target="_blank">Source</a>
+        <a href="https://github.com/mirari/v-viewer/blob/v2/example/views/example/ComponentExample.vue" target="_blank">Source</a>
       </p>
       <component-example />
     </div>
@@ -27,7 +27,7 @@
         Api
       </h2>
       <p class="subtitle">
-        <a href="https://github.com/mirari/v-viewer/blob/master/example/views/example/ApiExample.vue" target="_blank">Source</a>
+        <a href="https://github.com/mirari/v-viewer/blob/v2/example/views/example/ApiExample.vue" target="_blank">Source</a>
       </p>
       <api-example />
     </div>

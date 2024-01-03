@@ -10,7 +10,7 @@
                 v-viewer
               </p>
               <p class="subtitle is-4">
-                Image viewer component for vue, supports rotation, scale, zoom and so on, based on <a href="https://github.com/fengyuanchen/viewerjs" target="_blank">viewer.js</a>
+                Image viewer component for vue 2.x, supports rotation, scale, zoom and so on, based on <a href="https://github.com/fengyuanchen/viewerjs" target="_blank">viewer.js</a>
               </p>
             </div>
           </div>
