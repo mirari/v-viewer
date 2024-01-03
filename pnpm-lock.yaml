@@ -80,7 +80,7 @@ devDependencies:
     specifier: ^4.5.4
     version: 4.5.4
   vite:
-    specifier: ^2.7.10
+    specifier: ^2.9.16
     version: 2.9.16(sass@1.47.0)
   vite-plugin-vue2:
     specifier: ^1.9.2
