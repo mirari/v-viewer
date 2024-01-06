@@ -8,6 +8,9 @@ dependencies:
   lodash-es:
     specifier: ^4.17.21
     version: 4.17.21
+  viewerjs:
+    specifier: ^1.11.6
+    version: 1.11.6
 
 devDependencies:
   '@antfu/eslint-config':
@@ -49,9 +52,6 @@ devDependencies:
   typescript:
     specifier: ^4.6.4
     version: 4.6.4
-  viewerjs:
-    specifier: ^1.11.6
-    version: 1.11.6
   vite:
     specifier: ^3.1.0
     version: 3.2.7(@types/node@20.4.4)(sass@1.55.0)
@@ -4414,7 +4414,7 @@ packages:
 
   /viewerjs@1.11.6:
     resolution: {integrity: sha512-TlhdSp2oEOLFXvEp4psKaeTjR5zBjTRcM/sHUN8PkV1UWuY8HKC8n7GaVdW5Xqnwdr/F1OmzLik1QwDjI4w/nw==}
-    dev: true
+    dev: false
 
   /vite@3.2.7(@types/node@20.4.4)(sass@1.55.0):
     resolution: {integrity: sha512-29pdXjk49xAP0QBr0xXqu2s5jiQIXNvE/xwd0vUizYT2Hzqe4BksNNoWllFVXJf4eLZ+UlVQmXfB4lWrc+t18g==}
