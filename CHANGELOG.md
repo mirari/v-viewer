@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.4](https://github.com/mirari/v-viewer/compare/v1.7.3...v1.7.4) (2024-01-06)
+
 ### [1.7.3](https://github.com/mirari/v-viewer/compare/v1.6.4...v1.7.3) (2024-01-03)
 
 
