@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.14](https://github.com/mirari/v-viewer/compare/v3.0.13...v3.0.14) (2024-01-06)
+
+
+### Bug Fixes
+
+* update dependencies ([e9003e0](https://github.com/mirari/v-viewer/commit/e9003e0902f7cc8c0d03d9ed9b520580c263ade7))
+
 ### [3.0.13](https://github.com/mirari/v-viewer/compare/v3.0.9...v3.0.13) (2024-01-03)
 
 
