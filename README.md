@@ -421,8 +421,8 @@ const sourceImageObjects = [
   }
 ]
 const previewURL = () => {
-  // If you use the `app.use` full installation, you can use `this.$viewerApi` directly like this
-  const $viewer = this.$viewerApi({
+  // Import the api method and call it.
+  const $viewer = viewerApi({
     images: sourceImageURLs
   })
 }
