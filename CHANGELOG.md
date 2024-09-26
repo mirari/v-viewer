@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.15](https://github.com/mirari/v-viewer/compare/v3.0.14...v3.0.15) (2024-09-26)
+
+
+### Bug Fixes
+
+* fix the issue of incorrect entry reference caused by the unspecified type in package.json.[#338](https://github.com/mirari/v-viewer/issues/338) ([f493490](https://github.com/mirari/v-viewer/commit/f4934906d7c90c79571c7bf3edb160cc6b34e2f8))
+
 ### [3.0.14](https://github.com/mirari/v-viewer/compare/v3.0.13...v3.0.14) (2024-01-06)
 
 
