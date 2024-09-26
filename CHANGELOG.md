@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.20](https://github.com/mirari/v-viewer/compare/v3.0.19...v3.0.20) (2024-09-26)
+
+
+### Bug Fixes
+
+* fix package setting mistake ([6e54d96](https://github.com/mirari/v-viewer/commit/6e54d9643bc015710ca5eb1d971569c1f1336589))
+
 ### [3.0.19](https://github.com/mirari/v-viewer/compare/v3.0.18...v3.0.19) (2024-09-26)
 
 
