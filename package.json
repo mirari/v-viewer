@@ -1,7 +1,7 @@
 {
   "name": "v-viewer",
   "scope": "VueViewer",
-  "version": "3.0.16",
+  "version": "3.0.17",
   "description": "Image viewer component for vue, supports rotation, scale, zoom and so on, based on viewer.js",
   "author": "mirari",
   "license": "MIT",
