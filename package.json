@@ -23,9 +23,8 @@
   ],
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.js",
-  "unpkg": "./dist/index.umd.cjs",
+  "unpkg": "./dist/index.iife.js",
   "types": "./types/index.d.ts",
-  "type": "module",
   "exports": {
     ".": {
       "types": "./types/index.d.js",

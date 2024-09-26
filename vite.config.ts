@@ -10,6 +10,7 @@ export default defineConfig({
       entry: 'src/index.ts',
       name: pkg.scope,
       fileName: 'index',
+      formats: ['es', 'umd', 'iife'],
     },
     rollupOptions: {
       output: {
