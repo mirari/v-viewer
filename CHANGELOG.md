@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.18](https://github.com/mirari/v-viewer/compare/v3.0.17...v3.0.18) (2024-09-26)
+
+
+### Bug Fixes
+
+* support iife ([02662af](https://github.com/mirari/v-viewer/commit/02662afd89f8f307a0e825fd601a710939a463d0))
+
 ### [3.0.17](https://github.com/mirari/v-viewer/compare/v3.0.16...v3.0.17) (2024-09-26)
 
 
