@@ -1,7 +1,7 @@
 {
   "name": "v-viewer",
   "scope": "VueViewer",
-  "version": "3.0.15",
+  "version": "3.0.16",
   "description": "Image viewer component for vue, supports rotation, scale, zoom and so on, based on viewer.js",
   "author": "mirari",
   "license": "MIT",
@@ -22,14 +22,14 @@
     "image"
   ],
   "main": "./dist/index.umd.js",
-  "module": "./dist/index.mjs",
+  "module": "./dist/index.js",
   "unpkg": "./dist/index.umd.js",
   "types": "./types/index.d.ts",
   "type": "module",
   "exports": {
     ".": {
       "types": "./types/index.d.js",
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.js",
       "require": "./dist/index.umd.js"
     }
   },
