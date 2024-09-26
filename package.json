@@ -25,6 +25,14 @@
   "module": "./dist/index.mjs",
   "unpkg": "./dist/index.umd.js",
   "types": "./types/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.js",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.umd.js"
+    }
+  },
   "files": [
     "dist",
     "types",
@@ -60,7 +68,7 @@
     "bulma": "^0.9.4",
     "eslint": "^8.26.0",
     "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
+    "lint-staged": "^15.2.10",
     "sass": "^1.55.0",
     "standard-version": "^9.5.0",
     "typescript": "^4.6.4",
