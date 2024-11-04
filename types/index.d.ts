@@ -29,7 +29,7 @@ export declare const component: DefineComponent<{}, {}, any>
 
 export default VueViewer
 
-declare module '@vue/runtime-core' {
+declare module 'vue' {
   interface ComponentCustomProperties {
     $viewerApi: typeof api
   }
