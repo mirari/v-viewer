@@ -25,7 +25,7 @@ export declare const api: (options: VueViewer.ViewerApiOptions) => ViewerJs
 
 export declare const directive: (options?: VueViewer.InstallationOptions) => Directive
 
-export declare const component: DefineComponent<{}, {}, any>
+export declare const component: DefineComponent<{}, {}>
 
 export default VueViewer
 
