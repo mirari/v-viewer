@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.22](https://github.com/mirari/v-viewer/compare/v3.0.14...v3.0.22) (2025-07-02)
+
+
+### Bug Fixes
+
+* fix package setting mistake ([6e54d96](https://github.com/mirari/v-viewer/commit/6e54d9643bc015710ca5eb1d971569c1f1336589))
+* fix package setting mistake ([f930882](https://github.com/mirari/v-viewer/commit/f930882443b60bd23f62c88c0634692f9237bd5c))
+* fix package setting mistake ([4465979](https://github.com/mirari/v-viewer/commit/4465979cc8f07d924300cc7e802f752902f637bb))
+* fix the issue of incorrect entry reference caused by the unspecified type in package.json.[#338](https://github.com/mirari/v-viewer/issues/338) ([f493490](https://github.com/mirari/v-viewer/commit/f4934906d7c90c79571c7bf3edb160cc6b34e2f8))
+* fix type declaration ([e16928b](https://github.com/mirari/v-viewer/commit/e16928b3badcdbc2a79f3ab2f06a7feeb0700521))
+* slot type error ([0ddd93e](https://github.com/mirari/v-viewer/commit/0ddd93e7f3cf2f95773f2bcd16c2b05232579893))
+* support iife ([02662af](https://github.com/mirari/v-viewer/commit/02662afd89f8f307a0e825fd601a710939a463d0))
+
 ### [3.0.21](https://github.com/mirari/v-viewer/compare/v3.0.20...v3.0.21) (2024-11-02)
 
 
