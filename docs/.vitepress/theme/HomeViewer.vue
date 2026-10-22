@@ -2,11 +2,12 @@
 import { computed } from 'vue'
 import { useData, withBase } from 'vitepress'
 import { vViewer } from 'v-viewer'
+import { defaultImages } from './sample-images'
 import 'viewerjs/dist/viewer.css'
 
 const { lang } = useData()
 const english = computed(() => lang.value.startsWith('en'))
-const images = ['/images/valley.jpg', '/images/river.jpg', '/images/ridge.jpg']
+const images = defaultImages
 const options = { inline: true, button: false, title: false }
 </script>
 

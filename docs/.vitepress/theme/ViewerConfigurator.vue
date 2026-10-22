@@ -5,6 +5,7 @@ import { compile, moduleUrl } from './playground/compile'
 import 'viewerjs/dist/viewer.css'
 import './configurator/preview.css'
 import { previewSample } from './configurator/preview'
+import { defaultImages } from './sample-images'
 import {
   defaults,
   groups,
@@ -155,9 +156,7 @@ onMounted(async () => {
       /* @vite-ignore */ moduleUrl(await response.text())
     )
     if (disposed) return
-    const urls = ['valley', 'river', 'ridge'].map(
-      (name) => location.origin + withBase(`/images/${name}.jpg`),
-    )
+    const urls = defaultImages.map((path) => location.origin + withBase(path))
     const compiled = compile(
       previewSample(!!props.vue2, english.value, urls),
       !!props.vue2,

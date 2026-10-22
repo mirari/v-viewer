@@ -1,3 +1,5 @@
+import { defaultImageCount } from '../sample-images.ts'
+
 export type Setting = boolean | number | string
 export type Settings = Record<string, Setting>
 type Choice = { value: Setting; zh: string; en: string }
@@ -182,7 +184,14 @@ export const groups = [
         1,
         0.05,
       ),
-      num('initialViewIndex', '初始图片索引', 'Initial image index', 0, 0, 2),
+      num(
+        'initialViewIndex',
+        '初始图片索引',
+        'Initial image index',
+        0,
+        0,
+        defaultImageCount - 1,
+      ),
       num(
         'minWidth',
         '内嵌最小宽度 / px',
@@ -319,7 +328,7 @@ export const presets: Record<string, Record<string, string>> = {
   filter: {
     all: 'null',
     first: "image => image.dataset.index === '0'",
-    lastTwo: "image => image.dataset.index !== '0'",
+    lastTwo: `image => Number(image.dataset.index) >= ${defaultImageCount - 2}`,
   },
   url: { resolver: "image => image.getAttribute('data-source')" },
   inheritedAttributes: {

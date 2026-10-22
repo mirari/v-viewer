@@ -74,7 +74,7 @@ export default {
         const changedIndex = values.initialViewIndex !== this.previousIndex
         this.previousIndex = values.initialViewIndex
         const options = createOptions(values)
-        options.initialViewIndex = changedIndex ? values.initialViewIndex : Math.min(index, values.filter === 'first' ? 0 : values.filter === 'lastTwo' ? 1 : 2)
+        options.initialViewIndex = changedIndex ? values.initialViewIndex : Math.min(index, values.filter === 'first' ? 0 : values.filter === 'lastTwo' ? 1 : this.images.length - 1)
         this.options = options
         // Vue 2 rebuilds the child on its next tick; report after that completes.
         this.$nextTick(() => this.$nextTick(state))

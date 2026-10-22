@@ -14,7 +14,7 @@ for (const english of [false, true]) {
     await expect(image).toHaveAttribute('src', /valley/)
     await expect(example.locator('pre, code, h2')).toHaveCount(0)
     await expect(page.locator('body > .viewer-container')).toHaveCount(0)
-    await expect(viewer.locator('.viewer-list > li')).toHaveCount(3)
+    await expect(viewer.locator('.viewer-list > li')).toHaveCount(5)
     await viewer.getByRole('button', { name: 'Next', exact: true }).click()
     await expect(image).toHaveAttribute('src', /river/)
     await viewer.getByRole('button', { name: 'Previous', exact: true }).click()
@@ -224,6 +224,9 @@ for (const vue2 of [false, true]) {
           await expect(frame.locator('.v-viewer-token')).toHaveCount(0)
       }
       await open()
+      await expect(
+        frame.getByRole('dialog').locator('.viewer-list > li'),
+      ).toHaveCount(5)
       await expect(page.locator('body > .viewer-container')).toBeVisible()
       await expect
         .poll(() => page.getByRole('dialog').boundingBox())
@@ -250,14 +253,14 @@ for (const vue2 of [false, true]) {
         name: '显示viewer',
         exact: true,
       })
-      await add.click()
+      for (let i = 5; i < 10; i++) await add.click()
       await expect(add).toBeDisabled()
       await open(true)
       await expect(
         frame.getByRole('dialog').locator('.viewer-list > li'),
-      ).toHaveCount(3)
+      ).toHaveCount(10)
       await close()
-      for (let i = 0; i < 3; i++) await remove.click()
+      for (let i = 0; i < 10; i++) await remove.click()
       await expect(remove).toBeDisabled()
       await expect(show).toBeDisabled()
       await expectContentHeight()
@@ -395,7 +398,15 @@ for (const vue2 of [false, true]) {
             })
             .getByRole('button', { name: label, exact: true }),
         ).toHaveAttribute('aria-pressed', 'true')
-        // CodeMirror only renders visible lines, so check the script at the top.
+        // CodeMirror virtualizes lines; bring the Vue 2 methods below the
+        // image list into view before checking the selected example's code.
+        const editor = page.getByLabel(
+          english ? 'App.vue code editor' : 'App.vue 代码编辑器',
+        )
+        if (vue2) {
+          await editor.press('Control+Home')
+          for (let i = 0; i < 28; i++) await editor.press('ArrowDown')
+        }
         const expectedCode =
           mode === 'api'
             ? vue2
@@ -408,11 +419,7 @@ for (const vue2 of [false, true]) {
               : mode === 'component'
                 ? 'import { Viewer }'
                 : 'import { vViewer }'
-        await expect(
-          page.getByLabel(
-            english ? 'App.vue code editor' : 'App.vue 代码编辑器',
-          ),
-        ).toContainText(expectedCode)
+        await expect(editor).toContainText(expectedCode)
       }
       await page.reload()
       await expect(page.getByRole('status')).toHaveText(

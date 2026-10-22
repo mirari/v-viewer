@@ -1,13 +1,12 @@
 import { sampleStyles } from './samples.ts'
+import { defaultImages } from '../sample-images.ts'
 
 export function toolbarSample(
   vue2: boolean,
   english: boolean,
   withBase = (path: string) => path,
 ) {
-  const images = ['valley', 'river', 'ridge'].map((name) =>
-    withBase(`/images/${name}.jpg`),
-  )
+  const images = defaultImages.map(withBase)
   const script = vue2
     ? `import { Viewer } from 'v-viewer'
 export default {
