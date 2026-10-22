@@ -68,7 +68,7 @@ const images = ['/photo.jpg']
 
 ### Directive
 
-Suitable for simple image browsing without complex customization. See the [directive guide](/en/guide/directive).
+Suitable for simple image browsing without complex customization, while also supporting images in dynamically rendered Markdown or HTML whose content is not known in advance. See the [directive guide](/en/guide/directive).
 
 ```vue
 <script setup>

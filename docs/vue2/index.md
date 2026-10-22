@@ -75,7 +75,7 @@ export default { data: () => ({ images: ['/photo.jpg'] }) }
 
 ### 指令
 
-适合无需复杂定制需求的简单浏览场景。详细用法见[指令](/vue2/guide/directive)。
+适合无需复杂定制需求的简单浏览场景，同时支持动态渲染 Markdown 或 HTML 等未知图片内容。详细用法见[指令](/vue2/guide/directive)。
 
 ```vue
 <template>

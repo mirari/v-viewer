@@ -75,7 +75,7 @@ export default { data: () => ({ images: ['/photo.jpg'] }) }
 
 ### Directive
 
-Suitable for simple image browsing without complex customization. See the [directive guide](/en/vue2/guide/directive).
+Suitable for simple image browsing without complex customization, while also supporting images in dynamically rendered Markdown or HTML whose content is not known in advance. See the [directive guide](/en/vue2/guide/directive).
 
 ```vue
 <template>
