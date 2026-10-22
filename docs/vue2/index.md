@@ -14,7 +14,7 @@
 pnpm add v-viewer@legacy
 ```
 
-Viewer.js 会作为依赖自动安装。在应用入口注册一次插件，浏览器构建会自动加载对应版本的样式，无需单独导入 CSS。
+3.x 以下使用者注意，新版本无需显式安装 `viewerjs` 依赖，也无需在使用时引入 CSS 文件了。
 
 ```js
 import Vue from 'vue'

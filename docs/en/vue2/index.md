@@ -14,7 +14,7 @@ This major rewrite includes breaking API changes. Components now recommend direc
 pnpm add v-viewer@legacy
 ```
 
-Viewer.js is installed automatically as a dependency. Register the plugin once in your application entry; browser builds automatically include the matching stylesheet without a separate CSS import.
+For users upgrading from 3.x or earlier: the new version no longer requires you to explicitly install `viewerjs` or import its CSS file.
 
 ```js
 import Vue from 'vue'
