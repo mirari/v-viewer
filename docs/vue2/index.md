@@ -12,7 +12,9 @@
 pnpm add v-viewer@legacy
 ```
 
-3.x 以下使用者注意，新版本无需显式安装 `viewerjs` 依赖，也无需在使用时引入 CSS 文件了。
+::: warning 旧项目升级注意
+新版本无需显式安装 `viewerjs` 依赖，也无需在使用时引入 CSS 文件了。
+:::
 
 ```js
 import Vue from 'vue'

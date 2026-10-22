@@ -12,7 +12,9 @@ This major rewrite includes breaking API changes. Components now recommend direc
 pnpm add v-viewer@legacy
 ```
 
-For users upgrading from 3.x or earlier: the new version no longer requires you to explicitly install `viewerjs` or import its CSS file.
+::: warning Upgrading an existing project
+The new version no longer requires you to explicitly install `viewerjs` or import its CSS file.
+:::
 
 ```js
 import Vue from 'vue'
