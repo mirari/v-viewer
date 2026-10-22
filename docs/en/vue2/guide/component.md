@@ -3,7 +3,7 @@
 The component offers the most customization. It suits both simple image lists and content whose images are not known in advance, such as rendered Markdown or HTML fragments. By default, the component updates automatically when the image elements inside it change.
 
 ::: warning Upgrading from an older major version
-The Vue 2 (4.x) and Vue 3 (5.x) lines are a rewrite with breaking API changes. Migrate component settings to props, callbacks to Vue events, and method calls to the component ref. **The legacy options prop is retained for compatibility, but is deprecated.** Existing options-based galleries can migrate gradually.
+The Vue 2 (4.x) and Vue 3 (5.x) lines are a rewrite with breaking changes. Migrate component settings to props, callbacks to Vue events, and method calls to the component ref. **The legacy options prop is retained for compatibility, but is deprecated.** Existing options-based galleries can migrate gradually.
 :::
 
 [Playground](/en/vue2/playground?example=component)

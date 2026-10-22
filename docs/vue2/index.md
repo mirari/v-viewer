@@ -1,7 +1,7 @@
 # 快速上手
 
 ::: warning 旧项目升级注意
-本次主版本重构包含破坏性 API 变更。组件推荐改用直接属性、Vue 事件和 ref 方法；旧 options 传参保留兼容，但不推荐继续使用。升级前请对照[迁移示例](./guide/component#migration)调整写法。
+本次主版本重构包含破坏性变更。组件推荐改用直接属性、Vue 事件和 ref 方法；旧 options 传参保留兼容，但不推荐继续使用。升级前请对照[迁移示例](./guide/component#migration)调整写法。
 :::
 
 <ClientOnly><ViewerConfigurator vue2 /></ClientOnly>
@@ -13,7 +13,7 @@ npm install v-viewer@legacy
 ```
 
 ::: warning 旧项目升级注意
-新版本无需显式安装 `viewerjs` 依赖，也无需在使用时引入 CSS 文件了。
+新版本无需显式安装 `viewerjs` 依赖，也无需在使用时引入 `viewerjs` 的 CSS 文件了。
 :::
 
 ```js

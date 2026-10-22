@@ -1,7 +1,7 @@
 # Quick start
 
 ::: warning Upgrading an existing project
-This major rewrite includes breaking API changes. Components now recommend direct props, Vue events and ref methods. The legacy options prop remains compatible, but is deprecated. Read the [migration examples](./guide/component#migration) before upgrading.
+This major rewrite includes breaking changes. Components now recommend direct props, Vue events and ref methods. The legacy options prop remains compatible, but is deprecated. Read the [migration examples](./guide/component#migration) before upgrading.
 :::
 
 <ClientOnly><ViewerConfigurator vue2 /></ClientOnly>
@@ -13,7 +13,7 @@ npm install v-viewer@legacy
 ```
 
 ::: warning Upgrading an existing project
-The new version no longer requires you to explicitly install `viewerjs` or import its CSS file.
+The new version no longer requires you to explicitly install `viewerjs` or import the CSS file from `viewerjs`.
 :::
 
 ```js
