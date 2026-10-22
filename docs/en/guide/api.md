@@ -1,6 +1,6 @@
 # API
 
-Open a gallery from an image array without rendering source images on the page, or use `target` to control an existing gallery.
+Suitable for opening a specified image array after a button click.
 
 [Playground](/en/playground?example=api)
 

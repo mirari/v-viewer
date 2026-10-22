@@ -1,6 +1,6 @@
 # Directive
 
-Enhance an existing image or container, including dynamic DOM from rendered Markdown or HTML fragments.
+Suitable for simple image browsing without complex customization, while also supporting images in dynamically rendered Markdown or HTML whose content is not known in advance.
 
 [Playground](/en/vue2/playground?example=directive)
 

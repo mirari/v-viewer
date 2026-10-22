@@ -1,6 +1,6 @@
 # API
 
-Create a modal gallery from an image array without rendering source images on the page.
+Suitable for opening a specified image array after a button click.
 
 [Playground](/en/vue2/playground?example=api)
 

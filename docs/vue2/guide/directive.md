@@ -1,6 +1,6 @@
 # 指令
 
-直接增强已有的图片或图片容器，适用于 Markdown 渲染内容、HTML 片段等动态 DOM。
+适合无需复杂定制需求的简单浏览场景，同时支持动态渲染 Markdown 或 HTML 等未知图片内容。
 
 [演练场](/vue2/playground?example=directive)
 
