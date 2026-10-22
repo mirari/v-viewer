@@ -36,10 +36,6 @@ import './viewer.css'
 }
 ```
 
-These styles apply to all viewers. To customize one instance, use `class-name="custom-viewer"` on the component, or set `className: 'custom-viewer'` in the directive or API configuration. Replace `.viewer-container` in the CSS selectors with `.custom-viewer`.
-
-Use global CSS or a `<style>` block without `scoped`. Modals mount to `body` by default, so overrides should not depend on an ancestor selector from the page container.
-
 #### Replace the default stylesheet
 
 Import from `v-viewer/unstyled` to disable automatic CSS loading. It provides the same exports as `v-viewer`:

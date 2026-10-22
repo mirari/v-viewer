@@ -36,10 +36,6 @@ import './viewer.css'
 }
 ```
 
-以上样式作用于所有查看器。若只修改某个实例，组件使用 `class-name="custom-viewer"`；指令和 API 在配置中设置 `className: 'custom-viewer'`。将 CSS 选择器中的 `.viewer-container` 替换为 `.custom-viewer`。
-
-使用全局 CSS 或不带 `scoped` 的 `<style>`。弹窗默认挂载到 `body`，覆盖样式时不要依赖页面容器的父级选择器。
-
 #### 完全替换默认样式
 
 使用 `v-viewer/unstyled` 保留全部功能，关闭自动加载 CSS：
