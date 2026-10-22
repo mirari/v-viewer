@@ -45,7 +45,7 @@ import { Viewer } from 'v-viewer/unstyled'
 import './viewer-theme.css'
 ```
 
-自定义样式需包含完整布局和控件。
+默认样式位于 `viewerjs/dist/viewer.css`，可复制为 `viewer-theme.css` 后修改，保留所需的布局和控件样式。
 
 ## 基本使用方式
 

@@ -54,7 +54,7 @@ import './viewer-theme.css'
 Vue.use(VueViewer)
 ```
 
-Provide complete layout and control styles.
+The default stylesheet is `viewerjs/dist/viewer.css`. Copy it to `viewer-theme.css` and customize it, retaining the layout and control styles you need.
 
 ## Basic usage
 
