@@ -23,7 +23,10 @@ directive vue3 zh
 | v-viewer="options"              | 接受 Viewer.js 配置，深层修改会重建实例。                                         |
 | `v-viewer="{ observe: false }"` | 关闭图片 DOM 自动更新。                                                           |
 | `v-viewer="{ observe: 100 }"`   | 在 100ms 窗口内合并图片 DOM 变化；默认 `true` 使用 50ms，`0` 仅合并至下一个任务。 |
-| .rebuild                        | 图片变化时重建实例。                                                              |
+| `v-viewer="{ rebuild: true }"`  | 图片变化时重建实例；默认 `false`，支持动态切换。                                  |
+| `.rebuild`                      | `rebuild: true` 的简写。                                                          |
+
+绑定值中的 `rebuild` 优先于 `.rebuild`，显式设置 `false` 可关闭重建；未设置或为 `undefined` 时沿用修饰符。`rebuild` 和 `observe` 是 v-viewer 的扩展配置，不会传给 Viewer.js。
 
 默认监听图片增删和属性修改，自动更新图库。可通过 `element.$viewer` 获取实例；卸载时会断开监听并销毁实例。
 

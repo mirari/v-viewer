@@ -5,7 +5,10 @@ import type { ViewerEventName } from './component.js'
 export { ViewerJs }
 export type ViewerOptions = ViewerJs.Options
 export type ViewerObserve = boolean | number
-export type ViewerDirectiveOptions = ViewerOptions & { observe?: ViewerObserve }
+export type ViewerDirectiveOptions = ViewerOptions & {
+  observe?: ViewerObserve
+  rebuild?: boolean
+}
 export type ViewerImage = string | { src: string; [attribute: string]: string }
 export interface ViewerApiOptions {
   images: readonly ViewerImage[]
@@ -327,8 +330,12 @@ export function createDirectiveHooks() {
   return {
     mount(element: ViewerElement, binding: DirectiveValue) {
       states.get(element)?.controller.dispose()
-      const { observe, ...options } = binding.value ?? {}
-      const rebuild = !!binding.modifiers.rebuild
+      const {
+        observe,
+        rebuild: rebuildOption,
+        ...options
+      } = binding.value ?? {}
+      const rebuild = rebuildOption ?? !!binding.modifiers.rebuild
       states.set(element, {
         options: snapshot(options),
         observe,
@@ -343,8 +350,12 @@ export function createDirectiveHooks() {
     update(element: ViewerElement, binding: DirectiveValue) {
       const state = states.get(element)
       if (!state) return
-      const { observe, ...options } = binding.value ?? {}
-      const rebuild = !!binding.modifiers.rebuild
+      const {
+        observe,
+        rebuild: rebuildOption,
+        ...options
+      } = binding.value ?? {}
+      const rebuild = rebuildOption ?? !!binding.modifiers.rebuild
       const changed = !equal(state.options, options)
       if (changed || rebuild !== state.rebuild)
         state.controller.configure(

@@ -23,7 +23,10 @@ Rendered HTML works the same way:
 | v-viewer="options"              | Accepts Viewer.js options. Deep changes rebuild the instance.                                         |
 | `v-viewer="{ observe: false }"` | Disable automatic image DOM updates.                                                                  |
 | `v-viewer="{ observe: 100 }"`   | Batch image DOM changes in a 100ms window; default `true` uses 50ms, `0` batches until the next task. |
-| .rebuild                        | Recreate the instance when images change.                                                             |
+| `v-viewer="{ rebuild: true }"`  | Recreate the instance when images change; defaults to `false` and supports reactive changes.          |
+| `.rebuild`                      | Shorthand for `rebuild: true`.                                                                        |
+
+`rebuild` in the binding takes precedence over `.rebuild`, including an explicit `false`. When omitted or `undefined`, the modifier applies. `rebuild` and `observe` are v-viewer settings and are not passed to Viewer.js.
 
 By default, adding, removing and changing image attributes automatically updates the gallery. Access the instance as `element.$viewer`. Unmounting disconnects the observer and destroys the instance.
 

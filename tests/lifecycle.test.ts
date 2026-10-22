@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { createApp, h, nextTick, ref, reactive } from 'vue'
+import { createApp, h, nextTick, ref, reactive, withDirectives } from 'vue'
 import Vue2 from '../packages/vue2/node_modules/vue/dist/vue.common.js'
 
 const { instances } = vi.hoisted(() => ({ instances: [] as any[] }))
@@ -36,8 +36,13 @@ import {
   createDirectiveHooks,
   resolveTarget,
   showViewer,
+  type ViewerDirectiveOptions,
 } from '../packages/core/src/index.js'
-import { Viewer, useViewer } from '../packages/vue3/src/index.js'
+import {
+  Viewer,
+  useViewer,
+  vViewer as directive3,
+} from '../packages/vue3/src/index.js'
 import Plugin2, {
   Viewer as Viewer2,
   vViewer as directive2,
@@ -288,6 +293,102 @@ describe('batched image observation', () => {
     await advance(0)
     expect(instances[0].update).toHaveBeenCalledTimes(2)
   })
+
+  it.each([
+    { option: undefined, modifier: true, rebuilds: true },
+    { option: undefined, modifier: false, rebuilds: false },
+    { option: true, modifier: false, rebuilds: true },
+    { option: false, modifier: true, rebuilds: false },
+  ])(
+    'resolves directive rebuild settings: %j',
+    async ({ option, modifier, rebuilds }) => {
+      const el = gallery()
+      const hooks = createDirectiveHooks()
+      cleanups.push(() => hooks.unmount(el))
+      hooks.mount(el, {
+        value: { observe: 0, rebuild: option },
+        modifiers: { rebuild: modifier },
+      })
+      expect(instances[0].options).not.toHaveProperty('rebuild')
+      el.append(document.createElement('img'))
+      await advance(0)
+      expect(instances).toHaveLength(rebuilds ? 2 : 1)
+      expect(instances[0].destroy).toHaveBeenCalledTimes(rebuilds ? 1 : 0)
+      expect(instances[0].update).toHaveBeenCalledTimes(rebuilds ? 0 : 1)
+    },
+  )
+
+  it.each(['vue2', 'vue3'])(
+    '%s directive switches rebuild behavior through its reactive binding',
+    async (version) => {
+      let options: ViewerDirectiveOptions
+      let el: HTMLElement
+      if (version === 'vue3') {
+        options = reactive({ rebuild: false, observe: 0, toolbar: true })
+        mount(
+          () => () =>
+            withDirectives(h('div', [h('img', { src: 'a.jpg' })]), [
+              [directive3, options],
+            ]),
+        )
+        el = instances[0].element
+      } else {
+        const app = new Vue2({
+          data: () => ({
+            options: { rebuild: false, observe: 0, toolbar: true },
+          }),
+          directives: { viewer: directive2 },
+          render(h: any) {
+            return h(
+              'div',
+              { directives: [{ name: 'viewer', value: this.options }] },
+              [h('img', { attrs: { src: 'a.jpg' } })],
+            )
+          },
+        }).$mount()
+        document.body.append(app.$el)
+        cleanups.push(() => app.$destroy())
+        options = app.options
+        el = app.$el
+      }
+      const flush = async () => {
+        await nextTick()
+        await Vue2.nextTick()
+        await advance(0)
+      }
+      el.querySelector('img')!.src = 'b.jpg'
+      await flush()
+      expect(instances).toHaveLength(1)
+      expect(instances[0].update).toHaveBeenCalledOnce()
+
+      options.rebuild = true
+      await flush()
+      expect(instances).toHaveLength(2)
+      expect(instances[0].destroy).toHaveBeenCalledOnce()
+      el.querySelector('img')!.src = 'c.jpg'
+      await flush()
+      expect(instances).toHaveLength(3)
+      expect(instances[1].destroy).toHaveBeenCalledOnce()
+
+      options.rebuild = false
+      await flush()
+      instances[2].update.mockClear()
+      el.querySelector('img')!.src = 'd.jpg'
+      await flush()
+      expect(instances).toHaveLength(3)
+      expect(instances[2].destroy).not.toHaveBeenCalled()
+      expect(instances[2].update).toHaveBeenCalledOnce()
+
+      options.toolbar = false
+      await flush()
+      expect(instances).toHaveLength(4)
+      expect(instances[3].options.toolbar).toBe(false)
+      for (const instance of instances) {
+        expect(instance.options).not.toHaveProperty('rebuild')
+        expect(instance.options).not.toHaveProperty('observe')
+      }
+    },
+  )
 
   it.each(['vue2', 'vue3'])(
     '%s component reacts to observe without rebuilding',
