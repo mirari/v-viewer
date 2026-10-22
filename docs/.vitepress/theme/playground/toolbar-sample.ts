@@ -37,18 +37,18 @@ ${script}
         <img v-for="(src, index) in images" :key="src" :src="src" :alt="'Landscape ' + (index + 1)" />
       </div>
       <template v-if="custom" ${slot('toolbar', '{ zoom, rotate, reset }')}>
-        <button type="button" class="viewer-slot-button" title="${english ? 'Zoom in' : '放大'}" aria-label="${english ? 'Zoom in' : '放大'}" @click="zoom(0.1)">
-          <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h14M10 3v14" stroke="currentColor" stroke-width="2" /></svg>
+        <button type="button" class="viewer-slot-button viewer-custom-button" title="${english ? 'Zoom in' : '放大'}" aria-label="${english ? 'Zoom in' : '放大'}" @click="zoom(0.1)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6.5" /><path d="m15 15 5.5 5.5M7 10h6m-3-3v6" /></svg>
         </button>
-        <button type="button" class="viewer-slot-button" title="${english ? 'Rotate' : '旋转'}" aria-label="${english ? 'Rotate' : '旋转'}" @click="rotate(90)">
-          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 7a7 7 0 1 0 1 6M16 2v5h-5" /></svg>
+        <button type="button" class="viewer-slot-button viewer-custom-button" title="${english ? 'Rotate' : '旋转'}" aria-label="${english ? 'Rotate' : '旋转'}" @click="rotate(90)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="9" height="9" rx="1.5" /><path d="M5 7a9 9 0 0 1 15 7m0-5v5h-5" /></svg>
         </button>
-        <button type="button" class="viewer-slot-button" title="${english ? 'Reset' : '重置'}" aria-label="${english ? 'Reset' : '重置'}" @click="reset()">
-          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7a7 7 0 1 1-1 6M4 2v5h5" /></svg>
+        <button type="button" class="viewer-slot-button viewer-custom-button" title="${english ? 'Reset' : '重置'}" aria-label="${english ? 'Reset' : '重置'}" @click="reset()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M8 12a4 4 0 1 0 1-2.6M8 7v3h3" /></svg>
         </button>
       </template>
       <template ${slot('toolbar-append', '{ image, index }')}>
-        <a v-if="image" class="viewer-slot-button" :href="image.src" :download="image.alt" :title="'${english ? 'Download image' : '下载图片'} ' + (index + 1)" :aria-label="'${english ? 'Download image' : '下载图片'} ' + (index + 1)">
+        <a v-if="image" class="viewer-slot-button" :class="{ 'viewer-custom-button': custom }" :href="image.src" :download="image.alt" :title="'${english ? 'Download image' : '下载图片'} ' + (index + 1)" :aria-label="'${english ? 'Download image' : '下载图片'} ' + (index + 1)">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 2v10m-4-4 4 4 4-4M3 12v5h14v-5" /></svg>
         </a>
       </template>
@@ -71,4 +71,7 @@ export const toolbarStyles = `.toolbar-example .controls { margin-bottom: 16px; 
 .viewer-toolbar .viewer-slot-button:hover, .viewer-toolbar .viewer-slot-button:focus-visible { background: rgba(0, 0, 0, .8); }
 .viewer-toolbar .viewer-slot-button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .viewer-toolbar .viewer-slot-button svg { display: block; flex-shrink: 0; }
+.viewer-toolbar .viewer-custom-button { flex-basis: 34px; width: 34px; height: 34px; border: 1px solid #94c6a880; border-radius: 8px; background: #162c25; color: #b8f0ce; box-shadow: 0 2px 6px #0003; }
+.viewer-toolbar .viewer-custom-button:hover, .viewer-toolbar .viewer-custom-button:focus-visible { background: #28513e; border-color: #b8f0ce; }
+.viewer-toolbar .viewer-custom-button:focus-visible { outline-color: #b8f0ce; }
 .viewer-toolbar .v-viewer-toolbar-slot { padding: 6px 0; }`

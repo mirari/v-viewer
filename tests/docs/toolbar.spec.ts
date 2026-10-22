@@ -51,10 +51,16 @@ for (const vue2 of [false, true]) {
     const customZoom = toolbar.getByRole('button', { name: '放大' })
     await expect(customZoom.locator('svg')).toHaveCSS(
       'color',
-      'rgb(255, 255, 255)',
+      'rgb(184, 240, 206)',
     )
     await expect(customZoom).toHaveText('')
     await expect(customZoom).toHaveAttribute('title', '放大')
+    await expect(customZoom).toHaveCSS('border-radius', '8px')
+    await expect(customZoom).toHaveCSS('width', '34px')
+    await expect(toolbar.getByRole('link', { name: '下载图片 2' })).toHaveCSS(
+      'border-radius',
+      '8px',
+    )
     const customWidth = (await image.boundingBox())!.width
     await customZoom.locator('path').click()
     await expect
