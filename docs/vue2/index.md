@@ -60,7 +60,7 @@ Vue.use(VueViewer)
 
 ### 组件
 
-使用组件包裹图片内容，通过属性、事件和插槽定制，详细用法见[组件](/vue2/guide/component)。
+适合对工具栏有定制需求、动态渲染 Markdown 或 HTML 等未知图片内容的复杂场景。详细用法见[组件](/vue2/guide/component)。
 
 ```vue
 <template>
@@ -75,7 +75,7 @@ export default { data: () => ({ images: ['/photo.jpg'] }) }
 
 ### 指令
 
-在已有元素上绑定指令，为内部图片启用预览，详细用法见[指令](/vue2/guide/directive)。
+适合无需复杂定制需求的简单浏览场景。详细用法见[指令](/vue2/guide/directive)。
 
 ```vue
 <template>
@@ -87,7 +87,7 @@ export default { data: () => ({ images: ['/photo.jpg'] }) }
 
 ### API
 
-通过 `this.$viewerApi()` 传入图片数组并打开预览，详细用法见 [API](/vue2/guide/api)。
+适合按钮触发后打开指定图片数组的场景。详细用法见 [API](/vue2/guide/api)。
 
 ```vue
 <template><button @click="show">Open gallery</button></template>

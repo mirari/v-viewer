@@ -51,7 +51,7 @@ Download the [default stylesheet viewer.css](https://github.com/fengyuanchen/vie
 
 ### Component
 
-Wrap image content in a component and customize it with props, events and slots; see the [component guide](/en/guide/component).
+Suitable for complex scenarios involving custom toolbars or images in dynamically rendered Markdown or HTML whose content is not known in advance. See the [component guide](/en/guide/component).
 
 ```vue
 <script setup>
@@ -68,7 +68,7 @@ const images = ['/photo.jpg']
 
 ### Directive
 
-Attach a viewer to images inside an existing element; see the [directive guide](/en/guide/directive).
+Suitable for simple image browsing without complex customization. See the [directive guide](/en/guide/directive).
 
 ```vue
 <script setup>
@@ -84,7 +84,7 @@ import { vViewer } from 'v-viewer'
 
 ### API
 
-Open a gallery from an image array with `useViewer()`; see the [API guide](/en/guide/api).
+Suitable for opening a specified image array after a button click. See the [API guide](/en/guide/api).
 
 ```vue
 <script setup>

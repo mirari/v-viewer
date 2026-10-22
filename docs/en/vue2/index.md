@@ -60,7 +60,7 @@ Download the [default stylesheet viewer.css](https://github.com/fengyuanchen/vie
 
 ### Component
 
-Wrap image content in a component and customize it with props, events and slots; see the [component guide](/en/vue2/guide/component).
+Suitable for complex scenarios involving custom toolbars or images in dynamically rendered Markdown or HTML whose content is not known in advance. See the [component guide](/en/vue2/guide/component).
 
 ```vue
 <template>
@@ -75,7 +75,7 @@ export default { data: () => ({ images: ['/photo.jpg'] }) }
 
 ### Directive
 
-Attach a viewer to images inside an existing element; see the [directive guide](/en/vue2/guide/directive).
+Suitable for simple image browsing without complex customization. See the [directive guide](/en/vue2/guide/directive).
 
 ```vue
 <template>
@@ -87,7 +87,7 @@ Attach a viewer to images inside an existing element; see the [directive guide](
 
 ### API
 
-Open a gallery from an image array with `this.$viewerApi()`; see the [API guide](/en/vue2/guide/api).
+Suitable for opening a specified image array after a button click. See the [API guide](/en/vue2/guide/api).
 
 ```vue
 <template><button @click="show">Open gallery</button></template>
