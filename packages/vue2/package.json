@@ -1,0 +1,13 @@
+{
+  "name": "@v-viewer/vue2",
+  "version": "4.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "vue": "2.7.16",
+    "viewerjs": "^1.11.7"
+  }
+}

@@ -1,71 +1,52 @@
 {
-  "name": "v-viewer",
-  "scope": "VueViewer",
-  "version": "3.0.14",
-  "description": "Image viewer component for vue, supports rotation, scale, zoom and so on, based on viewer.js",
-  "author": "mirari",
-  "license": "MIT",
-  "homepage": "https://github.com/mirari/v-viewer#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mirari/v-viewer.git"
+  "name": "v-viewer-workspace",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
-  "bugs": {
-    "url": "https://github.com/mirari/v-viewer/issues"
-  },
-  "keywords": [
-    "vue",
-    "viewer",
-    "gallery",
-    "picture",
-    "img",
-    "image"
-  ],
-  "main": "./dist/index.umd.js",
-  "module": "./dist/index.mjs",
-  "unpkg": "./dist/index.umd.js",
-  "types": "./types/index.d.ts",
-  "files": [
-    "dist",
-    "types",
-    "README.md"
-  ],
+  "packageManager": "pnpm@11.25.0",
   "scripts": {
-    "prepare": "husky install",
-    "dev": "vite serve example --config example/vite.config.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "build": "vue-tsc --noEmit && vite build",
-    "preview:build": "vite build example --config example/vite.config.ts",
-    "preview:serve": "vite preview example --config example/vite.config.ts",
-    "release": "standard-version",
-    "publish": "npm run build && npm publish",
-    "publish:next": "npm run build && npm publish --tag next"
-  },
-  "peerDependencies": {
-    "viewerjs": "^1.11.0",
-    "vue": "^3.0.0"
-  },
-  "dependencies": {
-    "viewerjs": "^1.11.6",
-    "lodash-es": "^4.17.21"
+    "dev": "pnpm run docs:dev",
+    "format": "prettier --write .",
+    "lint": "prettier --check .",
+    "typecheck": "pnpm -r typecheck",
+    "test": "vitest run",
+    "test:docs": "playwright test --config playwright.docs.config.ts",
+    "build": "node scripts/build.mjs",
+    "check:packages": "node scripts/check-packages.mjs",
+    "check": "pnpm run lint && pnpm run typecheck && pnpm test && pnpm run build && pnpm run check:packages && pnpm run docs:build",
+    "docs:prepare": "node scripts/prepare-docs.mjs",
+    "docs:dev": "pnpm run docs:prepare && vitepress dev docs --host 127.0.0.1 --port 5190",
+    "docs:build": "pnpm run docs:prepare && vitepress build docs",
+    "docs:preview": "vitepress preview docs --host 127.0.0.1 --port 5190",
+    "release": "node scripts/release.mjs"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.27.0",
-    "@commitlint/cli": "^17.1.2",
-    "@commitlint/config-conventional": "^17.1.0",
-    "@types/lodash-es": "^4.17.6",
-    "@vitejs/plugin-vue": "^3.1.0",
-    "@vue/compiler-sfc": "^3.2.26",
-    "bulma": "^0.9.4",
-    "eslint": "^8.26.0",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "sass": "^1.55.0",
-    "standard-version": "^9.5.0",
-    "typescript": "^4.6.4",
-    "vite": "^3.1.0",
-    "vue": "^3.2.37",
-    "vue-tsc": "^0.40.4"
+    "@babel/core": "8.0.7",
+    "@babel/preset-env": "8.0.7",
+    "@codemirror/lang-html": "6.4.12",
+    "@codemirror/state": "6.7.6",
+    "@codemirror/theme-one-dark": "6.1.3",
+    "@playwright/test": "1.64.0",
+    "@types/node": "^24.0.0",
+    "@vue/compiler-sfc": "3.5.43",
+    "acorn": "8.19.0",
+    "codemirror": "6.0.2",
+    "commit-and-tag-version": "13.3.0",
+    "conventional-changelog-conventionalcommits": "10.4.0",
+    "core-js": "3.50.0",
+    "jsdom": "30.1.2",
+    "prettier": "3.9.9",
+    "semver": "7.7.4",
+    "typescript": "7.0.2",
+    "viewerjs": "^1.11.7",
+    "viewerjs-min": "npm:viewerjs@1.11.7",
+    "vite": "8.3.4",
+    "vitepress": "1.6.4",
+    "vitest": "5.0.3",
+    "vue": "3.5.43",
+    "vue2-min": "npm:vue@2.4.0",
+    "vue3-min": "npm:vue@3.0.0"
   }
 }

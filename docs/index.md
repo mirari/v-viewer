@@ -1,0 +1,24 @@
+---
+layout: home
+hero:
+  name: v-viewer
+  text: 每一张图片，都值得细看。
+  tagline: 为 Vue 提供组件、指令与组合式 API，基于 <a href="https://github.com/fengyuanchen/viewerjs">Viewer.js</a>。
+  actions:
+    - theme: brand
+      text: 快速上手
+      link: /guide/getting-started
+    - theme: alt
+      text: 演练场
+      link: /playground
+    - theme: alt
+      text: Vue 2
+      link: /vue2/
+features:
+  - title: 三种使用方式
+    details: 模板用组件，已有图片用指令，按需预览用 API。
+  - title: 生命周期管理
+    details: 自动跟随图片变化，并在组件卸载时释放实例。
+  - title: 兼顾新旧项目
+    details: 同仓库维护 Vue 2 和 Vue 3，提供 TypeScript 类型和 SSR 导入支持。
+---

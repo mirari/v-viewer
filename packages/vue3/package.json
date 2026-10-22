@@ -1,0 +1,13 @@
+{
+  "name": "@v-viewer/vue3",
+  "version": "5.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "vue": "3.5.43",
+    "viewerjs": "^1.11.7"
+  }
+}

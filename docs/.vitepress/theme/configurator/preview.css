@@ -1,0 +1,35 @@
+.viewer-config-preview {
+  position: relative;
+  height: 100%;
+}
+.viewer-config-preview .photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 30px 16px;
+}
+.viewer-config-preview .inline-source {
+  visibility: hidden;
+}
+.viewer-config-preview .photos img {
+  width: 100%;
+  height: auto;
+  cursor: zoom-in;
+}
+.viewer-config-preview .layer-reference {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  padding: 3px 6px;
+  color: #fff;
+  background: #284c3bcc;
+  font: 12px monospace;
+  pointer-events: none;
+}
+.viewer-config-viewer.warm-viewer {
+  background-color: #533322 !important;
+}
+.viewer-config-viewer.viewer-backdrop.warm-viewer {
+  background-color: #533322e8 !important;
+}

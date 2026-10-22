@@ -1,0 +1,42 @@
+name: Documentation Pages
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm run test:docs
+        env:
+          DOCS_BASE: /v-viewer/
+      - name: Upload documentation test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-docs
+          path: |
+            playwright-report/docs/
+            test-results/docs/
+          if-no-files-found: ignore
+          retention-days: 14
+      - uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: docs/.vitepress/dist
+          clean: true

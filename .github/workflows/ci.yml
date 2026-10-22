@@ -1,0 +1,45 @@
+name: CI
+on:
+  push:
+    branches: [master, v4]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - if: matrix.node == 24
+        run: pnpm exec playwright install --with-deps chromium
+      - if: matrix.node == 24
+        run: pnpm run test:docs
+      - name: Upload browser test reports
+        if: always() && matrix.node == 24
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-ci
+          path: |
+            playwright-report/docs/
+            test-results/docs/
+          if-no-files-found: ignore
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        if: matrix.node == 24
+        with:
+          name: viewer-packages
+          path: artifacts/*.tgz

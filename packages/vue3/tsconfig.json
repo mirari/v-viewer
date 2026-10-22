@@ -1,0 +1,8 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../.types/vue3",
+    "rootDir": ".."
+  },
+  "include": ["src/**/*.ts", "../core/src/**/*.ts"]
+}

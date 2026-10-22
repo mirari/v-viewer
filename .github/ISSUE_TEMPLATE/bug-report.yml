@@ -1,0 +1,29 @@
+name: Bug report / 问题报告
+description: Report a reproducible problem / 报告可复现的问题
+body:
+  - type: input
+    id: versions
+    attributes:
+      label: Versions / 版本
+      description: Vue, v-viewer, Viewer.js
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and environment / 浏览器与环境
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction / 复现步骤
+      description: A minimal example or repository link / 最小示例或仓库链接
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior / 预期与实际结果
+    validations:
+      required: true

@@ -1,0 +1,31 @@
+:root {
+  --vp-layout-max-width: min(1680px, 100vw);
+  --vp-c-brand-1: #35654e;
+  --vp-c-brand-2: #3e765b;
+  --vp-c-brand-3: #2d6048;
+  --vp-c-brand-soft: #35654e16;
+  --vp-font-family-base: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+}
+.dark {
+  --vp-c-brand-1: #94c6a8;
+  --vp-c-brand-2: #79b890;
+  --vp-c-brand-3: #477d5d;
+}
+.VPHomeHero .name {
+  font-family: Georgia, serif;
+  letter-spacing: -0.04em;
+}
+.VPHomeHero .text {
+  font-weight: 500;
+}
+.vp-doc h1 {
+  letter-spacing: -0.025em;
+}
+.VPContent .VPDoc.has-sidebar.has-aside .content-container {
+  max-width: 960px;
+}
+@media (min-width: 1280px) and (max-width: 1599px) {
+  .VPContent .VPDoc .container > .aside {
+    display: none;
+  }
+}

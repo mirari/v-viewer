@@ -1,0 +1,11 @@
+node_modules
+dist
+.types
+artifacts
+output
+pnpm-lock.yaml
+.playwright-cli
+docs/.vitepress/cache
+docs/public/playground
+playwright-report
+test-results
