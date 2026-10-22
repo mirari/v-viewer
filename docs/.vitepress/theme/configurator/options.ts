@@ -345,31 +345,3 @@ export function defaults(): Settings {
     ),
   )
 }
-export function optionsCode(settings: Settings) {
-  return (
-    '{\n' +
-    Object.entries(settings)
-      .map(([key, value]) => {
-        const code = eventNames.includes(key)
-          ? value
-            ? `event => console.log('${key}', event.detail)`
-            : 'null'
-          : (presets[key]?.[String(value)] ?? JSON.stringify(value))
-        return `  ${key}: ${code}`
-      })
-      .join(',\n') +
-    '\n}'
-  )
-}
-
-export function componentCode(settings: Settings) {
-  const props = Object.fromEntries(
-    Object.entries(settings).filter(([key]) => !eventNames.includes(key)),
-  )
-  const events = Object.fromEntries(
-    Object.entries(settings).filter(
-      ([key, value]) => eventNames.includes(key) && value,
-    ),
-  )
-  return `const viewerProps = ${optionsCode(props)}\n\nconst viewerEvents = ${optionsCode(events)}\n\n<Viewer v-bind="viewerProps" v-on="viewerEvents">\n  <img src="/photo.jpg" />\n</Viewer>`
-}

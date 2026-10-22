@@ -1,12 +1,7 @@
 import { expect, test, vi } from 'vitest'
 import ViewerJs from 'viewerjs'
 import { createViewerController } from '../packages/core/src/index'
-import {
-  defaults,
-  eventNames,
-  groups,
-  optionsCode,
-} from '../docs/.vitepress/theme/configurator/options'
+import { groups } from '../docs/.vitepress/theme/configurator/options'
 
 test('quick start covers every installed Viewer.js option without duplicate controls', () => {
   const element = document.createElement('div')
@@ -20,27 +15,6 @@ test('quick start covers every installed Viewer.js option without duplicate cont
   } finally {
     viewer.destroy()
   }
-})
-
-test('generated options contain executable presets and optional event handlers', () => {
-  const values = {
-    ...defaults(),
-    filter: 'first',
-    toolbar: 'compact',
-    inheritedAttributes: 'custom',
-  }
-  const options = Function(`return (${optionsCode(values)})`)()
-  const first = document.createElement('img')
-  first.dataset.index = '0'
-  const second = document.createElement('img')
-  second.dataset.index = '1'
-  expect(options.filter(first)).toBe(true)
-  expect(options.filter(second)).toBe(false)
-  expect(options.toolbar.zoomIn).toBe(true)
-  expect(options.toolbar.rotateLeft).toBeUndefined()
-  expect(options.inheritedAttributes).toEqual(['data-credit'])
-  for (const name of eventNames)
-    expect(typeof options[name]).toBe(values[name] ? 'function' : 'object')
 })
 
 test.each(['replace', 'dispose'])(

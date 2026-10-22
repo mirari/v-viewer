@@ -157,10 +157,6 @@ for (const vue2 of [false, true]) {
     ).toBe(false)
     await panel.locator('.event-log summary').click()
     await expect(panel.getByRole('log')).toContainText('viewed')
-    await panel.getByText('查看组件配置代码', { exact: true }).click()
-    await expect(panel.locator('.option-code code')).toContainText(
-      'inline: false',
-    )
     expect(errors).toEqual([])
     await expect(panel.getByRole('alert')).toHaveCount(0)
   })

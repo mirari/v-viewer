@@ -9,7 +9,6 @@ import { defaultImages } from './sample-images'
 import {
   defaults,
   groups,
-  componentCode,
   type Control,
   type Setting,
 } from './configurator/options'
@@ -50,7 +49,6 @@ const controls = computed(() => {
           .includes(search),
     )
 })
-const code = computed(() => componentCode(settings.value))
 const count = groups.reduce((sum, group) => sum + group.controls.length, 0)
 const hints: Record<string, [string, string]> = {
   appearance: [
@@ -340,12 +338,6 @@ onBeforeUnmount(() => {
         }}</span>
       </div>
     </details>
-    <details class="option-code">
-      <summary>
-        {{ text('查看组件配置代码', 'View component configuration code') }}
-      </summary>
-      <pre><code>{{ code }}</code></pre>
-    </details>
   </section>
 </template>
 
@@ -600,8 +592,7 @@ button {
   color: var(--vp-c-text-3);
   border-top: 1px solid var(--vp-c-divider);
 }
-.event-log,
-.option-code {
+.event-log {
   border-top: 1px solid var(--vp-c-divider);
   padding: 10px 16px;
 }
@@ -620,17 +611,6 @@ summary span {
   padding-top: 8px;
   font: 12px/1.8 var(--vp-font-family-mono);
   overflow-wrap: anywhere;
-}
-.option-code pre {
-  max-height: 300px;
-  overflow: auto;
-  background: var(--vp-c-bg-soft);
-  padding: 12px;
-}
-.option-code code {
-  padding: 0;
-  background: none;
-  font-size: 12px;
 }
 .error {
   padding: 0 16px;
