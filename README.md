@@ -15,7 +15,7 @@ The rewrite is under development on v4. The new version lines have not been publ
 ## Vue 3
 
 ```sh
-pnpm add v-viewer
+npm install v-viewer
 ```
 
 ```vue
@@ -42,7 +42,7 @@ Use `vViewer` for existing galleries or `useViewer` for a reactive API with scop
 ## Vue 2
 
 ```sh
-pnpm add v-viewer@legacy
+npm install v-viewer@legacy
 ```
 
 ```js

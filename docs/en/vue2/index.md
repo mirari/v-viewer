@@ -9,7 +9,7 @@ This major rewrite includes breaking API changes. Components now recommend direc
 ## Installation
 
 ```sh
-pnpm add v-viewer@legacy
+npm install v-viewer@legacy
 ```
 
 ::: warning Upgrading an existing project

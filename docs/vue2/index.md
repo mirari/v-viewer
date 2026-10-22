@@ -9,7 +9,7 @@
 ## 安装
 
 ```sh
-pnpm add v-viewer@legacy
+npm install v-viewer@legacy
 ```
 
 ::: warning 旧项目升级注意
