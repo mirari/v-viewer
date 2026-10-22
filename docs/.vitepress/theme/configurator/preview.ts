@@ -1,4 +1,5 @@
 import { defaults, eventNames, presets } from './options'
+import { defaultImageCount } from '../sample-images'
 
 export function previewSample(
   vue2: boolean,
@@ -20,6 +21,7 @@ export function previewSample(
 const presets = ${presetSource}
 const eventNames = ${JSON.stringify(eventNames)}
 const initial = ${JSON.stringify(defaults())}
+const sourceImages = ${JSON.stringify(imageUrls)}
 let getViewer = () => undefined
 let index = 0
 let revision = 0
@@ -61,20 +63,25 @@ export default {
     revision = 0
     send = this.report
   },
-  data() { return { images: ${JSON.stringify(imageUrls)}, options: createOptions(initial) } },
+  data() { return { images: sourceImages.slice(0, ${defaultImageCount}), options: createOptions(initial) } },
   computed: {
     viewerProps() { return Object.fromEntries(Object.entries(this.options).filter(([key]) => !eventNames.includes(key))) },
     viewerListeners() { return Object.fromEntries(Object.entries(this.options).filter(([key]) => eventNames.includes(key))) },
   },
   mounted() {
     this.receive = command => {
+      if (command.type === 'images') {
+        this.images = sourceImages.slice(0, command.count)
+        index = Math.max(0, Math.min(index, this.images.length - 1))
+        this.$nextTick(state)
+      }
       if (command.type === 'options') {
         const values = command.settings
         revision = command.revision
         const changedIndex = values.initialViewIndex !== this.previousIndex
         this.previousIndex = values.initialViewIndex
         const options = createOptions(values)
-        options.initialViewIndex = changedIndex ? values.initialViewIndex : Math.min(index, values.filter === 'first' ? 0 : values.filter === 'lastTwo' ? 1 : this.images.length - 1)
+        options.initialViewIndex = changedIndex ? values.initialViewIndex : Math.max(0, Math.min(index, values.filter === 'first' ? 0 : values.filter === 'lastTwo' ? Math.min(1, this.images.length - 1) : this.images.length - 1))
         this.options = options
         // Vue 2 rebuilds the child on its next tick; report after that completes.
         this.$nextTick(() => this.$nextTick(state))
@@ -98,7 +105,7 @@ export default {
   <div id="preview-container" class="viewer-config-preview">
     <Viewer ref="gallery" v-bind="viewerProps" v-on="viewerListeners" class="photos" :class="{ 'inline-source': options.inline }">
       <img v-for="(src, i) in images" :key="src" :src="src" :alt="'Landscape ' + (i + 1)"
-        :data-index="i" :data-source="images[(i + 1) % images.length]" data-credit="Lorem Picsum"
+        :data-index="i" :data-count="images.length" :data-source="images[(i + 1) % images.length]" data-credit="Lorem Picsum"
         tabindex="0" @keydown.enter="$event.target.click()" />
     </Viewer>
     <span class="layer-reference">z-index: 1</span>

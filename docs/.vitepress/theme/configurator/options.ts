@@ -328,7 +328,8 @@ export const presets: Record<string, Record<string, string>> = {
   filter: {
     all: 'null',
     first: "image => image.dataset.index === '0'",
-    lastTwo: `image => Number(image.dataset.index) >= ${defaultImageCount - 2}`,
+    lastTwo:
+      'image => Number(image.dataset.index) >= Number(image.dataset.count) - 2',
   },
   url: { resolver: "image => image.getAttribute('data-source')" },
   inheritedAttributes: {

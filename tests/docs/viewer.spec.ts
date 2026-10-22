@@ -61,6 +61,23 @@ for (const vue2 of [false, true]) {
     await expect(image).toBeVisible()
     await expect(panel.getByRole('status')).toHaveText('已应用')
     await expect(image).toHaveAttribute('src', /valley/)
+    const add = panel.getByRole('button', { name: '添加图片', exact: true })
+    const remove = panel.getByRole('button', { name: '删除图片', exact: true })
+    const reset = panel.getByRole('button', { name: '重置示例', exact: true })
+    const sourceImages = panel.locator('.photos > img')
+    await expect(sourceImages).toHaveCount(5)
+    for (let i = 5; i < 10; i++) await add.click()
+    await expect(add).toBeDisabled()
+    await expect(panel.locator('.viewer-list > li')).toHaveCount(10)
+    for (let i = 0; i < 10; i++) await remove.click()
+    await expect(sourceImages).toHaveCount(0)
+    await expect(remove).toBeDisabled()
+    await add.click()
+    await expect(panel.locator('.viewer-list > li')).toHaveCount(1)
+    await reset.click()
+    await expect(sourceImages).toHaveCount(5)
+    await expect(panel.locator('.viewer-list > li')).toHaveCount(5)
+    await expect(image).toHaveAttribute('src', /valley/)
     const navbar = await page.locator('.viewer-navbar').boundingBox()
     const toolbarBottom = await page
       .locator('.viewer-toolbar [role="button"]')
@@ -157,8 +174,41 @@ for (const vue2 of [false, true]) {
     ).toBe(false)
     await panel.locator('.event-log summary').click()
     await expect(panel.getByRole('log')).toContainText('viewed')
+    await page.setViewportSize({ width: 390, height: 844 })
+    const addBox = (await add.boundingBox())!
+    const resetBox = (await reset.boundingBox())!
+    expect(
+      Math.abs(addBox.y + addBox.height / 2 - resetBox.y - resetBox.height / 2),
+    ).toBeLessThan(1)
+    expect(addBox.x).toBeLessThan(resetBox.x)
+    await panel
+      .locator('.config-header')
+      .screenshot({ path: test.info().outputPath('config-header-mobile.png') })
     expect(errors).toEqual([])
     await expect(panel.getByRole('alert')).toHaveCount(0)
+    await page.goto(vue2 ? 'en/vue2/' : 'en/guide/getting-started')
+    const englishPanel = page.getByRole('region', {
+      name: 'Image preview settings',
+    })
+    await expect(englishPanel.getByRole('status')).toHaveText('Applied')
+    const englishHeader = englishPanel.locator('.config-header')
+    const buttons = await englishHeader
+      .locator('button')
+      .evaluateAll((elements) =>
+        elements.map((element) => {
+          const rect = element.getBoundingClientRect()
+          return { y: rect.y + rect.height / 2, right: rect.right }
+        }),
+      )
+    expect(
+      Math.max(...buttons.map((button) => button.y)) -
+        Math.min(...buttons.map((button) => button.y)),
+    ).toBeLessThan(1)
+    const headerBox = (await englishHeader.boundingBox())!
+    expect(buttons[2].right).toBeLessThanOrEqual(headerBox.x + headerBox.width)
+    await englishHeader.screenshot({
+      path: test.info().outputPath('config-header-en-mobile.png'),
+    })
   })
 }
 

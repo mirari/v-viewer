@@ -5,7 +5,7 @@ import { compile, moduleUrl } from './playground/compile'
 import 'viewerjs/dist/viewer.css'
 import './configurator/preview.css'
 import { previewSample } from './configurator/preview'
-import { defaultImages } from './sample-images'
+import { defaultImageCount, sampleImages } from './sample-images'
 import {
   defaults,
   groups,
@@ -18,6 +18,7 @@ const { lang } = useData()
 const english = computed(() => lang.value.startsWith('en'))
 const text = (zh: string, en: string) => (english.value ? en : zh)
 const settings = ref(defaults())
+const imageCount = ref(defaultImageCount)
 const selectedGroup = ref('appearance')
 const query = ref('')
 const preview = ref<HTMLDivElement>()
@@ -50,6 +51,15 @@ const controls = computed(() => {
     )
 })
 const count = groups.reduce((sum, group) => sum + group.controls.length, 0)
+const lastImageIndex = (filter: Setting) =>
+  Math.max(
+    0,
+    (filter === 'first'
+      ? Math.min(1, imageCount.value)
+      : filter === 'lastTwo'
+        ? Math.min(2, imageCount.value)
+        : imageCount.value) - 1,
+  )
 const hints: Record<string, [string, string]> = {
   appearance: [
     '响应式断点以浏览器窗口宽度为准。加载提示在慢速网络下更明显。',
@@ -94,12 +104,15 @@ function update(control: Control, event: Event) {
       input.value = String(settings.value[control.key])
       return
     }
-    value = Math.min(control.max!, Math.max(control.min!, number))
+    const max =
+      control.key === 'initialViewIndex'
+        ? lastImageIndex(settings.value.filter)
+        : control.max!
+    value = Math.min(max, Math.max(control.min!, number))
     input.value = String(value)
   }
   const next = { ...settings.value, [control.key]: value }
-  const lastIndex =
-    next.filter === 'first' ? 0 : next.filter === 'lastTwo' ? 1 : 2
+  const lastIndex = lastImageIndex(next.filter)
   next.initialViewIndex = Math.min(Number(next.initialViewIndex), lastIndex)
   settings.value = next
 }
@@ -114,6 +127,7 @@ function sync() {
 }
 function reset() {
   logs.value = []
+  imageCount.value = defaultImageCount
   settings.value = defaults()
 }
 function chooseGroup(id: string) {
@@ -144,6 +158,12 @@ function receive(
     ].slice(0, 12)
 }
 watch(settings, sync)
+watch(imageCount, (count) => {
+  send({ type: 'images', count })
+  const lastIndex = lastImageIndex(settings.value.filter)
+  if (Number(settings.value.initialViewIndex) > lastIndex)
+    settings.value = { ...settings.value, initialViewIndex: lastIndex }
+})
 onMounted(async () => {
   try {
     const response = await fetch(
@@ -154,7 +174,7 @@ onMounted(async () => {
       /* @vite-ignore */ moduleUrl(await response.text())
     )
     if (disposed) return
-    const urls = defaultImages.map((path) => location.origin + withBase(path))
+    const urls = sampleImages.map((path) => location.origin + withBase(path))
     const compiled = compile(
       previewSample(!!props.vue2, english.value, urls),
       !!props.vue2,
@@ -181,24 +201,26 @@ onBeforeUnmount(() => {
     :aria-label="text('图片预览配置', 'Image preview settings')"
   >
     <header class="config-header">
-      <div>
-        <span class="eyebrow">VIEWER / {{ vue2 ? 'VUE 2' : 'VUE 3' }}</span
-        ><strong>{{
-          text('图片预览与配置', 'Image preview & options')
-        }}</strong>
+      <div class="image-actions">
+        <button
+          type="button"
+          :disabled="!ready || imageCount >= sampleImages.length"
+          @click="imageCount++"
+        >
+          {{ text('添加图片', 'Add image') }}
+        </button>
+        <button
+          type="button"
+          :disabled="!ready || imageCount === 0"
+          @click="imageCount--"
+        >
+          {{ text('删除图片', 'Remove image') }}
+        </button>
       </div>
       <button type="button" class="reset" @click="reset">
         {{ text('重置示例', 'Reset demo') }}
       </button>
     </header>
-    <p class="intro">
-      {{
-        text(
-          '调整配置，预览即时更新。切换到弹窗模式后，点击图片打开预览。',
-          'Adjust options to see changes immediately. Switch to modal mode, then click an image to open the viewer.',
-        )
-      }}
-    </p>
     <div class="workbench">
       <div class="preview-pane">
         <div class="preview-stage">
@@ -218,8 +240,8 @@ onBeforeUnmount(() => {
         </div>
         <div class="inspector">
           <span
-            >{{ text('图片', 'Image') }} {{ state.index + 1 }} ·
-            {{ state.width }}px</span
+            >{{ text('图片', 'Image') }}
+            {{ imageCount ? state.index + 1 : 0 }} · {{ state.width }}px</span
           ><span>{{ state.container || '—' }}</span
           ><span v-if="state.credit">{{ state.credit }}</span>
         </div>
@@ -306,7 +328,11 @@ onBeforeUnmount(() => {
                 :aria-label="control.key"
                 :value="settings[control.key]"
                 :min="control.min"
-                :max="control.max"
+                :max="
+                  control.key === 'initialViewIndex'
+                    ? lastImageIndex(settings.filter)
+                    : control.max
+                "
                 :step="control.step"
                 @change="update(control, $event)"
               />
@@ -354,36 +380,32 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 20px 20px 0;
+  padding: 16px 20px;
 }
-.config-header strong {
-  display: block;
-  margin-top: 5px;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-}
-.eyebrow {
-  font: 12px var(--vp-font-family-mono);
-  letter-spacing: 0.16em;
-  color: var(--vp-c-brand-1);
-}
-.intro {
-  padding: 0 20px;
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--vp-c-text-2);
+.image-actions {
+  display: flex;
+  gap: 8px;
 }
 button {
   cursor: pointer;
   font-size: 14px;
   line-height: 1.5;
 }
-.reset {
+.config-header button {
   padding: 7px 10px;
   border: 1px solid var(--vp-c-divider);
   border-radius: 5px;
   white-space: nowrap;
+}
+.config-header button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.config-header button:not(:disabled):hover {
+  background: var(--vp-c-bg-soft);
+}
+.reset {
+  margin-left: auto;
 }
 .workbench {
   display: grid;
@@ -645,13 +667,12 @@ summary span {
     grid-template-columns: 1fr 1fr;
   }
   .config-header {
-    padding: 16px 14px 0;
+    padding: 14px;
+    gap: 8px;
   }
-  .config-header strong {
-    font-size: 16px;
-  }
-  .intro {
-    padding: 0 14px;
+  .config-header button {
+    padding: 7px 8px;
+    font-size: 12px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
