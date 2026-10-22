@@ -51,6 +51,8 @@ import './viewer-theme.css'
 
 ### 组件
 
+使用组件包裹图片内容，通过属性、事件和插槽定制，详细用法见[组件](/guide/component)。
+
 ```vue
 <script setup>
 import { Viewer } from 'v-viewer'
@@ -66,6 +68,8 @@ const images = ['/photo.jpg']
 
 ### 指令
 
+在已有元素上绑定指令，为内部图片启用预览，详细用法见[指令](/guide/directive)。
+
 ```vue
 <script setup>
 import { vViewer } from 'v-viewer'
@@ -79,6 +83,8 @@ import { vViewer } from 'v-viewer'
 ```
 
 ### API
+
+通过 `useViewer()` 传入图片数组并打开预览，详细用法见 [API](/guide/api)。
 
 ```vue
 <script setup>

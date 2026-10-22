@@ -60,6 +60,8 @@ Provide complete layout and control styles.
 
 ### Component
 
+Wrap image content in a component and customize it with props, events and slots; see the [component guide](/en/vue2/guide/component).
+
 ```vue
 <template>
   <viewer :toolbar="true">
@@ -73,6 +75,8 @@ export default { data: () => ({ images: ['/photo.jpg'] }) }
 
 ### Directive
 
+Attach a viewer to images inside an existing element; see the [directive guide](/en/vue2/guide/directive).
+
 ```vue
 <template>
   <div v-viewer="{ toolbar: true }">
@@ -82,6 +86,8 @@ export default { data: () => ({ images: ['/photo.jpg'] }) }
 ```
 
 ### API
+
+Open a gallery from an image array with `this.$viewerApi()`; see the [API guide](/en/vue2/guide/api).
 
 ```vue
 <template><button @click="show">Open gallery</button></template>

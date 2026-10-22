@@ -51,6 +51,8 @@ Provide complete layout and control styles.
 
 ### Component
 
+Wrap image content in a component and customize it with props, events and slots; see the [component guide](/en/guide/component).
+
 ```vue
 <script setup>
 import { Viewer } from 'v-viewer'
@@ -66,6 +68,8 @@ const images = ['/photo.jpg']
 
 ### Directive
 
+Attach a viewer to images inside an existing element; see the [directive guide](/en/guide/directive).
+
 ```vue
 <script setup>
 import { vViewer } from 'v-viewer'
@@ -79,6 +83,8 @@ import { vViewer } from 'v-viewer'
 ```
 
 ### API
+
+Open a gallery from an image array with `useViewer()`; see the [API guide](/en/guide/api).
 
 ```vue
 <script setup>
