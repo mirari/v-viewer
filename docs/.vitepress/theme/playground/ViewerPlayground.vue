@@ -376,7 +376,7 @@ onBeforeUnmount(() => {
   color: var(--vp-c-text-2);
 }
 .playground-toolbar .playground-run {
-  background: var(--vp-c-brand-3);
+  background: var(--vp-button-brand-bg);
   color: var(--vp-button-brand-text);
   min-width: 80px;
 }

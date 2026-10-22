@@ -4,16 +4,23 @@
   --vp-c-brand-2: #008f7a;
   --vp-c-brand-3: #00d1b2;
   --vp-c-brand-soft: #00d1b21a;
-  --vp-button-brand-text: #073b33;
-  --vp-button-brand-hover-text: #073b33;
-  --vp-button-brand-active-text: #073b33;
-  --vp-button-brand-hover-bg: #00b89c;
-  --vp-button-brand-active-bg: #00a88f;
+  --vp-button-brand-bg: #007f6d;
+  --vp-button-brand-text: #fff;
+  --vp-button-brand-hover-text: #fff;
+  --vp-button-brand-active-text: #fff;
+  --vp-button-brand-hover-bg: #006d5e;
+  --vp-button-brand-active-bg: #005c4f;
   --vp-font-family-base: 'Segoe UI', 'Microsoft YaHei', sans-serif;
 }
 .dark {
   --vp-c-brand-1: #00d1b2;
   --vp-c-brand-2: #39dfc7;
+  --vp-button-brand-bg: #00d1b2;
+  --vp-button-brand-text: #073b33;
+  --vp-button-brand-hover-text: #073b33;
+  --vp-button-brand-active-text: #073b33;
+  --vp-button-brand-hover-bg: #00b89c;
+  --vp-button-brand-active-bg: #00a88f;
 }
 .VPHomeHero .name {
   font-family: Georgia, serif;
