@@ -1,6 +1,6 @@
 # Component
 
-Suitable for complex scenarios involving custom toolbars or images in dynamically rendered Markdown or HTML whose content is not known in advance.
+Suitable for complex scenarios involving custom toolbars or images in dynamically rendered Markdown or HTML whose content is not known in advance. By default, it watches additions, removals and attribute changes of `<img>` elements inside the component and automatically updates the gallery.
 
 ::: warning Upgrading from an older major version
 The Vue 2 (4.x) and Vue 3 (5.x) lines are a rewrite with breaking changes. Migrate component settings to props, callbacks to Vue events, and method calls to the component ref. **The legacy options prop is retained for compatibility, but is deprecated.** Existing options-based galleries can migrate gradually.
@@ -106,7 +106,7 @@ These props map to [Viewer.js options](https://github.com/fengyuanchen/viewerjs#
 | `rebuild` | boolean          | `false`; rebuild instead of updating when images change.                                                             |
 | `observe` | boolean / number | Default `true` (50ms); `false` disables observation; a non-negative number sets the batching window in milliseconds. |
 
-The component observes image DOM additions, removals and attribute changes, including whole HTML subtree replacements. It calls `update()` by default, or recreates the instance when `rebuild` is enabled.
+The component observes additions, removals and attribute changes of `<img>` elements inside it, including whole HTML subtree replacements. It calls `update()` by default, or recreates the instance when `rebuild` is enabled.
 
 `observe` batches changes in a fixed window starting at the first image mutation; further mutations do not postpone the update. Set `:observe="100"` for a 100ms window, or `:observe="0"` to batch only until the next task. Disabling observation does not prevent configuration changes or explicit `update()` calls.
 

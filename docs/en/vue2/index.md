@@ -60,7 +60,7 @@ Download the [default stylesheet viewer.css](https://github.com/fengyuanchen/vie
 
 ### Component
 
-Suitable for complex scenarios involving custom toolbars or images in dynamically rendered Markdown or HTML whose content is not known in advance. See the [component guide](/en/vue2/guide/component).
+Suitable for complex scenarios involving custom toolbars or images in dynamically rendered Markdown or HTML whose content is not known in advance. By default, it watches additions, removals and attribute changes of `<img>` elements inside the component and automatically updates the gallery. See the [component guide](/en/vue2/guide/component).
 
 ```vue
 <template>
@@ -75,7 +75,7 @@ export default { data: () => ({ images: ['/photo.jpg'] }) }
 
 ### Directive
 
-Suitable for simple image browsing without complex customization, while also supporting images in dynamically rendered Markdown or HTML whose content is not known in advance. See the [directive guide](/en/vue2/guide/directive).
+Suitable for simple image browsing without complex customization, while also supporting images in dynamically rendered Markdown or HTML whose content is not known in advance. By default, it watches additions, removals and attribute changes of `<img>` elements inside the element the directive is bound to and automatically updates the gallery. See the [directive guide](/en/vue2/guide/directive).
 
 ```vue
 <template>

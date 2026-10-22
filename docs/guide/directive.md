@@ -1,6 +1,6 @@
 # 指令
 
-适合无需复杂定制需求的简单浏览场景，同时支持动态渲染 Markdown 或 HTML 等未知图片内容。
+适合无需复杂定制需求的简单浏览场景，同时支持动态渲染 Markdown 或 HTML 等未知图片内容。默认监听指令绑定元素内部 `<img>` 元素的增删和属性变化，自动更新图库。
 
 [演练场](/playground?example=directive)
 
@@ -28,7 +28,7 @@ directive vue3 zh
 
 绑定值中的 `rebuild` 优先于 `.rebuild`，显式设置 `false` 可关闭重建；未设置或为 `undefined` 时沿用修饰符。`rebuild` 和 `observe` 是 v-viewer 的扩展配置，不会传给 Viewer.js。
 
-默认监听图片增删和属性修改，自动更新图库。可通过 `element.$viewer` 获取实例；卸载时会断开监听并销毁实例。
+默认监听指令绑定元素内部 `<img>` 元素的增删和属性变化，自动更新图库。可通过 `element.$viewer` 获取实例；卸载时会断开监听并销毁实例。
 
 等待窗口从首次图片变化开始，后续变化不会推迟更新。`observe` 接受 `true`、`false` 或非负数字；关闭监听后，配置变更和手动调用 `update()` 仍然生效。旧版 `.static` 修饰符已移除，请替换为 `{ observe: false }`。
 

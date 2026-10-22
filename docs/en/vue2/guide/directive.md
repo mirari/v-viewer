@@ -1,6 +1,6 @@
 # Directive
 
-Suitable for simple image browsing without complex customization, while also supporting images in dynamically rendered Markdown or HTML whose content is not known in advance.
+Suitable for simple image browsing without complex customization, while also supporting images in dynamically rendered Markdown or HTML whose content is not known in advance. By default, it watches additions, removals and attribute changes of `<img>` elements inside the element the directive is bound to and automatically updates the gallery.
 
 [Playground](/en/vue2/playground?example=directive)
 
@@ -28,7 +28,7 @@ Rendered HTML works the same way:
 
 `rebuild` in the binding takes precedence over `.rebuild`, including an explicit `false`. When omitted or `undefined`, the modifier applies. `rebuild` and `observe` are v-viewer settings and are not passed to Viewer.js.
 
-By default, adding, removing and changing image attributes automatically updates the gallery. Access the instance as `element.$viewer`. Unmounting disconnects the observer and destroys the instance.
+By default, additions, removals and attribute changes of `<img>` elements inside the element the directive is bound to automatically update the gallery. Access the instance as `element.$viewer`. Unmounting disconnects the observer and destroys the instance.
 
 The window starts at the first image mutation; subsequent changes do not postpone the update. `observe` accepts `true`, `false` or a non-negative number. Configuration changes and explicit `update()` calls still apply when observation is disabled. The `.static` modifier has been removed; replace it with `{ observe: false }`.
 
