@@ -11,6 +11,7 @@
   --vp-button-brand-hover-bg: #006d5e;
   --vp-button-brand-active-bg: #005c4f;
   --vp-font-family-base: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  accent-color: var(--vp-c-brand-1);
 }
 .dark {
   --vp-c-brand-1: #00d1b2;
