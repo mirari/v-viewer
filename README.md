@@ -62,7 +62,7 @@ Use `<viewer>`, `v-viewer` or `this.$viewerApi({ images })`. You can also import
 
 Viewer.js is installed automatically as a dependency. Browser builds include its stylesheet automatically through the browser entry; Node.js / SSR imports use a CSS-free entry. Both use the same runtime implementation, and styles come from the installed Viewer.js version. Direct CDN/UMD usage still needs the Viewer.js CSS link. Viewer.js options and callbacks are passed unchanged through the component's options prop, the directive binding or API options.
 
-To replace the default stylesheet entirely, import from `v-viewer/unstyled` and load your own complete viewer CSS. This entry provides the same exports without automatic CSS loading, for both Vue versions. Use it consistently: importing from `v-viewer` elsewhere still includes the default stylesheet.
+To replace the default stylesheet entirely, import from `v-viewer/unstyled` and load your own complete viewer CSS. This entry provides the same exports without automatic CSS loading, for both Vue versions.
 
 ## License
 

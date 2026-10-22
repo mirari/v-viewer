@@ -45,7 +45,7 @@ import { Viewer } from 'v-viewer/unstyled'
 import './viewer-theme.css'
 ```
 
-自定义样式需包含完整布局和控件。项目内统一使用无样式入口，避免其他 `v-viewer` 导入再次加载默认样式。
+自定义样式需包含完整布局和控件。
 
 ## 基本使用方式
 

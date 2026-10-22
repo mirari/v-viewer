@@ -45,7 +45,7 @@ import { Viewer } from 'v-viewer/unstyled'
 import './viewer-theme.css'
 ```
 
-Provide complete layout and control styles. Use the unstyled entry throughout the project; any `v-viewer` import still loads the default stylesheet.
+Provide complete layout and control styles.
 
 ## Basic usage
 
