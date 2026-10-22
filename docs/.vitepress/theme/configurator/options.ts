@@ -95,7 +95,7 @@ export const groups = [
         true,
         [choice(true, 'inline'), choice(false, 'modal')],
       ),
-      bool('button', '右上角按钮', 'Top-right button'),
+      bool('button', '显示右上角按钮', 'Show the top-right button'),
       select('navbar', '缩略图导航', 'Thumbnail navigation', true, [
         ...visibility,
         choice('left', '左侧缩略图', 'Thumbnails on the left'),
@@ -125,10 +125,16 @@ export const groups = [
         choice('zoomOnly', '仅缩放动画', 'Zoom only'),
       ]),
       bool('tooltip', '缩放比例提示', 'Zoom percentage tooltip'),
-      select('className', '自定义样式类', 'Custom class', '', [
-        choice('', '默认', 'Default'),
-        choice('warm-viewer', '暖色背景', 'Warm backdrop'),
-      ]),
+      select(
+        'className',
+        '查看器根元素的样式类',
+        'CSS class on the viewer root',
+        '',
+        [
+          choice('', '默认', 'Default'),
+          choice('warm-viewer', '暖色背景', 'Warm backdrop'),
+        ],
+      ),
     ],
   },
   {
@@ -142,8 +148,8 @@ export const groups = [
       bool('zoomable', '缩放', 'Zoom'),
       select(
         'magnifier',
-        '放大镜（悬停图片）',
-        'Magnifier (hover over an image)',
+        '全屏视图中悬停放大（非触屏）',
+        'Hover magnifier in fullscreen view (non-touch)',
         false,
         [
           choice(false, '关闭', 'Disabled'),
@@ -151,16 +157,42 @@ export const groups = [
           choice('large', '大号 3× 放大镜', 'Large 3× magnifier'),
         ],
       ),
-      bool('keyboard', '键盘操作', 'Keyboard controls'),
-      bool('loop', '循环浏览', 'Loop images'),
-      bool('toggleOnDblclick', '双击切换原始尺寸', 'Double-click actual size'),
-      bool('rotateOnGesture', '手势旋转（触屏）', 'Gesture rotation (touch)'),
-      bool('rotateOnTouch', '拖动旋转（触屏）', 'Drag rotation (touch)'),
+      bool(
+        'keyboard',
+        '全屏视图中的键盘操作',
+        'Keyboard controls in fullscreen view',
+      ),
+      bool('loop', '首尾循环浏览', 'Wrap between the first and last images'),
+      bool(
+        'toggleOnDblclick',
+        '双击切换原始尺寸与初始尺寸',
+        'Double-click to switch natural and initial sizes',
+      ),
+      bool(
+        'rotateOnGesture',
+        '手势事件旋转（如 Mac Safari 双指手势）',
+        'Rotate via gesture events (e.g. Mac Safari)',
+      ),
+      bool(
+        'rotateOnTouch',
+        '触屏双指旋转',
+        'Two-finger rotation on touch screens',
+      ),
       bool('zoomOnTouch', '拖动缩放（触屏）', 'Drag zoom (touch)'),
-      bool('zoomOnGesture', '手势缩放（触屏）', 'Gesture zoom (touch)'),
+      bool(
+        'zoomOnGesture',
+        '手势事件缩放（如 Mac Safari 捏合手势）',
+        'Zoom via gesture events (e.g. Mac Safari)',
+      ),
       select('zoomOnWheel', '滚轮缩放', 'Wheel zoom', true, wheel),
       bool('slideOnTouch', '滑动切换（触屏）', 'Swipe navigation (touch)'),
-      select('slideOnWheel', '滚轮切换', 'Wheel navigation', true, wheel),
+      select(
+        'slideOnWheel',
+        '滚轮切图（缩略图导航区，或滚轮缩放未生效时）',
+        'Wheel navigation over thumbnails or when wheel zoom is inactive',
+        true,
+        wheel,
+      ),
     ],
   },
   {
@@ -185,7 +217,7 @@ export const groups = [
         0,
         defaultImageCount - 1,
       ),
-      num('zoomRatio', '每次缩放步长', 'Zoom step', 0.1, 0.01, 1, 0.01),
+      num('zoomRatio', '滚轮缩放步长', 'Wheel zoom step', 0.1, 0.01, 1, 0.01),
       num(
         'minZoomRatio',
         '最小缩放比例',

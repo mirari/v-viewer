@@ -57,8 +57,8 @@ const hints: Record<string, [string, string]> = {
     'Responsive breakpoints use the browser viewport width.',
   ],
   interaction: [
-    '触屏选项需在触屏设备上体验。',
-    'Try touch options on a touch device.',
+    '放大镜和方向键等快捷键请在弹窗模式或点击内嵌查看器右上角展开后体验。Gesture 选项依赖浏览器手势事件；Touch 选项用于触屏。',
+    'Try the magnifier and arrow-key shortcuts in modal mode or expand the inline viewer with its top-right button. Gesture options require browser gesture events; Touch options apply to touch screens.',
   ],
   geometry: ['初始图片索引从 0 开始。', 'Image indexes start at 0.'],
   playback: [
