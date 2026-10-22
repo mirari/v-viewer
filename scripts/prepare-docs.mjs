@@ -2,18 +2,21 @@ import { build } from 'vite'
 import { cp, mkdir } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { sample } from '../docs/.vitepress/theme/playground/samples.ts'
+import { toolbarSample } from '../docs/.vitepress/theme/playground/toolbar-sample.ts'
 import { compile } from '../docs/.vitepress/theme/playground/compile.ts'
 
 function demoExamples(vue2) {
   const sources = new Map()
-  for (const mode of ['component', 'directive', 'api']) {
+  for (const mode of ['component', 'directive', 'api', 'toolbar']) {
     for (const language of ['zh', 'en']) {
       const id = `virtual:viewer-example/${mode}-${language}`
       const base = process.env.DOCS_BASE || '/'
       sources.set(
         id,
         compile(
-          sample(
+          (mode === 'toolbar'
+            ? (_, ...args) => toolbarSample(...args)
+            : sample)(
             mode,
             vue2,
             language === 'en',

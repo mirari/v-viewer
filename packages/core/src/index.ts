@@ -74,6 +74,7 @@ export interface ViewerControllerOptions {
   rebuild?: boolean
   observe?: ViewerObserve
   onInit?: (viewer: ViewerJs) => void
+  onDestroy?: () => void
   onEvent?: (name: ViewerEventName, event: CustomEvent) => void
 }
 
@@ -97,6 +98,7 @@ export function createViewerController(
     : undefined
 
   function destroyInstance() {
+    config.onDestroy?.()
     const previous = instance
     instance = undefined
     if (element.$viewer === previous) delete element.$viewer

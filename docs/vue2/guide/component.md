@@ -191,3 +191,29 @@ component vue2 zh
   <article v-html="html" />
 </viewer>
 ```
+
+## 工具栏插槽 {#toolbar-slots}
+
+通过 Vue 模板、图标组件和事件绑定定制工具栏。插槽属于组件能力，指令和 API 继续使用 Viewer.js 的 toolbar 配置。
+
+| 插槽             | 作用                                                                                                              |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `toolbar-icon`   | 替换已有按钮的图标；`name` 为 toolbar 配置键，如 `zoomIn`、`oneToOne`。未提供内容时保留原图标，按钮行为保持不变。 |
+| `toolbar-append` | 在工具栏后追加内容，也可与自定义 `toolbar` 同时使用。                                                             |
+| `toolbar`        | 替换全部内置工具栏按钮，优先于 `toolbar-icon`。                                                                   |
+
+三个插槽均提供 `image`（当前预览图片的 HTMLImageElement，图片显示前为 undefined）、`index`（从 0 开始），以及 `zoom`、`rotate`、`reset`、`next` 等组件上的 Viewer.js 方法。方法始终作用于当前实例；状态和插槽内容响应式更新，无需重建图库。
+
+`toolbar: false` 会隐藏整个工具栏，包括插槽内容。不使用完整替换插槽时，原 toolbar 配置仍决定按钮是否显示。`toolbar-icon` 仅放置图标；交互按钮使用另外两个插槽，自行设置按钮名称和样式。
+
+示例使用 Vue 2.5+ 的 `slot-scope` 写法；Vue 2.4 请改用 `scope`。
+
+<ClientOnly><ViewerDemo vue2 mode="toolbar" /></ClientOnly>
+
+::: details 示例代码
+
+```viewer-example
+toolbar vue2 zh
+```
+
+:::

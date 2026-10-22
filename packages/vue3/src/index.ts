@@ -7,6 +7,8 @@ import {
   ref,
   watch,
   unref,
+  Teleport,
+  onUpdated,
 } from 'vue'
 import * as VueRuntime from 'vue'
 import type {
@@ -31,6 +33,45 @@ import type {
   ViewerDirectiveOptions,
 } from '../../core/src/index.js'
 import type ViewerJs from 'viewerjs'
+import {
+  createToolbarBridge,
+  toolbarState,
+  updateToolbarIcon,
+} from '../../core/src/toolbar.js'
+import type {
+  ToolbarMount,
+  ViewerToolbarScope,
+  ViewerToolbarIconScope,
+} from '../../core/src/toolbar.js'
+export type {
+  ViewerToolbarScope,
+  ViewerToolbarIconScope,
+} from '../../core/src/toolbar.js'
+import type { VNode } from 'vue'
+export interface ViewerSlots {
+  default?: (scope: { options: ViewerOptions }) => VNode[]
+  toolbar?: (scope: ViewerToolbarScope) => VNode[]
+  'toolbar-append'?: (scope: ViewerToolbarScope) => VNode[]
+  'toolbar-icon'?: (scope: ViewerToolbarIconScope) => VNode[]
+}
+const ToolbarContent = defineComponent({
+  props: {
+    mount: { type: Object as PropType<ToolbarMount>, required: true },
+    content: {
+      type: Function as PropType<() => VNode[] | undefined>,
+      required: true,
+    },
+  },
+  mounted() {
+    updateToolbarIcon(this.mount, this.$el)
+  },
+  updated() {
+    updateToolbarIcon(this.mount, this.$el)
+  },
+  render() {
+    return h('span', { style: { display: 'contents' } }, this.content())
+  },
+})
 import {
   viewerOptionProps,
   viewerEvents,
@@ -64,6 +105,7 @@ export interface ViewerProps extends ViewerOptionProps, ViewerEventListeners {
   observe?: ViewerObserve
 }
 export interface ViewerExposed extends ViewerMethods {
+  $slots: ViewerSlots
   viewer: ShallowRef<ViewerJs | undefined>
   createViewer: () => void
   updateViewer: () => void
@@ -80,11 +122,29 @@ export const Viewer: DefineComponent<ViewerProps, ViewerExposed> =
       observe: { type: [Boolean, Number], default: true },
     },
     emits: [...viewerEvents],
-    setup(props, { emit, expose }) {
+    setup(props, { emit, expose, slots }) {
       const root = ref<HTMLElement>()
       const viewer = shallowRef<ViewerJs>()
       let controller: ViewerController | undefined
       let disposed = false
+      const bridge = createToolbarBridge()
+      const toolbarMounts = shallowRef<ToolbarMount[]>([])
+      const state = shallowRef(toolbarState(undefined))
+      const syncToolbar = () => {
+        toolbarMounts.value = bridge.sync(viewer.value, (name) => !!slots[name])
+        const next = toolbarState(viewer.value)
+        if (
+          next.image !== state.value.image ||
+          next.index !== state.value.index
+        )
+          state.value = next
+      }
+      const clearToolbar = () => {
+        viewer.value = undefined
+        bridge.clear()
+        toolbarMounts.value = []
+        state.value = toolbarState(undefined)
+      }
       const optionValues = () => collectViewerOptions(props)
       const createViewer = () => {
         if (disposed || !root.value || controller) return
@@ -92,9 +152,14 @@ export const Viewer: DefineComponent<ViewerProps, ViewerExposed> =
           options: optionValues(),
           rebuild: props.rebuild,
           observe: props.observe,
-          onEvent: (name, event) => emit(name, event),
+          onEvent: (name, event) => {
+            syncToolbar()
+            emit(name, event)
+          },
+          onDestroy: clearToolbar,
           onInit: (instance) => {
             viewer.value = instance
+            syncToolbar()
           },
         })
       }
@@ -126,6 +191,7 @@ export const Viewer: DefineComponent<ViewerProps, ViewerExposed> =
         { flush: 'post' },
       )
       onMounted(createViewer)
+      onUpdated(syncToolbar)
       onBeforeUnmount(() => {
         disposed = true
         destroyViewer()
@@ -143,14 +209,28 @@ export const Viewer: DefineComponent<ViewerProps, ViewerExposed> =
       // Vue 3.0/3.1 expose setup bindings via the public instance;
       // newer runtimes can explicitly restrict that surface with expose().
       expose?.(publicApi)
-      return { ...publicApi, root }
+      const toolbarScope = (): ViewerToolbarScope => ({
+        ...publicApi,
+        ...state.value,
+      })
+      return { ...publicApi, root, toolbarMounts, toolbarScope }
     },
     render() {
-      return h(
-        'div',
-        { ref: 'root' },
+      return h('div', { ref: 'root' }, [
         this.$slots.default?.({ options: this.options }),
-      )
+        ...this.toolbarMounts.map((mount) =>
+          h(Teleport, { to: mount.target, key: mount.key }, [
+            h(ToolbarContent, {
+              mount,
+              content: () =>
+                this.$slots[mount.slot]?.({
+                  ...this.toolbarScope(),
+                  name: mount.name,
+                }),
+            }),
+          ]),
+        ),
+      ])
     },
   }) as unknown as DefineComponent<ViewerProps, ViewerExposed>
 

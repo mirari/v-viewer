@@ -177,9 +177,9 @@ for (const vue2 of [false, true]) {
       await page.emulateMedia({ colorScheme: 'dark' })
       await page.goto(`${prefix}guide/${mode}`)
       const frame = page
-      const preview = page.locator('.viewer-demo')
+      const preview = page.locator('.viewer-demo').first()
       await expect(preview.locator('iframe')).toHaveCount(0)
-      await expect(frame.locator('.viewer-example')).toHaveCSS(
+      await expect(preview.locator('.viewer-example')).toHaveCSS(
         'background-color',
         'rgb(32, 33, 39)',
       )
@@ -194,12 +194,12 @@ for (const vue2 of [false, true]) {
       }
       await expectContentHeight()
       await page.getByRole('switch', { name: '切换到浅色主题' }).click()
-      await expect(frame.locator('.viewer-example')).toHaveCSS(
+      await expect(preview.locator('.viewer-example')).toHaveCSS(
         'background-color',
         'rgb(246, 246, 247)',
       )
       await page.getByRole('switch', { name: '切换到深色主题' }).click()
-      await expect(frame.locator('.viewer-example')).toHaveCSS(
+      await expect(preview.locator('.viewer-example')).toHaveCSS(
         'background-color',
         'rgb(32, 33, 39)',
       )
@@ -209,7 +209,7 @@ for (const vue2 of [false, true]) {
             .getByRole('button', { name: '显示viewer', exact: true })
             .click()
         else
-          await frame
+          await preview
             .getByRole('img', { name: 'Landscape 1', exact: true })
             .click()
         // Viewer.js binds controls after the entrance animation completes.
@@ -228,8 +228,14 @@ for (const vue2 of [false, true]) {
       await expect
         .poll(() => page.getByRole('dialog').boundingBox())
         .toEqual({ x: 0, y: 0, ...page.viewportSize()! })
-      await frame.getByRole('button', { name: 'Zoom In', exact: true }).click()
-      await frame.getByRole('button', { name: 'Next', exact: true }).click()
+      await frame
+        .getByRole('dialog')
+        .getByRole('button', { name: 'Zoom In', exact: true })
+        .click()
+      await frame
+        .getByRole('dialog')
+        .getByRole('button', { name: 'Next', exact: true })
+        .click()
       // URL-only API images use their filenames as the default title.
       await expect(frame.getByRole('dialog')).toHaveAccessibleName(
         mode === 'api' ? /river/ : /Landscape 2/,
@@ -247,7 +253,9 @@ for (const vue2 of [false, true]) {
       await add.click()
       await expect(add).toBeDisabled()
       await open(true)
-      await expect(frame.locator('.viewer-list > li')).toHaveCount(3)
+      await expect(
+        frame.getByRole('dialog').locator('.viewer-list > li'),
+      ).toHaveCount(3)
       await close()
       for (let i = 0; i < 3; i++) await remove.click()
       await expect(remove).toBeDisabled()
@@ -262,9 +270,13 @@ for (const vue2 of [false, true]) {
       await expect(toolbarOn).toHaveAttribute('aria-pressed', 'false')
       await expect(toolbarOff).toHaveAttribute('aria-pressed', 'true')
       await open(true)
-      await expect(frame.locator('.viewer-list > li')).toHaveCount(1)
       await expect(
-        frame.getByRole('button', { name: 'Zoom In', exact: true }),
+        frame.getByRole('dialog').locator('.viewer-list > li'),
+      ).toHaveCount(1)
+      await expect(
+        frame
+          .getByRole('dialog')
+          .getByRole('button', { name: 'Zoom In', exact: true }),
       ).toBeHidden()
       await close()
       await toolbarOn.click()
@@ -272,7 +284,9 @@ for (const vue2 of [false, true]) {
       await expect(toolbarOff).toHaveAttribute('aria-pressed', 'false')
       await open(true)
       await expect(
-        frame.getByRole('button', { name: 'Zoom In', exact: true }),
+        frame
+          .getByRole('dialog')
+          .getByRole('button', { name: 'Zoom In', exact: true }),
       ).toBeVisible()
       await close()
       await page.setViewportSize({ width: 390, height: 844 })
@@ -360,7 +374,7 @@ for (const vue2 of [false, true]) {
         await expect(page).toHaveURL(
           new RegExp(`/playground\\?example=${mode}$`),
         )
-        await expect(page.getByRole('status')).toHaveText(
+        await expect(page.locator('.playground-status')).toHaveText(
           english ? 'Ready' : '已就绪',
         )
         const label =

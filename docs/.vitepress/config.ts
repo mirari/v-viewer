@@ -2,20 +2,23 @@ import { defineConfig, postcssIsolateStyles } from 'vitepress'
 import { fileURLToPath } from 'node:url'
 import { format } from 'prettier'
 import { sample, type Example } from './theme/playground/samples'
+import { toolbarSample } from './theme/playground/toolbar-sample'
 
 // Share the runnable SFC, omitting presentation styles from documentation code.
 // Documentation uses /images/... paths; sandbox previews need an origin.
 const exampleSources = new Map<string, string>()
 for (const version of ['vue2', 'vue3']) {
   for (const language of ['zh', 'en']) {
-    for (const mode of ['component', 'directive', 'api'] as Example[]) {
+    for (const mode of ['component', 'directive', 'api', 'toolbar'] as (
+      Example | 'toolbar'
+    )[]) {
       exampleSources.set(
         `${mode} ${version} ${language}`,
         await format(
-          sample(mode, version === 'vue2', language === 'en').replace(
-            /\n<style>[\s\S]*<\/style>\s*$/,
-            '',
-          ),
+          (mode === 'toolbar'
+            ? toolbarSample(version === 'vue2', language === 'en')
+            : sample(mode, version === 'vue2', language === 'en')
+          ).replace(/\n<style>[\s\S]*<\/style>\s*$/, ''),
           {
             parser: 'vue',
             semi: false,

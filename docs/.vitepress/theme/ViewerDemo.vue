@@ -4,10 +4,14 @@ import { useData, withBase } from 'vitepress'
 import 'viewerjs/dist/viewer.css'
 import { moduleUrl } from './playground/compile'
 import { sampleStyles, type Example } from './playground/samples'
+import { toolbarStyles } from './playground/toolbar-sample'
 
-const props = withDefaults(defineProps<{ vue2?: boolean; mode?: Example }>(), {
-  mode: 'component',
-})
+const props = withDefaults(
+  defineProps<{ vue2?: boolean; mode?: Example | 'toolbar' }>(),
+  {
+    mode: 'component',
+  },
+)
 const { lang } = useData()
 const host = ref<HTMLDivElement>()
 const ready = ref(false)
@@ -18,7 +22,8 @@ let style: HTMLStyleElement | undefined
 
 onMounted(async () => {
   style = document.createElement('style')
-  style.textContent = sampleStyles
+  style.textContent =
+    sampleStyles + (props.mode === 'toolbar' ? toolbarStyles : '')
   document.head.appendChild(style)
   try {
     const response = await fetch(

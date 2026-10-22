@@ -134,7 +134,8 @@ for (const line of ['vue2', 'vue3'])
         assert.ok(!serverOutputs.some((file) => file.fileName.endsWith('.css')))
         for (const file of serverOutputs) {
           if (file.type === 'chunk') {
-            assert.ok(!file.code.includes('style.css'))
+            // DOM style.cssText is not a stylesheet import.
+            assert.doesNotMatch(file.code, /style\.css(?:['"]|\?)/)
           }
         }
       }
@@ -147,6 +148,7 @@ for (const line of ['vue2', 'vue3'])
     await writeFile(
       `${fixture}/runtime.cjs`,
       `
+;(async () => {
 const assert = require('node:assert/strict')
 const {JSDOM} = require(${JSON.stringify(await realpath('node_modules/jsdom'))})
 const dom = new JSDOM('<!doctype html><html><body><div id="app"></div></body></html>',{url:'http://localhost/'})
@@ -224,7 +226,49 @@ assert.equal(shown,2)
 assert.equal(legacyShown,2)
 ${line === 'vue2' ? 'componentApp.$destroy()' : 'componentApp.unmount()'}
 assert.equal(document.querySelector('.viewer-container'),null)
+const toolbarHost=document.createElement('div')
+document.body.appendChild(toolbarHost)
+let toolbarComponent
+let toolbarCalls=0
+${
+  line === 'vue2'
+    ? `
+const toolbarApp=new Vue({render(h){return h(pkg.Viewer,{ref:'gallery',props:{transition:false},scopedSlots:{
+default:()=>[h('img',{attrs:{src:'photo.jpg'}})],
+'toolbar-icon':({name})=>name==='zoomIn'?[h('b',{attrs:{'data-icon':'custom'}},['+'])]:[],
+'toolbar-append':({rotate})=>[h('button',{attrs:{'data-action':'custom'},on:{click:()=>rotate(90)}},['Rotate'])]
+}})}}).$mount(toolbarHost)
+toolbarComponent=toolbarApp.$refs.gallery
+`
+    : `
+const toolbarRef=Vue.ref(null)
+const toolbarApp=Vue.createApp({render(){return Vue.h(pkg.Viewer,{ref:toolbarRef,transition:false},{
+default:()=>[Vue.h('img',{src:'photo.jpg'})],
+'toolbar-icon':({name})=>name==='zoomIn'?[Vue.h('b',{'data-icon':'custom'},'+')]:[],
+'toolbar-append':({rotate})=>[Vue.h('button',{'data-action':'custom',onClick:()=>rotate(90)},'Rotate')]
+})}})
+toolbarApp.mount(toolbarHost)
+toolbarComponent=toolbarRef.value
+`
+}
+toolbarComponent.show(true)
+await Vue.nextTick()
+await Vue.nextTick()
+const toolbarInstance=${line === 'vue2' ? 'toolbarComponent.$viewer' : 'toolbarComponent.viewer'}
+toolbarInstance.rotate=function(degree){assert.equal(degree,90);toolbarCalls++;return this}
+assert.ok(document.querySelector('.viewer-zoom-in.v-viewer-custom-icon [data-icon="custom"]'))
+document.querySelector('[data-action="custom"]').click()
+assert.equal(toolbarCalls,1)
+toolbarComponent.rebuildViewer()
+toolbarComponent.show(true)
+await Vue.nextTick()
+await Vue.nextTick()
+assert.equal(document.querySelectorAll('[data-action="custom"]').length,1)
+${line === 'vue2' ? 'toolbarApp.$destroy()' : 'toolbarApp.unmount()'}
+await Vue.nextTick()
+assert.equal(document.querySelector('.viewer-container'),null)
 dom.window.close()
+})().catch(error=>{console.error(error);global.window?.close();process.exitCode=1})
 `,
     )
     execFileSync(process.execPath, [`${fixture}/runtime.cjs`], {
@@ -240,6 +284,14 @@ dom.window.close()
       `
 import type {ViewerOptionProps,ViewerEventMap,ViewerMethods} from 'v-viewer'
 import type {ViewerObserve,ViewerDirectiveOptions} from 'v-viewer'
+import type {ViewerToolbarScope,ViewerToolbarIconScope,ViewerSlots} from 'v-viewer'
+const toolbarSlots:ViewerSlots={toolbar:({zoom,image,index})=>{zoom(0.1);image?.src;index.toFixed();return []},'toolbar-icon':({name})=>{name.toUpperCase();return []}}
+const toolbarScope={} as ViewerToolbarScope
+toolbarScope.rotate(90)
+// @ts-expect-error toolbar methods retain their argument types
+toolbarScope.rotate('90')
+const iconScope={} as ViewerToolbarIconScope
+iconScope.name.toUpperCase()
 const observe:ViewerObserve=100
 const directiveOptions:ViewerDirectiveOptions={toolbar:false,observe}
 const disabledObservation:ViewerDirectiveOptions={observe:false}

@@ -3,6 +3,27 @@ import type { DirectiveOptions, PluginObject, VueConstructor } from 'vue'
 import type { Vue as VueInstanceType } from 'vue/types/vue.js'
 import type ViewerJsType from 'viewerjs'
 import {
+  createToolbarBridge,
+  toolbarState,
+  updateToolbarIcon,
+} from '../../core/src/toolbar.js'
+import type {
+  ToolbarMount,
+  ViewerToolbarScope,
+  ViewerToolbarIconScope,
+} from '../../core/src/toolbar.js'
+import type { VNode } from 'vue'
+export type {
+  ViewerToolbarScope,
+  ViewerToolbarIconScope,
+} from '../../core/src/toolbar.js'
+export interface ViewerSlots {
+  default?: (scope: { options: ViewerOptions }) => VNode[]
+  toolbar?: (scope: ViewerToolbarScope) => VNode[]
+  'toolbar-append'?: (scope: ViewerToolbarScope) => VNode[]
+  'toolbar-icon'?: (scope: ViewerToolbarIconScope) => VNode[]
+}
+import {
   ViewerJs,
   createViewerController,
   createDirectiveHooks,
@@ -18,6 +39,7 @@ import {
   viewerOptionProps,
   viewerMethods,
   collectViewerOptions,
+  bindViewerMethods,
 } from '../../core/src/component.js'
 import type {
   ViewerOptionProps,
@@ -41,9 +63,91 @@ export type {
 export const viewerApi = showViewer
 
 const controllers = new WeakMap<Vue, ViewerController>()
+const toolbars = new WeakMap<
+  Vue,
+  {
+    bridge: ReturnType<typeof createToolbarBridge>
+    portals: Map<ToolbarMount, Vue>
+  }
+>()
+function clearToolbar(vm: Vue) {
+  vm.$viewer = undefined
+  const state = toolbars.get(vm)
+  if (!state) return
+  for (const portal of state.portals.values()) {
+    portal.$destroy()
+    portal.$el.remove()
+  }
+  state.portals.clear()
+  state.bridge.clear()
+}
+function syncToolbar(vm: Vue) {
+  const state = toolbars.get(vm)
+  if (!state) return
+  const mounts = state.bridge.sync(vm.$viewer, (name) => {
+    // Vue 2's legacy slot-scope syntax keeps a function for v-if=false.
+    // Treat its empty result as an absent replacement slot.
+    if (name === 'toolbar') {
+      const owner = vm as ViewerInstance
+      const content =
+        vm.$scopedSlots.toolbar?.({
+          ...bindViewerMethods(() => vm.$viewer),
+          update: () => owner.update(),
+          destroy: () => owner.destroy(),
+          ...toolbarState(vm.$viewer),
+        }) || vm.$slots.toolbar
+      return !!content?.some(
+        (node) => !node.isComment && (!!node.tag || !!node.text?.trim()),
+      )
+    }
+    return !!vm.$scopedSlots[name] || !!vm.$slots[name]
+  })
+  for (const [mount, portal] of state.portals) {
+    if (mounts.indexOf(mount) !== -1) continue
+    portal.$destroy()
+    portal.$el.remove()
+    state.portals.delete(mount)
+  }
+  for (const mount of mounts) {
+    const existing = state.portals.get(mount)
+    if (existing) {
+      existing.$forceUpdate()
+      continue
+    }
+    const methods = bindViewerMethods(() => vm.$viewer)
+    const portal = new Vue({
+      parent: vm,
+      mounted() {
+        updateToolbarIcon(mount, this.$el as HTMLElement)
+      },
+      updated() {
+        updateToolbarIcon(mount, this.$el as HTMLElement)
+      },
+      render(h) {
+        const owner = vm as ViewerInstance
+        const scope: ViewerToolbarIconScope = {
+          ...methods,
+          update: () => owner.update(),
+          destroy: () => owner.destroy(),
+          ...toolbarState(vm.$viewer),
+          name: mount.name ?? '',
+        }
+        return h(
+          'span',
+          { style: { display: 'contents' } },
+          vm.$scopedSlots[mount.slot]?.(scope) || vm.$slots[mount.slot],
+        )
+      },
+    }).$mount()
+    mount.target.appendChild(portal.$el)
+    updateToolbarIcon(mount, portal.$el as HTMLElement)
+    state.portals.set(mount, portal)
+  }
+}
 export type ViewerInstance = VueInstanceType &
   ViewerOptionProps &
   ViewerMethods & {
+    $scopedSlots: ViewerSlots
     /** @deprecated Bind Viewer.js settings as props and callbacks as Vue events. */
     options: ViewerOptions
     rebuild: boolean
@@ -83,9 +187,13 @@ export const Viewer: ReturnType<typeof VueInstanceType.extend> &
   mounted() {
     this.createViewer()
   },
+  updated() {
+    syncToolbar(this)
+  },
   beforeDestroy() {
     this._viewerDisposed = true
     this.destroyViewer()
+    toolbars.delete(this)
   },
   watch: {
     observe(value: ViewerObserve) {
@@ -121,9 +229,14 @@ export const Viewer: ReturnType<typeof VueInstanceType.extend> &
           options: this.viewerOptions,
           rebuild: this.rebuild,
           observe: this.observe,
-          onEvent: (name, event) => this.$emit(name, event),
+          onEvent: (name, event) => {
+            syncToolbar(this)
+            this.$emit(name, event)
+          },
+          onDestroy: () => clearToolbar(this),
           onInit: (viewer) => {
             this.$viewer = viewer
+            syncToolbar(this)
           },
         }),
       )
@@ -150,6 +263,7 @@ export const Viewer: ReturnType<typeof VueInstanceType.extend> &
     },
   },
   beforeCreate() {
+    toolbars.set(this, { bridge: createToolbarBridge(), portals: new Map() })
     this._viewerDisposed = false
   },
   destroyed() {

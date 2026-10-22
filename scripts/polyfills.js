@@ -3,6 +3,7 @@ import 'core-js/features/object/assign'
 import 'core-js/features/object/entries'
 import 'core-js/features/object/from-entries'
 import 'core-js/features/weak-map'
+import 'core-js/features/map'
 // Viewer.js supports IE 11; Element.remove is used for temporary gallery cleanup.
 if (typeof Element !== 'undefined' && !Element.prototype.remove) {
   Element.prototype.remove = function () {
