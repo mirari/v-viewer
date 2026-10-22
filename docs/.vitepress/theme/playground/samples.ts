@@ -104,8 +104,8 @@ ${sampleStyles}
 </style>`
 }
 
-export const sampleStyles = `.viewer-example { --demo-bg: #f6f6f7; --demo-text: #3c3c43; --demo-border: #c2c2c4; --demo-hover: #e7ebe2; --demo-accent: #35654e; --demo-on-accent: #fff; }
-.dark .viewer-example { --demo-bg: #202127; --demo-text: #dfdfe5; --demo-border: #51515c; --demo-hover: #30363a; --demo-accent: #94c6a8; --demo-on-accent: #18251d; }
+export const sampleStyles = `.viewer-example { --demo-bg: #f6f6f7; --demo-text: #3c3c43; --demo-border: #c2c2c4; --demo-hover: #e0f3ef; --demo-accent: #00d1b2; --demo-on-accent: #073b33; }
+.dark .viewer-example { --demo-bg: #202127; --demo-text: #dfdfe5; --demo-border: #51515c; --demo-hover: #233d39; }
 .viewer-example { background: var(--demo-bg); color: var(--demo-text); font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', sans-serif; }
 .viewer-example { padding: 28px; box-sizing: border-box; border-radius: inherit; }
 .viewer-example p { font-size: 14px; line-height: 1.8; }

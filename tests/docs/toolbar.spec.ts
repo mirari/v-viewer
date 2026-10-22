@@ -51,7 +51,7 @@ for (const vue2 of [false, true]) {
     const customZoom = toolbar.getByRole('button', { name: '放大' })
     await expect(customZoom.locator('svg')).toHaveCSS(
       'color',
-      'rgb(184, 240, 206)',
+      'rgb(0, 209, 178)',
     )
     await expect(customZoom).toHaveText('')
     await expect(customZoom).toHaveAttribute('title', '放大')

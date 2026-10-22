@@ -71,7 +71,7 @@ export const toolbarStyles = `.toolbar-example .controls { margin-bottom: 16px; 
 .viewer-toolbar .viewer-slot-button:hover, .viewer-toolbar .viewer-slot-button:focus-visible { background: rgba(0, 0, 0, .8); }
 .viewer-toolbar .viewer-slot-button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .viewer-toolbar .viewer-slot-button svg { display: block; flex-shrink: 0; }
-.viewer-toolbar .viewer-custom-button { flex-basis: 34px; width: 34px; height: 34px; border: 1px solid #94c6a880; border-radius: 8px; background: #162c25; color: #b8f0ce; box-shadow: 0 2px 6px #0003; }
-.viewer-toolbar .viewer-custom-button:hover, .viewer-toolbar .viewer-custom-button:focus-visible { background: #28513e; border-color: #b8f0ce; }
-.viewer-toolbar .viewer-custom-button:focus-visible { outline-color: #b8f0ce; }
+.viewer-toolbar .viewer-custom-button { flex-basis: 34px; width: 34px; height: 34px; border: 1px solid #00d1b280; border-radius: 8px; background: #102e29; color: #00d1b2; box-shadow: 0 2px 6px #0003; }
+.viewer-toolbar .viewer-custom-button:hover, .viewer-toolbar .viewer-custom-button:focus-visible { background: #174b42; border-color: #00d1b2; }
+.viewer-toolbar .viewer-custom-button:focus-visible { outline-color: #00d1b2; }
 .viewer-toolbar .v-viewer-toolbar-slot { padding: 6px 0; }`

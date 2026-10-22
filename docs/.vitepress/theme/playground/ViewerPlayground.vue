@@ -377,7 +377,7 @@ onBeforeUnmount(() => {
 }
 .playground-toolbar .playground-run {
   background: var(--vp-c-brand-3);
-  color: white;
+  color: var(--vp-button-brand-text);
   min-width: 80px;
 }
 .playground-run span {
