@@ -25,17 +25,8 @@ const preview = ref<HTMLDivElement>()
 let runtime:
   { send: (command: object) => void; dispose: () => void } | undefined
 const ready = ref(false)
-const pending = ref(false)
 const error = ref('')
 const logs = ref<string[]>([])
-const state = ref({
-  index: 0,
-  shown: false,
-  credit: '',
-  container: '',
-  width: 0,
-})
-let revision = 0
 let disposed = false
 const controls = computed(() => {
   const search = query.value.trim().toLowerCase()
@@ -62,24 +53,21 @@ const lastImageIndex = (filter: Setting) =>
   )
 const hints: Record<string, [string, string]> = {
   appearance: [
-    '响应式断点以浏览器窗口宽度为准。加载提示在慢速网络下更明显。',
-    'Responsive breakpoints use the browser viewport width. Loading indicators are easier to see on a slow connection.',
+    '响应式断点以浏览器窗口宽度为准。',
+    'Responsive breakpoints use the browser viewport width.',
   ],
   interaction: [
-    '触屏选项需在触屏设备上体验。focus 依赖 keyboard；预加载差异在慢速网络下更明显。',
-    'Try touch options on a touch device. Focus requires keyboard; preloading is easier to observe on a slow connection.',
+    '触屏选项需在触屏设备上体验。',
+    'Try touch options on a touch device.',
   ],
-  geometry: [
-    '初始索引从 0 开始。z-index: 1 标记可用来比较层级。',
-    'Image indexes start at 0. Use the z-index: 1 marker to compare stacking.',
-  ],
+  geometry: ['初始图片索引从 0 开始。', 'Image indexes start at 0.'],
   playback: [
     '请点击预览工具栏 ▶ 开始播放。原生全屏只能由用户操作触发。',
     'Start playback with ▶ in the preview toolbar. Native fullscreen requires a user gesture.',
   ],
   data: [
-    'data-source 示例指向下一张图片。挂载位置和继承的 data-credit 显示在预览下方。',
-    'The data-source preset points to the next image. The container and inherited data-credit appear below the preview.',
+    'data-source 示例指向下一张图片。',
+    'The data-source preset points to the next image.',
   ],
   events: [
     '开启事件开关后操作图片，下面的日志会显示事件名称和参数。',
@@ -118,10 +106,8 @@ function update(control: Control, event: Event) {
 }
 function sync() {
   if (!ready.value) return
-  pending.value = true
   send({
     type: 'options',
-    revision: ++revision,
     settings: { ...settings.value },
   })
 }
@@ -134,22 +120,11 @@ function chooseGroup(id: string) {
   selectedGroup.value = id
   query.value = ''
 }
-function receive(
-  data: typeof state.value & {
-    type: string
-    revision?: number
-    name?: string
-    detail?: unknown
-  },
-) {
+function receive(data: { type: string; name?: string; detail?: unknown }) {
   if (disposed) return
   if (data.type === 'ready') {
     ready.value = true
     sync()
-  }
-  if (data.type === 'state') {
-    state.value = data
-    if (data.revision === revision) pending.value = false
   }
   if (data.type === 'event')
     logs.value = [
@@ -225,25 +200,9 @@ onBeforeUnmount(() => {
       <div class="preview-pane">
         <div class="preview-stage">
           <div ref="preview" class="preview-host vp-raw"></div>
-          <div v-if="!ready" class="loading">
+          <div v-if="!ready && !error" class="loading" role="status">
             {{ text('正在加载图片预览…', 'Loading image preview…') }}
           </div>
-        </div>
-        <div class="preview-status">
-          <span role="status">{{
-            !ready
-              ? text('加载中', 'Loading')
-              : pending
-                ? text('应用中…', 'Applying…')
-                : text('已应用', 'Applied')
-          }}</span>
-        </div>
-        <div class="inspector">
-          <span
-            >{{ text('图片', 'Image') }}
-            {{ imageCount ? state.index + 1 : 0 }} · {{ state.width }}px</span
-          ><span>{{ state.container || '—' }}</span
-          ><span v-if="state.credit">{{ state.credit }}</span>
         </div>
       </div>
       <div class="settings-slot">
@@ -437,22 +396,6 @@ button {
   display: grid;
   place-items: center;
   font-size: 12px;
-}
-.preview-status {
-  padding: 10px;
-  border-top: 1px solid var(--vp-c-divider);
-}
-.preview-status span {
-  font: 14px var(--vp-font-family-base);
-  color: var(--vp-c-brand-1);
-}
-.inspector {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px 12px;
-  padding: 0 10px 10px;
-  font: 12px/1.5 var(--vp-font-family-mono);
-  color: var(--vp-c-text-2);
 }
 .settings-pane {
   min-width: 0;

@@ -16,17 +16,6 @@
   height: auto;
   cursor: zoom-in;
 }
-.viewer-config-preview .layer-reference {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 1;
-  padding: 3px 6px;
-  color: #fff;
-  background: #073b33cc;
-  font: 12px monospace;
-  pointer-events: none;
-}
 .viewer-config-viewer.warm-viewer {
   background-color: #533322 !important;
 }

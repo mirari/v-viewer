@@ -59,7 +59,9 @@ for (const vue2 of [false, true]) {
     const image = frame.locator('.viewer-canvas img')
     const search = panel.getByRole('searchbox', { name: '搜索配置项' })
     await expect(image).toBeVisible()
-    await expect(panel.getByRole('status')).toHaveText('已应用')
+    await expect(
+      panel.getByRole('button', { name: '添加图片', exact: true }),
+    ).toBeEnabled()
     await expect(image).toHaveAttribute('src', /valley/)
     const add = panel.getByRole('button', { name: '添加图片', exact: true })
     const remove = panel.getByRole('button', { name: '删除图片', exact: true })
@@ -120,16 +122,12 @@ for (const vue2 of [false, true]) {
       .getByRole('combobox', { name: 'url', exact: true })
       .selectOption({ label: 'data-source（不同图片）' })
     await expect(image).toHaveAttribute('src', /ridge/)
-    await search.fill('inheritedAttributes')
-    await panel
-      .getByRole('combobox', { name: 'inheritedAttributes', exact: true })
-      .selectOption({ label: '继承 data-credit' })
-    await expect(image).toHaveAttribute('data-credit', 'Lorem Picsum')
-
     await panel.getByRole('button', { name: '重置示例' }).click()
     await search.fill('inline')
     await panel.getByRole('radio', { name: 'modal', exact: true }).check()
-    await expect(panel.getByRole('status')).toHaveText('已应用')
+    await expect(
+      panel.getByRole('button', { name: '添加图片', exact: true }),
+    ).toBeEnabled()
     await expect(page.getByRole('dialog')).toBeHidden()
     const photos = panel.locator('.photos')
     const firstPhoto = photos.getByRole('img', {
@@ -160,7 +158,9 @@ for (const vue2 of [false, true]) {
     await panel
       .getByRole('combobox', { name: 'navbar', exact: true })
       .selectOption({ label: '隐藏' })
-    await expect(panel.getByRole('status')).toHaveText('已应用')
+    await expect(
+      panel.getByRole('button', { name: '添加图片', exact: true }),
+    ).toBeEnabled()
     await expect(dialog).toBeHidden()
     await firstPhoto.click()
     await expect(dialog).toHaveAccessibleName(/960 × 640/)
@@ -190,7 +190,9 @@ for (const vue2 of [false, true]) {
     const englishPanel = page.getByRole('region', {
       name: 'Image preview settings',
     })
-    await expect(englishPanel.getByRole('status')).toHaveText('Applied')
+    await expect(
+      englishPanel.getByRole('button', { name: 'Add image', exact: true }),
+    ).toBeEnabled()
     const englishHeader = englishPanel.locator('.config-header')
     const buttons = await englishHeader
       .locator('button')

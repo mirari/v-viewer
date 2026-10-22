@@ -125,7 +125,6 @@ export const groups = [
         choice('zoomOnly', '仅缩放动画', 'Zoom only'),
       ]),
       bool('tooltip', '缩放比例提示', 'Zoom percentage tooltip'),
-      bool('loading', '图片加载提示', 'Loading indicator'),
       select('className', '自定义样式类', 'Custom class', '', [
         choice('', '默认', 'Default'),
         choice('warm-viewer', '暖色背景', 'Warm backdrop'),
@@ -143,8 +142,8 @@ export const groups = [
       bool('zoomable', '缩放', 'Zoom'),
       select(
         'magnifier',
-        '放大镜（展开预览后悬停）',
-        'Magnifier (hover after expanding)',
+        '放大镜（悬停图片）',
+        'Magnifier (hover over an image)',
         false,
         [
           choice(false, '关闭', 'Disabled'),
@@ -153,13 +152,7 @@ export const groups = [
         ],
       ),
       bool('keyboard', '键盘操作', 'Keyboard controls'),
-      bool(
-        'focus',
-        '聚焦预览（需开启 keyboard）',
-        'Focus viewer (requires keyboard)',
-      ),
       bool('loop', '循环浏览', 'Loop images'),
-      bool('preload', '预加载相邻图片', 'Preload adjacent images'),
       bool('toggleOnDblclick', '双击切换原始尺寸', 'Double-click actual size'),
       bool('rotateOnGesture', '手势旋转（触屏）', 'Gesture rotation (touch)'),
       bool('rotateOnTouch', '拖动旋转（触屏）', 'Drag rotation (touch)'),
@@ -192,24 +185,6 @@ export const groups = [
         0,
         defaultImageCount - 1,
       ),
-      num(
-        'minWidth',
-        '内嵌最小宽度 / px',
-        'Minimum inline width / px',
-        200,
-        100,
-        1200,
-        10,
-      ),
-      num(
-        'minHeight',
-        '内嵌最小高度 / px',
-        'Minimum inline height / px',
-        100,
-        100,
-        800,
-        10,
-      ),
       num('zoomRatio', '每次缩放步长', 'Zoom step', 0.1, 0.01, 1, 0.01),
       num(
         'minZoomRatio',
@@ -221,8 +196,6 @@ export const groups = [
         0.01,
       ),
       num('maxZoomRatio', '最大缩放比例', 'Maximum zoom ratio', 100, 1, 100, 1),
-      num('zIndex', '弹窗层级', 'Modal z-index', 2015, 0, 10000),
-      num('zIndexInline', '内嵌层级', 'Inline z-index', 0, 0, 10000),
     ],
   },
   {
@@ -252,10 +225,6 @@ export const groups = [
     zh: '图片来源',
     en: 'Sources',
     controls: [
-      select('container', '弹窗挂载位置', 'Modal container', 'body', [
-        choice('body', 'body'),
-        choice('#preview-container', '#preview-container'),
-      ]),
       select('filter', '筛选可预览图片', 'Filter viewable images', 'all', [
         choice('all', '全部图片', 'All images'),
         choice('first', '仅第一张', 'First image only'),
@@ -274,17 +243,6 @@ export const groups = [
           'Function reading data-source',
         ),
       ]),
-      select(
-        'inheritedAttributes',
-        '继承图片属性',
-        'Inherited image attributes',
-        'default',
-        [
-          choice('default', 'Viewer.js 默认属性', 'Viewer.js defaults'),
-          choice('none', '不继承', 'None'),
-          choice('custom', '继承 data-credit', 'Inherit data-credit'),
-        ],
-      ),
     ],
   },
   {
@@ -332,12 +290,6 @@ export const presets: Record<string, Record<string, string>> = {
       'image => Number(image.dataset.index) >= Number(image.dataset.count) - 2',
   },
   url: { resolver: "image => image.getAttribute('data-source')" },
-  inheritedAttributes: {
-    default:
-      "['crossOrigin', 'decoding', 'isMap', 'loading', 'referrerPolicy', 'sizes', 'srcset', 'useMap']",
-    none: '[]',
-    custom: "['data-credit']",
-  },
 }
 export function defaults(): Settings {
   return Object.fromEntries(
