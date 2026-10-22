@@ -112,20 +112,22 @@ component vue3 zh
 
 ## 事件 {#events}
 
+以下均为 [Viewer.js 原生事件](https://github.com/fengyuanchen/viewerjs#events)，通过 Vue 事件使用；点击事件名可查看原文档。
+
 事件参数为原始 DOM 事件，操作数据位于 `event.detail`。事件同步转发，可通过 `@show.prevent` 或 `event.preventDefault()` 取消操作。
 
-| 事件                 | 触发时机 / 常用参数                                                                                                    |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `ready`              | 查看器界面初始化完成；弹窗模式下可能在首次打开时才触发。                                                               |
-| `show` / `shown`     | 弹窗打开前 / 打开过渡动画完成后。                                                                                      |
-| `hide` / `hidden`    | 弹窗关闭前 / 关闭过渡动画完成后。                                                                                      |
-| `view` / `viewed`    | 图片显示前 / 显示完成后；`detail.index` 为从 0 开始的图片下标，`image` 和 `originalImage` 分别为预览图片与源图片元素。 |
-| `move` / `moved`     | 移动前 / 后；`detail.x`、`y`、`oldX`、`oldY` 表示位置变化。                                                            |
-| `rotate` / `rotated` | 旋转前 / 后；`detail.degree`、`oldDegree` 表示角度变化。                                                               |
-| `scale` / `scaled`   | 按轴缩放或翻转前 / 后；`detail.scaleX`、`scaleY`、`oldScaleX`、`oldScaleY` 表示变化。                                  |
-| `zoom` / `zoomed`    | 缩放前 / 后；`detail.ratio`、`oldRatio` 表示缩放比例。                                                                 |
-| `play` / `stop`      | 开始 / 停止幻灯片播放前。                                                                                              |
-| `playing`            | 幻灯片播放中显示每张图片之前。                                                                                         |
+| 事件                                                                                                                            | 触发时机 / 常用参数                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| [`ready`](https://github.com/fengyuanchen/viewerjs#ready-1)                                                                     | 查看器界面初始化完成；弹窗模式下可能在首次打开时才触发。                                                               |
+| [`show`](https://github.com/fengyuanchen/viewerjs#show-1) / [`shown`](https://github.com/fengyuanchen/viewerjs#shown-1)         | 弹窗打开前 / 打开过渡动画完成后。                                                                                      |
+| [`hide`](https://github.com/fengyuanchen/viewerjs#hide-1) / [`hidden`](https://github.com/fengyuanchen/viewerjs#hidden-1)       | 弹窗关闭前 / 关闭过渡动画完成后。                                                                                      |
+| [`view`](https://github.com/fengyuanchen/viewerjs#view-1) / [`viewed`](https://github.com/fengyuanchen/viewerjs#viewed-1)       | 图片显示前 / 显示完成后；`detail.index` 为从 0 开始的图片下标，`image` 和 `originalImage` 分别为预览图片与源图片元素。 |
+| [`move`](https://github.com/fengyuanchen/viewerjs#move-1) / [`moved`](https://github.com/fengyuanchen/viewerjs#moved-1)         | 移动前 / 后；`detail.x`、`y`、`oldX`、`oldY` 表示位置变化。                                                            |
+| [`rotate`](https://github.com/fengyuanchen/viewerjs#rotate-1) / [`rotated`](https://github.com/fengyuanchen/viewerjs#rotated-1) | 旋转前 / 后；`detail.degree`、`oldDegree` 表示角度变化。                                                               |
+| [`scale`](https://github.com/fengyuanchen/viewerjs#scale-1) / [`scaled`](https://github.com/fengyuanchen/viewerjs#scaled-1)     | 按轴缩放或翻转前 / 后；`detail.scaleX`、`scaleY`、`oldScaleX`、`oldScaleY` 表示变化。                                  |
+| [`zoom`](https://github.com/fengyuanchen/viewerjs#zoom-1) / [`zoomed`](https://github.com/fengyuanchen/viewerjs#zoomed-1)       | 缩放前 / 后；`detail.ratio`、`oldRatio` 表示缩放比例。                                                                 |
+| [`play`](https://github.com/fengyuanchen/viewerjs#play-1) / [`stop`](https://github.com/fengyuanchen/viewerjs#stop-2)           | 开始 / 停止幻灯片播放前。                                                                                              |
+| [`playing`](https://github.com/fengyuanchen/viewerjs#playing-1)                                                                 | 幻灯片播放中显示每张图片之前。                                                                                         |
 
 ## 方法 {#methods}
 

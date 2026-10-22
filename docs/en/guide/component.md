@@ -112,20 +112,22 @@ The component observes image DOM additions, removals and attribute changes, incl
 
 ## Events {#events}
 
+These are [Viewer.js events](https://github.com/fengyuanchen/viewerjs#events) exposed as Vue events. Click an event name for its original documentation.
+
 Events forward the original DOM event synchronously, with operation data in `event.detail`. Use `@show.prevent` or `event.preventDefault()` to cancel a cancelable operation.
 
-| Event                | When it fires / useful data                                                                                                                           |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ready`              | The viewer UI is initialized. In modal mode this can happen on the first opening.                                                                     |
-| `show` / `shown`     | Before opening / after the opening transition completes in modal mode.                                                                                |
-| `hide` / `hidden`    | Before closing / after the closing transition completes in modal mode.                                                                                |
-| `view` / `viewed`    | Before displaying an image / after it is displayed. `detail.index` is zero-based; `image` and `originalImage` identify the preview and source images. |
-| `move` / `moved`     | Before / after moving. `detail.x`, `y`, `oldX` and `oldY` describe the position change.                                                               |
-| `rotate` / `rotated` | Before / after rotation. `detail.degree` and `oldDegree` describe the angle change.                                                                   |
-| `scale` / `scaled`   | Before / after scaling or flipping. `detail.scaleX`, `scaleY`, `oldScaleX` and `oldScaleY` describe the change.                                       |
-| `zoom` / `zoomed`    | Before / after zooming. `detail.ratio` and `oldRatio` contain the zoom ratios.                                                                        |
-| `play` / `stop`      | Before starting / stopping a slideshow.                                                                                                               |
-| `playing`            | Before showing each slide during playback.                                                                                                            |
+| Event                                                                                                                           | When it fires / useful data                                                                                                                           |
+| ------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`ready`](https://github.com/fengyuanchen/viewerjs#ready-1)                                                                     | The viewer UI is initialized. In modal mode this can happen on the first opening.                                                                     |
+| [`show`](https://github.com/fengyuanchen/viewerjs#show-1) / [`shown`](https://github.com/fengyuanchen/viewerjs#shown-1)         | Before opening / after the opening transition completes in modal mode.                                                                                |
+| [`hide`](https://github.com/fengyuanchen/viewerjs#hide-1) / [`hidden`](https://github.com/fengyuanchen/viewerjs#hidden-1)       | Before closing / after the closing transition completes in modal mode.                                                                                |
+| [`view`](https://github.com/fengyuanchen/viewerjs#view-1) / [`viewed`](https://github.com/fengyuanchen/viewerjs#viewed-1)       | Before displaying an image / after it is displayed. `detail.index` is zero-based; `image` and `originalImage` identify the preview and source images. |
+| [`move`](https://github.com/fengyuanchen/viewerjs#move-1) / [`moved`](https://github.com/fengyuanchen/viewerjs#moved-1)         | Before / after moving. `detail.x`, `y`, `oldX` and `oldY` describe the position change.                                                               |
+| [`rotate`](https://github.com/fengyuanchen/viewerjs#rotate-1) / [`rotated`](https://github.com/fengyuanchen/viewerjs#rotated-1) | Before / after rotation. `detail.degree` and `oldDegree` describe the angle change.                                                                   |
+| [`scale`](https://github.com/fengyuanchen/viewerjs#scale-1) / [`scaled`](https://github.com/fengyuanchen/viewerjs#scaled-1)     | Before / after scaling or flipping. `detail.scaleX`, `scaleY`, `oldScaleX` and `oldScaleY` describe the change.                                       |
+| [`zoom`](https://github.com/fengyuanchen/viewerjs#zoom-1) / [`zoomed`](https://github.com/fengyuanchen/viewerjs#zoomed-1)       | Before / after zooming. `detail.ratio` and `oldRatio` contain the zoom ratios.                                                                        |
+| [`play`](https://github.com/fengyuanchen/viewerjs#play-1) / [`stop`](https://github.com/fengyuanchen/viewerjs#stop-2)           | Before starting / stopping a slideshow.                                                                                                               |
+| [`playing`](https://github.com/fengyuanchen/viewerjs#playing-1)                                                                 | Before showing each slide during playback.                                                                                                            |
 
 ## Methods {#methods}
 
