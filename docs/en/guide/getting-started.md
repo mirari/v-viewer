@@ -45,7 +45,7 @@ import { Viewer } from 'v-viewer/unstyled'
 import './viewer-theme.css'
 ```
 
-The default stylesheet is `viewerjs/dist/viewer.css`. Copy it to `viewer-theme.css` and customize it, retaining the layout and control styles you need.
+Download the [default stylesheet viewer.css](https://github.com/fengyuanchen/viewerjs/blob/main/dist/viewer.css) from the Viewer.js repository, save it as `viewer-theme.css` and customize it.
 
 ## Basic usage
 
