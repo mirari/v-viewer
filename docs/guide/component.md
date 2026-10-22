@@ -174,7 +174,9 @@ component vue3 zh
 
 需要访问底层实例数据时，可读取 `gallery.value.viewer`。
 
-## 默认插槽 {#slot}
+## 插槽 {#slot}
+
+### 默认插槽 {#default-slot}
 
 在默认插槽中渲染图片及自定义布局。插槽参数仅保留兼容用的 `options`，其内容为原始 options 属性。
 
@@ -192,7 +194,7 @@ component vue3 zh
 </Viewer>
 ```
 
-## 工具栏插槽 {#toolbar-slots}
+### 工具栏插槽 {#toolbar-slots}
 
 通过 Vue 模板、图标组件和事件绑定定制工具栏。插槽属于组件能力，指令和 API 继续使用 Viewer.js 的 toolbar 配置。
 

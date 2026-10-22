@@ -174,7 +174,9 @@ The component wraps `update()` and `destroy()` to manage its lifecycle; both ret
 
 For underlying instance data, read `this.$refs.gallery.$viewer`.
 
-## Default slot {#slot}
+## Slots {#slot}
+
+### Default slot {#default-slot}
 
 Render images and custom layouts in the default slot. Its only parameter is the legacy `options`, containing the original options prop.
 
@@ -192,7 +194,7 @@ Rendered HTML can also be used as the slot content:
 </viewer>
 ```
 
-## Toolbar slots {#toolbar-slots}
+### Toolbar slots {#toolbar-slots}
 
 Use Vue templates, icon components and event bindings to customize the toolbar. These slots belong to the component; directives and the API continue to use Viewer.js toolbar options.
 
