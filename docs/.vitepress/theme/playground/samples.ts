@@ -16,6 +16,7 @@ export function sample(
   const remove = english ? 'Remove image' : '删除图片'
   const showLabel = english ? 'Show viewer' : '显示viewer'
   const toolbar = english ? 'Toggle toolbar' : '切换工具栏'
+  const toolbarValue = kind === 'component' ? 'toolbar' : 'options.toolbar'
   let script: string
   let gallery: string
   const imageTemplate =
@@ -24,25 +25,28 @@ export function sample(
     const show =
       kind === 'api'
         ? 'this.viewerInstance?.destroy(); this.viewerInstance = this.$viewerApi({ images: this.images, options: this.options })'
-        : 'this.$refs.gallery.$viewer.show()'
+        : kind === 'component'
+          ? 'this.$refs.gallery.show()'
+          : 'this.$refs.gallery.$viewer.show()'
     script = `import Vue from 'vue'
 import VueViewer from 'v-viewer'
 Vue.use(VueViewer)
 ${sourceImages}
 export default {
   data() {
-    return { sourceImages, images: sourceImages.slice(0, 2), options: { toolbar: true } }
+    return { sourceImages, images: sourceImages.slice(0, 2), ${kind === 'component' ? 'toolbar: true' : 'options: { toolbar: true }'} }
   },
   ${kind === 'api' ? 'beforeDestroy() { this.viewerInstance?.destroy() },' : ''}
   methods: {
     add() { this.images.push(this.sourceImages[this.images.length]) },
     remove() { this.images.pop() },
     show() { ${show} },
+    ${kind === 'component' ? 'onViewed(event) { console.log(event.detail.index) },' : ''}
   },
 }`
     gallery =
       kind === 'component'
-        ? `<viewer ref="gallery" :images="images" :options="options" class="gallery">${imageTemplate}</viewer>`
+        ? `<viewer ref="gallery" :toolbar="toolbar" @viewed="onViewed" class="gallery">${imageTemplate}</viewer>`
         : kind === 'directive'
           ? `<div ref="gallery" v-viewer="options" class="gallery">${imageTemplate}</div>`
           : ''
@@ -57,18 +61,18 @@ export default {
       kind === 'api'
         ? 'const { show, isShown } = useViewer({ images, options })'
         : `const gallery = ref(null)
-function show() { gallery.value.${kind === 'component' ? 'viewer' : '$viewer'}.show() }`
+function show() { gallery.value.${kind === 'component' ? '' : '$viewer.'}show() }`
     script = `import { ref } from 'vue'
 import { ${imports} } from 'v-viewer'
 ${sourceImages}
 const images = ref(sourceImages.slice(0, 2))
-const options = ref({ toolbar: true })
+${kind === 'component' ? 'const toolbar = ref(true)\nfunction onViewed(event) { console.log(event.detail.index) }' : 'const options = ref({ toolbar: true })'}
 ${show}
 function add() { images.value.push(sourceImages[images.value.length]) }
 function remove() { images.value.pop() }`
     gallery =
       kind === 'component'
-        ? `<Viewer ref="gallery" :images="images" :options="options" class="gallery">${imageTemplate}</Viewer>`
+        ? `<Viewer ref="gallery" :toolbar="toolbar" @viewed="onViewed" class="gallery">${imageTemplate}</Viewer>`
         : kind === 'directive'
           ? `<div ref="gallery" v-viewer="options" class="gallery">${imageTemplate}</div>`
           : `<p>{{ isShown ? '${english ? 'Gallery open' : '正在预览'}' : '${english ? 'Ready to explore' : '等待预览'}' }}</p>`
@@ -87,8 +91,8 @@ ${script}
       <button class="open" :disabled="images.length === 0" @click="show()">${showLabel}</button>
       <div class="toolbar" role="group" aria-label="${toolbar}">
         <span>${toolbar}</span>
-        <button :aria-pressed="options.toolbar ? 'true' : 'false'" @click="options.toolbar = true">${english ? 'On' : '开启'}</button>
-        <button :aria-pressed="options.toolbar ? 'false' : 'true'" @click="options.toolbar = false">${english ? 'Off' : '关闭'}</button>
+        <button :aria-pressed="${toolbarValue} ? 'true' : 'false'" @click="${toolbarValue} = true">${english ? 'On' : '开启'}</button>
+        <button :aria-pressed="${toolbarValue} ? 'false' : 'true'" @click="${toolbarValue} = false">${english ? 'Off' : '关闭'}</button>
       </div>
     </div>
     ${gallery}

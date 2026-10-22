@@ -1,6 +1,6 @@
 # API
 
-从图片地址打开图库，或控制现有的图片容器。
+从图片数组创建弹窗图库，无需在页面渲染源图片。
 
 [演练场](/vue2/playground?example=api)
 
@@ -16,7 +16,7 @@ api vue2 zh
 
 ## 临时图库
 
-也可以直接导入 `viewerApi`，无需注册全局插件。它返回 Viewer.js 实例；若所属页面在关闭前被移除，请调用 destroy()。此 API 始终使用弹层模式。
+也可直接导入 `viewerApi`。页面卸载时调用 `destroy()` 清理未关闭的图库。
 
 ```ts
 import { viewerApi } from 'v-viewer'

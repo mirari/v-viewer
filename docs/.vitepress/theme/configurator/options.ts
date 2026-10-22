@@ -352,3 +352,15 @@ export function optionsCode(settings: Settings) {
     '\n}'
   )
 }
+
+export function componentCode(settings: Settings) {
+  const props = Object.fromEntries(
+    Object.entries(settings).filter(([key]) => !eventNames.includes(key)),
+  )
+  const events = Object.fromEntries(
+    Object.entries(settings).filter(
+      ([key, value]) => eventNames.includes(key) && value,
+    ),
+  )
+  return `const viewerProps = ${optionsCode(props)}\n\nconst viewerEvents = ${optionsCode(events)}\n\n<Viewer v-bind="viewerProps" v-on="viewerEvents">\n  <img src="/photo.jpg" />\n</Viewer>`
+}

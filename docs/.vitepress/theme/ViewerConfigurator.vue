@@ -8,7 +8,7 @@ import { previewSample } from './configurator/preview'
 import {
   defaults,
   groups,
-  optionsCode,
+  componentCode,
   type Control,
   type Setting,
 } from './configurator/options'
@@ -49,7 +49,7 @@ const controls = computed(() => {
           .includes(search),
     )
 })
-const code = computed(() => optionsCode(settings.value))
+const code = computed(() => componentCode(settings.value))
 const count = groups.reduce((sum, group) => sum + group.controls.length, 0)
 const hints: Record<string, [string, string]> = {
   appearance: [
@@ -73,8 +73,8 @@ const hints: Record<string, [string, string]> = {
     'The data-source preset points to the next image. The container and inherited data-credit appear below the preview.',
   ],
   events: [
-    '开启回调开关后操作图片，下面的日志会显示事件名称和参数。',
-    'Enable callbacks and interact with images to see event names and details below.',
+    '开启事件开关后操作图片，下面的日志会显示事件名称和参数。',
+    'Enable event listeners and interact with images to see event names and details below.',
   ],
 }
 function send(payload: object) {
@@ -342,7 +342,9 @@ onBeforeUnmount(() => {
       </div>
     </details>
     <details class="option-code">
-      <summary>{{ text('查看当前 options', 'View current options') }}</summary>
+      <summary>
+        {{ text('查看组件配置代码', 'View component configuration code') }}
+      </summary>
       <pre><code>{{ code }}</code></pre>
     </details>
   </section>

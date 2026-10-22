@@ -16,7 +16,7 @@ hero:
       link: /en/vue2/
 features:
   - title: Three ways to use
-    details: A component for templates, a directive for existing images, and an API for on-demand previews.
+    details: Components and directives handle image DOM, including Markdown and dynamic HTML; the API accepts image arrays.
   - title: Lifecycle managed
     details: Dynamic galleries update automatically and instances are released when their owner unmounts.
   - title: Two Vue generations

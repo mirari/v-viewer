@@ -10,9 +10,24 @@ import {
 } from '../../core/src/index.js'
 import type {
   ViewerController,
-  ViewerImage,
   ViewerOptions,
+  ViewerObserve,
 } from '../../core/src/index.js'
+
+import {
+  viewerOptionProps,
+  viewerMethods,
+  collectViewerOptions,
+} from '../../core/src/component.js'
+import type {
+  ViewerOptionProps,
+  ViewerMethods,
+} from '../../core/src/component.js'
+export type {
+  ViewerOptionProps,
+  ViewerEventMap,
+  ViewerMethods,
+} from '../../core/src/component.js'
 
 export { ViewerJs } from '../../core/src/index.js'
 export type {
@@ -20,29 +35,50 @@ export type {
   ViewerImage,
   ViewerApiOptions,
   ViewerElement,
+  ViewerObserve,
+  ViewerDirectiveOptions,
 } from '../../core/src/index.js'
 export const viewerApi = showViewer
 
 const controllers = new WeakMap<Vue, ViewerController>()
-export type ViewerInstance = VueInstanceType & {
-  images: ViewerImage[]
-  options: ViewerOptions
-  rebuild: boolean
-  trigger?: unknown
-  createViewer(): void
-  updateViewer(): void
-  rebuildViewer(): void
-  destroyViewer(): void
-  changeViewer(): void
-}
+export type ViewerInstance = VueInstanceType &
+  ViewerOptionProps &
+  ViewerMethods & {
+    /** @deprecated Bind Viewer.js settings as props and callbacks as Vue events. */
+    options: ViewerOptions
+    rebuild: boolean
+    observe: ViewerObserve
+    createViewer(): void
+    updateViewer(): void
+    rebuildViewer(): void
+    destroyViewer(): void
+    changeViewer(): void
+  }
+const forwardedMethods = Object.fromEntries(
+  viewerMethods.map((name) => [
+    name,
+    function (this: VueInstanceType, ...args: unknown[]) {
+      const viewer = this.$viewer
+      return (
+        viewer?.[name] as ((...args: unknown[]) => ViewerJsType) | undefined
+      )?.apply(viewer, args)
+    },
+  ]),
+) as Pick<ViewerMethods, (typeof viewerMethods)[number]>
+
 export const Viewer: ReturnType<typeof VueInstanceType.extend> &
   (new (...args: any[]) => ViewerInstance) = Vue.extend({
   name: 'Viewer',
   props: {
-    images: { type: Array, default: () => [] as ViewerImage[] },
+    ...viewerOptionProps,
     options: { type: Object, default: () => ({}) as ViewerOptions },
     rebuild: Boolean,
-    trigger: { default: undefined },
+    observe: { type: [Boolean, Number], default: true },
+  },
+  computed: {
+    viewerOptions(): ViewerOptions {
+      return collectViewerOptions(this.$props)
+    },
   },
   mounted() {
     this.createViewer()
@@ -52,22 +88,13 @@ export const Viewer: ReturnType<typeof VueInstanceType.extend> &
     this.destroyViewer()
   },
   watch: {
-    options: {
+    observe(value: ViewerObserve) {
+      controllers.get(this)?.configure({ observe: value })
+    },
+    viewerOptions: {
       deep: true,
       handler() {
         this.$nextTick(() => this.rebuildViewer())
-      },
-    },
-    images: {
-      deep: true,
-      handler() {
-        this.$nextTick(() => this.changeViewer())
-      },
-    },
-    trigger: {
-      deep: true,
-      handler() {
-        this.$nextTick(() => this.changeViewer())
       },
     },
     rebuild() {
@@ -75,17 +102,28 @@ export const Viewer: ReturnType<typeof VueInstanceType.extend> &
     },
   },
   methods: {
+    ...forwardedMethods,
+    showTooltip() {
+      return this.$viewer?.tooltip()
+    },
+    update() {
+      this.updateViewer()
+    },
+    destroy() {
+      this.destroyViewer()
+    },
     createViewer() {
       if (controllers.has(this) || this.$isServer || this._viewerDisposed)
         return
       controllers.set(
         this,
         createViewerController(this.$el as HTMLElement, {
-          options: this.options,
+          options: this.viewerOptions,
           rebuild: this.rebuild,
+          observe: this.observe,
+          onEvent: (name, event) => this.$emit(name, event),
           onInit: (viewer) => {
             this.$viewer = viewer
-            this.$emit('inited', viewer)
           },
         }),
       )
@@ -104,7 +142,7 @@ export const Viewer: ReturnType<typeof VueInstanceType.extend> &
       controllers.has(this)
         ? controllers
             .get(this)!
-            .configure({ options: this.options, rebuild: this.rebuild })
+            .configure({ options: this.viewerOptions, rebuild: this.rebuild })
         : this.createViewer()
     },
     changeViewer() {
@@ -121,7 +159,6 @@ export const Viewer: ReturnType<typeof VueInstanceType.extend> &
     return h(
       'div',
       this.$scopedSlots.default?.({
-        images: this.images,
         options: this.options,
       }) || this.$slots.default,
     )

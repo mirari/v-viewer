@@ -27,24 +27,43 @@ import type {
   ViewerImage,
   ViewerOptions,
   ViewerTarget,
+  ViewerObserve,
+  ViewerDirectiveOptions,
 } from '../../core/src/index.js'
 import type ViewerJs from 'viewerjs'
+import {
+  viewerOptionProps,
+  viewerEvents,
+  collectViewerOptions,
+  bindViewerMethods,
+} from '../../core/src/component.js'
+import type {
+  ViewerOptionProps,
+  ViewerEventListeners,
+  ViewerMethods,
+} from '../../core/src/component.js'
+export type {
+  ViewerOptionProps,
+  ViewerEventMap,
+  ViewerMethods,
+} from '../../core/src/component.js'
 
 export { ViewerJs } from '../../core/src/index.js'
 export type {
   ViewerOptions,
   ViewerImage,
   ViewerElement,
+  ViewerObserve,
+  ViewerDirectiveOptions,
 } from '../../core/src/index.js'
 
-export interface ViewerProps {
-  images?: ViewerImage[]
+export interface ViewerProps extends ViewerOptionProps, ViewerEventListeners {
+  /** @deprecated Bind Viewer.js settings as props and callbacks as Vue events. */
   options?: ViewerOptions
   rebuild?: boolean
-  trigger?: unknown
-  onInited?: (viewer: ViewerJs) => void
+  observe?: ViewerObserve
 }
-export interface ViewerExposed {
+export interface ViewerExposed extends ViewerMethods {
   viewer: ShallowRef<ViewerJs | undefined>
   createViewer: () => void
   updateViewer: () => void
@@ -55,24 +74,27 @@ export const Viewer: DefineComponent<ViewerProps, ViewerExposed> =
   defineComponent({
     name: 'Viewer',
     props: {
-      images: { type: Array as PropType<ViewerImage[]>, default: () => [] },
+      ...viewerOptionProps,
       options: { type: Object as PropType<ViewerOptions>, default: () => ({}) },
       rebuild: Boolean,
-      trigger: null,
+      observe: { type: [Boolean, Number], default: true },
     },
-    emits: { inited: (_viewer: ViewerJs) => true },
-    setup(props, { slots, emit, expose }) {
+    emits: [...viewerEvents],
+    setup(props, { emit, expose }) {
       const root = ref<HTMLElement>()
       const viewer = shallowRef<ViewerJs>()
       let controller: ViewerController | undefined
+      let disposed = false
+      const optionValues = () => collectViewerOptions(props)
       const createViewer = () => {
-        if (!root.value || controller) return
+        if (disposed || !root.value || controller) return
         controller = createViewerController(root.value, {
-          options: props.options,
+          options: optionValues(),
           rebuild: props.rebuild,
+          observe: props.observe,
+          onEvent: (name, event) => emit(name, event),
           onInit: (instance) => {
             viewer.value = instance
-            emit('inited', instance)
           },
         })
       }
@@ -86,45 +108,63 @@ export const Viewer: DefineComponent<ViewerProps, ViewerExposed> =
       const rebuildViewer = () =>
         controller
           ? controller.configure({
-              options: props.options,
+              options: optionValues(),
               rebuild: props.rebuild,
             })
           : createViewer()
-      watch(() => props.options, rebuildViewer, { deep: true, flush: 'post' })
+      watch(optionValues, rebuildViewer, { deep: true, flush: 'post' })
       watch(
-        () => [props.images, props.trigger, props.rebuild],
+        () => props.observe,
+        (observe) => controller?.configure({ observe }),
+        { flush: 'post' },
+      )
+      watch(
+        () => props.rebuild,
         () => {
           controller?.configure({ rebuild: props.rebuild }, props.rebuild)
         },
-        { deep: true, flush: 'post' },
+        { flush: 'post' },
       )
       onMounted(createViewer)
-      onBeforeUnmount(destroyViewer)
-      expose({
+      onBeforeUnmount(() => {
+        disposed = true
+        destroyViewer()
+      })
+      const publicApi = {
+        ...bindViewerMethods(() => viewer.value),
+        update: updateViewer,
+        destroy: destroyViewer,
         viewer,
         createViewer,
         updateViewer,
         rebuildViewer,
         destroyViewer,
-      })
-      return () =>
-        h(
-          'div',
-          { ref: root },
-          slots.default?.({ images: props.images, options: props.options }),
-        )
+      }
+      // Vue 3.0/3.1 expose setup bindings via the public instance;
+      // newer runtimes can explicitly restrict that surface with expose().
+      expose?.(publicApi)
+      return { ...publicApi, root }
+    },
+    render() {
+      return h(
+        'div',
+        { ref: 'root' },
+        this.$slots.default?.({ options: this.options }),
+      )
     },
   }) as unknown as DefineComponent<ViewerProps, ViewerExposed>
 
 const hooks = createDirectiveHooks()
-export const vViewer: ObjectDirective<HTMLElement, ViewerOptions | undefined> =
-  {
-    deep: true,
-    mounted: hooks.mount,
-    updated: hooks.update,
-    beforeUnmount: hooks.unmount,
-    getSSRProps: () => ({}),
-  }
+export const vViewer: ObjectDirective<
+  HTMLElement,
+  ViewerDirectiveOptions | undefined
+> = {
+  deep: true,
+  mounted: hooks.mount,
+  updated: hooks.update,
+  beforeUnmount: hooks.unmount,
+  getSSRProps: () => ({}),
+}
 
 export type MaybeRefOrGetter<T> = T | Ref<T> | (() => T)
 export interface UseViewerOptions {
@@ -134,6 +174,8 @@ export interface UseViewerOptions {
   /** Without a target, show() creates a temporary gallery from these images. */
   images?: MaybeRefOrGetter<readonly ViewerImage[]>
   rebuild?: boolean
+  /** Only applies when target is provided. */
+  observe?: MaybeRefOrGetter<ViewerObserve>
 }
 const read = <T>(value: MaybeRefOrGetter<T>): T =>
   typeof value === 'function' ? (value as () => T)() : unref(value)
@@ -187,6 +229,7 @@ export function useViewer(config: UseViewerOptions = {}): UseViewerReturn {
       controller = createViewerController(nextElement, {
         options: options(),
         rebuild: config.rebuild,
+        observe: config.observe === undefined ? true : read(config.observe),
         onInit: (instance) => {
           viewer.value = instance
         },
@@ -236,6 +279,12 @@ export function useViewer(config: UseViewerOptions = {}): UseViewerReturn {
         else destroy()
       },
       { deep: true, flush: 'post' },
+    )
+  if (config.observe !== undefined)
+    watch(
+      () => read(config.observe!),
+      (observe) => controller?.configure({ observe }),
+      { flush: 'post' },
     )
   if (config.images)
     watch(

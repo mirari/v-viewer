@@ -9,6 +9,9 @@ Image viewer components, directives and composables for Vue, powered by [Viewer.
 
 The rewrite is under development on v4. The new version lines have not been published yet.
 
+> [!WARNING]
+> The Vue 2 (4.x) and Vue 3 (5.x) lines are a major rewrite with breaking API changes. Existing users should migrate component settings to props, callbacks to Vue events, and calls to component ref methods. The old `options` prop is retained for gradual migration, but is deprecated. See the migration examples in the [Vue 3 component guide](docs/guide/component.md#migration) or [Vue 2 component guide](docs/vue2/guide/component.md#migration).
+
 ## Vue 3
 
 ```sh
@@ -22,11 +25,17 @@ const images = ['/photo.jpg']
 </script>
 
 <template>
-  <Viewer :images="images">
+  <Viewer :toolbar="true">
     <img v-for="src in images" :key="src" :src="src" />
   </Viewer>
 </template>
 ```
+
+The component’s `images` and `trigger` props and the `images` slot parameter have been removed. Render images in the slot; for image-array input use `useViewer({ images })` (Vue 3) or `viewerApi({ images })` (Vue 2).
+
+The `inited` event has been removed. Call methods on the component ref (`gallery.value.show()` in Vue 3, `this.$refs.gallery.show()` in Vue 2); the component always forwards to its current Viewer.js instance.
+
+The component accepts Viewer.js settings directly as props (`:toolbar="false"`, `inline`), emits Vue events (`@viewed`, `@show.prevent`), and exposes methods on its ref (`gallery.value.show()`). The legacy `options` prop and callbacks remain compatible but are deprecated. Explicit props take precedence; legacy callbacks and Vue listeners both run when provided together. `showTooltip()` forwards Viewer.js’s `tooltip()` method while `tooltip` remains a Boolean prop.
 
 Use `vViewer` for existing galleries or `useViewer` for a reactive API with scope cleanup. `useViewer({ images, options })` returns a `show()` method that opens a temporary gallery; pass `target` in the same configuration object to control an existing gallery. `ViewerJs` exposes the underlying Viewer.js class. No global plugin is installed in Vue 3. The script setup example requires Vue 3.2+.
 

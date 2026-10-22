@@ -157,7 +157,7 @@ for (const vue2 of [false, true]) {
     ).toBe(false)
     await panel.locator('.event-log summary').click()
     await expect(panel.getByRole('log')).toContainText('viewed')
-    await panel.getByText('查看当前 options', { exact: true }).click()
+    await panel.getByText('查看组件配置代码', { exact: true }).click()
     await expect(panel.locator('.option-code code')).toContainText(
       'inline: false',
     )
@@ -388,7 +388,9 @@ for (const vue2 of [false, true]) {
               ? 'this.$viewerApi'
               : 'useViewer({'
             : vue2
-              ? 'this.$refs.gallery.$viewer.show()'
+              ? mode === 'component'
+                ? 'this.$refs.gallery.show()'
+                : 'this.$refs.gallery.$viewer.show()'
               : mode === 'component'
                 ? 'import { Viewer }'
                 : 'import { vViewer }'

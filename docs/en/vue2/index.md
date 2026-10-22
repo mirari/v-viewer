@@ -2,6 +2,10 @@
 
 Image viewing for Vue 2, powered by [Viewer.js](https://github.com/fengyuanchen/viewerjs). Click an image to zoom, rotate and navigate.
 
+::: warning Upgrading an existing project
+This major rewrite includes breaking API changes. Components now recommend direct props, Vue events and ref methods. The legacy options prop remains compatible, but is deprecated. Read the [migration examples](./guide/component#migration) before upgrading.
+:::
+
 <ClientOnly><ViewerConfigurator vue2 /></ClientOnly>
 
 ## Installation
@@ -20,7 +24,7 @@ Vue.use(VueViewer)
 
 ### Custom styles
 
-The default stylesheet loads automatically. To customize its appearance, import your own global CSS in the page using v-viewer or in your application entry:
+Import global CSS to override the default styles:
 
 ```js
 import './viewer.css'
@@ -38,7 +42,7 @@ import './viewer.css'
 }
 ```
 
-These styles apply to all viewers. To customize one instance, set `className: 'custom-viewer'` in its `options` and replace `.viewer-container` in the selectors with `.custom-viewer`. Components, directives and the API all support this option.
+These styles apply to all viewers. To customize one instance, use `class-name="custom-viewer"` on the component, or set `className: 'custom-viewer'` in the directive or API configuration. Replace `.viewer-container` in the CSS selectors with `.custom-viewer`.
 
 Use global CSS or a `<style>` block without `scoped`. Modals mount to `body` by default, so overrides should not depend on an ancestor selector from the page container.
 
@@ -54,7 +58,7 @@ import './viewer-theme.css'
 Vue.use(VueViewer)
 ```
 
-`viewer-theme.css` must provide the complete viewer styles, including layout and controls. Use the unstyled entry consistently throughout your project; importing from `v-viewer` anywhere still loads the default stylesheet.
+Provide complete layout and control styles. Use the unstyled entry throughout the project; any `v-viewer` import still loads the default stylesheet.
 
 ## Basic usage
 
@@ -62,7 +66,7 @@ Vue.use(VueViewer)
 
 ```vue
 <template>
-  <viewer :images="images">
+  <viewer :toolbar="true">
     <img v-for="src in images" :key="src" :src="src" />
   </viewer>
 </template>

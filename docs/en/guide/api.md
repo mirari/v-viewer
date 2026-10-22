@@ -1,6 +1,6 @@
 # API
 
-Open a gallery from image URLs, or control an existing gallery.
+Open a gallery from an image array without rendering source images on the page, or use `target` to control an existing gallery.
 
 [Playground](/en/playground?example=api)
 
@@ -12,14 +12,15 @@ api vue3 en
 
 ## Parameters and return values {#reference}
 
-`useViewer({ images?, options?, target?, rebuild? })`
+`useViewer({ images?, options?, target?, rebuild?, observe? })`
 
-| Parameter | Description                                                                  |
-| --------- | ---------------------------------------------------------------------------- |
-| images    | Image array, ref or getter for temporary galleries.                          |
-| options   | Viewer.js options, ref or getter.                                            |
-| target    | HTML element, id, CSS selector, ref or getter. Omit for a temporary gallery. |
-| rebuild   | Recreate on image DOM changes; defaults to false.                            |
+| Parameter | Description                                                                                                                                                                                                                 |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| images    | Image array, ref or getter for temporary galleries.                                                                                                                                                                         |
+| options   | Viewer.js options, ref or getter.                                                                                                                                                                                           |
+| target    | HTML element, id, CSS selector, ref or getter. Omit for a temporary gallery.                                                                                                                                                |
+| rebuild   | Recreate on image DOM changes; defaults to false.                                                                                                                                                                           |
+| observe   | Applies only to `target`. `true` (default) batches image DOM changes in a fixed 50ms window; `false` disables observation; a non-negative number sets the window in milliseconds (`0`: next task). Accepts a ref or getter. |
 
 | Return value | Description                                   |
 | ------------ | --------------------------------------------- |

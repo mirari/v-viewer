@@ -6,16 +6,18 @@ Browser builds with Vite / Webpack include styles automatically. When using the 
 
 ## How do thumbnails open the original image?
 
-Set `options.url` to an image attribute such as `data-source`.
+Set the component’s `url` prop, or `options.url` for the API / directive, to an image attribute such as `data-source`.
 
 ```html
 <img src="thumb.jpg" data-source="large.jpg" />
 ```
 
-## How do I customize the toolbar or callbacks?
-
-Pass Viewer.js options through `options` (component/API) or the directive binding. [Viewer.js options](https://github.com/fengyuanchen/viewerjs#options)
-
 ## How do I migrate from the previous release?
 
 Replace the default plugin with local imports. component becomes Viewer; directive() becomes vViewer; api becomes useViewer, with images, options and an optional target in one configuration object and automatic scope cleanup. The old Viewer class export is now ViewerJs.
+
+The component’s `options` prop remains compatible but is deprecated. See [component migration](./component#migration) for direct props, Vue events and ref methods.
+
+The `inited` event has been removed. Call methods on the component ref instead, such as `gallery.value.show()`.
+
+The component’s `images` and `trigger` props have also been removed. Render images in its slot; DOM changes are observed automatically. Use `useViewer({ images })` for an image-array API.

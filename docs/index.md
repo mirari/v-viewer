@@ -16,7 +16,7 @@ hero:
       link: /vue2/
 features:
   - title: 三种使用方式
-    details: 模板用组件，已有图片用指令，按需预览用 API。
+    details: 组件和指令处理图片 DOM，支持 Markdown 与动态 HTML；API 接收图片数组。
   - title: 生命周期管理
     details: 自动跟随图片变化，并在组件卸载时释放实例。
   - title: 兼顾新旧项目

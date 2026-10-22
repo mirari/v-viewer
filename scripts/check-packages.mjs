@@ -159,7 +159,8 @@ let api
 ${
   line === 'vue2'
     ? `
-const app = new Vue({render(h){return h(pkg.Viewer,{on:{inited:value=>instance=value}},[h('img',{attrs:{src:'photo.jpg'}})])}}).$mount('#app')
+const app = new Vue({render(h){return h(pkg.Viewer,{ref:'gallery'},[h('img',{attrs:{src:'photo.jpg'}})])}}).$mount('#app')
+instance=app.$refs.gallery.$viewer
 assert.ok(instance)
 instance.show(true)
 assert.ok(document.querySelector('.viewer-container'))
@@ -189,6 +190,40 @@ temporary.unmount()
 assert.equal(api.viewer.value,undefined)`
 }
 assert.equal(document.querySelector('.v-viewer-token'),null)
+const componentHost=document.createElement('div')
+document.body.appendChild(componentHost)
+let component
+let shown=0
+let legacyShown=0
+let blocked=true
+const legacyOptions={toolbar:true,title:false,shown:()=>legacyShown++}
+const onShow=event=>{if(blocked)event.preventDefault()}
+${
+  line === 'vue2'
+    ? `const componentApp=new Vue({render(h){return h(pkg.Viewer,{ref:'gallery',props:{options:legacyOptions,toolbar:false,transition:false},on:{show:onShow,shown:()=>shown++}},[h('img',{attrs:{src:'photo.jpg'}})])}}).$mount(componentHost)
+component=componentApp.$refs.gallery`
+    : `const componentRef=Vue.ref(null)
+const componentApp=Vue.createApp({render(){return Vue.h(pkg.Viewer,{ref:componentRef,options:legacyOptions,toolbar:false,transition:false,onShow,onShown:()=>shown++},()=>Vue.h('img',{src:'photo.jpg'}))}})
+componentApp.mount(componentHost)
+component=componentRef.value`
+}
+component.show(true)
+assert.equal(shown,0)
+blocked=false
+component.show(true)
+assert.equal(shown,1)
+assert.equal(legacyShown,1)
+assert.ok(document.querySelector('.viewer-container'))
+assert.equal(document.querySelector('.viewer-toolbar').classList.contains('viewer-hide'),true)
+assert.equal(document.querySelector('.viewer-title').classList.contains('viewer-hide'),true)
+component.destroy()
+assert.equal(document.querySelector('.viewer-container'),null)
+component.createViewer()
+component.show(true)
+assert.equal(shown,2)
+assert.equal(legacyShown,2)
+${line === 'vue2' ? 'componentApp.$destroy()' : 'componentApp.unmount()'}
+assert.equal(document.querySelector('.viewer-container'),null)
 dom.window.close()
 `,
     )
@@ -201,7 +236,65 @@ dom.window.close()
         : `import {Vue} from 'vue/types/vue.js'\nimport plugin from 'v-viewer'\nVue.use(plugin)\n`
     const source =
       `import {Viewer,vViewer,ViewerJs} from 'v-viewer'\nimport type {ViewerOptions,ViewerImage} from 'v-viewer'\nconst options:ViewerOptions={toolbar:true}\nconst images:ViewerImage[]=['photo.jpg']\n${line === 'vue2' ? "import {viewerApi} from 'v-viewer'\nconst viewer:ViewerJs=viewerApi({images,options})\nviewer.destroy()\n// @ts-expect-error showViewer is no longer a Vue 2 export\nimport {showViewer} from 'v-viewer'" : "import type {UseViewerOptions} from 'v-viewer'\nconst config:UseViewerOptions={images,options}\nconst viewer:ViewerJs|undefined=useViewer(config).show()\nviewer?.destroy()\nuseViewer({target:()=>document.body})\nuseViewer({target:'photos'})\nuseViewer()\n// @ts-expect-error showViewer is no longer a Vue 3 export\nimport {showViewer} from 'v-viewer'\n// @ts-expect-error target belongs in the configuration object\nuseViewer(document.body)\n// @ts-expect-error the old two-argument signature is removed\nuseViewer(undefined,{images})"}\nvoid Viewer;void vViewer\n` +
-      use
+      use +
+      `
+import type {ViewerOptionProps,ViewerEventMap,ViewerMethods} from 'v-viewer'
+import type {ViewerObserve,ViewerDirectiveOptions} from 'v-viewer'
+const observe:ViewerObserve=100
+const directiveOptions:ViewerDirectiveOptions={toolbar:false,observe}
+const disabledObservation:ViewerDirectiveOptions={observe:false}
+// @ts-expect-error observe is a boolean or a number
+const invalidObservation:ViewerDirectiveOptions={observe:'100'}
+const props:ViewerOptionProps={inline:true,toolbar:false,initialViewIndex:1,filter:(image:HTMLImageElement)=>!!image.src}
+// @ts-expect-error ViewerOptionProps contains only direct Viewer.js settings
+const obsolete:ViewerOptionProps={options:{toolbar:false}}
+const viewed=(event:ViewerEventMap['viewed'])=>event.detail.index
+const methods={} as ViewerMethods
+methods.show(true)
+methods.view(1)
+methods.zoomTo(1)
+methods.showTooltip()
+methods.destroy()
+// @ts-expect-error view takes a numeric index
+methods.view('one')
+${
+  line === 'vue3'
+    ? `import type {ViewerProps} from 'v-viewer'
+const componentProps:ViewerProps={toolbar:false,observe:100,onViewed:event=>event.detail.index}
+useViewer({target:document.body,observe:ref<boolean|number>(false)})
+useViewer({target:document.body,observe:()=>100})
+// @ts-expect-error observe is not a string
+useViewer({target:document.body,observe:'100'})
+// @ts-expect-error inited was removed; read the instance through the component ref
+const removedEvent:ViewerProps={onInited:()=>{}}
+// @ts-expect-error component images are rendered in the slot
+const removedImages:ViewerProps={images:['photo.jpg']}
+// @ts-expect-error internal image DOM changes no longer need a trigger prop
+const removedTrigger:ViewerProps={trigger:{}}
+const exposed={} as InstanceType<typeof Viewer>
+exposed.show(true)
+exposed.showTooltip()
+const oldProps:ViewerProps={options:{toolbar:false,viewed:event=>event.detail.index}}
+// @ts-expect-error legacy options must still be type checked
+const invalidOptions:ViewerProps={options:{toolbar:'invalid'}}`
+    : `import type {ViewerInstance} from 'v-viewer'
+const exposed={} as ViewerInstance
+exposed.observe=100
+exposed.observe=false
+// @ts-expect-error observe is not a string
+exposed.observe='100'
+// @ts-expect-error the component no longer exposes an images prop
+exposed.images=['photo.jpg']
+// @ts-expect-error the component no longer exposes a trigger prop
+exposed.trigger={}
+exposed.show(true)
+exposed.showTooltip()
+exposed.options={toolbar:false,viewed:event=>event.detail.index}
+// @ts-expect-error legacy options must still be type checked
+exposed.options={toolbar:'invalid'}`
+}
+void props;void viewed
+`
     await writeFile(`${fixture}/consumer.mts`, source)
     await writeFile(`${fixture}/consumer.cts`, source)
     const unstyledSource = source.replaceAll(

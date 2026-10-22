@@ -1,6 +1,6 @@
 # API
 
-Open a gallery from image URLs, or control an existing gallery.
+Create a modal gallery from an image array without rendering source images on the page.
 
 [Playground](/en/vue2/playground?example=api)
 
@@ -16,7 +16,7 @@ api vue2 en
 
 ## Temporary galleries
 
-Import `viewerApi` directly to open a gallery without registering the global plugin. It returns a Viewer.js instance; call destroy() if its owner is removed before it closes. This API always uses modal mode.
+You can also import `viewerApi` directly. Call `destroy()` on page unmount to clean up an open gallery.
 
 ```ts
 import { viewerApi } from 'v-viewer'

@@ -20,11 +20,12 @@ export function previewSample(
 const presets = ${presetSource}
 const eventNames = ${JSON.stringify(eventNames)}
 const initial = ${JSON.stringify(defaults())}
-let instance
+let getViewer = () => undefined
 let index = 0
 let revision = 0
 let send = () => {}
 function state() {
+  const instance = getViewer()
   const shown = !!(instance?.isShown || instance?.showing)
   send({ type: 'state', revision, index, shown,
     credit: instance?.image?.getAttribute('data-credit') || '',
@@ -55,12 +56,16 @@ function createOptions(settings) {
 export default {
   props: { report: Function },
   beforeMount() {
-    instance = undefined
+    getViewer = () => this.$refs.gallery?.${vue2 ? '$viewer' : 'viewer'}
     index = 0
     revision = 0
     send = this.report
   },
   data() { return { images: ${JSON.stringify(imageUrls)}, options: createOptions(initial) } },
+  computed: {
+    viewerProps() { return Object.fromEntries(Object.entries(this.options).filter(([key]) => !eventNames.includes(key))) },
+    viewerListeners() { return Object.fromEntries(Object.entries(this.options).filter(([key]) => eventNames.includes(key))) },
+  },
   mounted() {
     this.receive = command => {
       if (command.type === 'options') {
@@ -71,27 +76,27 @@ export default {
         const options = createOptions(values)
         options.initialViewIndex = changedIndex ? values.initialViewIndex : Math.min(index, values.filter === 'first' ? 0 : values.filter === 'lastTwo' ? 1 : 2)
         this.options = options
+        // Vue 2 rebuilds the child on its next tick; report after that completes.
+        this.$nextTick(() => this.$nextTick(state))
       }
     }
     this.previousIndex = initial.initialViewIndex
     window.addEventListener('resize', state)
-    this.$nextTick(() => send({ type: 'ready' }))
+    this.$nextTick(() => {
+      state()
+      send({ type: 'ready' })
+    })
   },
   ${vue2 ? 'beforeDestroy' : 'beforeUnmount'}() {
     window.removeEventListener('resize', state)
+    getViewer = () => undefined
     send = () => {}
   },
-  methods: {
-    inited(viewer) {
-      instance = viewer
-      this.$nextTick(state)
-    }
-  }
 }
 </script>
 <template>
   <div id="preview-container" class="viewer-config-preview">
-    <Viewer :images="images" :options="options" @inited="inited" class="photos" :class="{ 'inline-source': options.inline }">
+    <Viewer ref="gallery" v-bind="viewerProps" v-on="viewerListeners" class="photos" :class="{ 'inline-source': options.inline }">
       <img v-for="(src, i) in images" :key="src" :src="src" :alt="'Landscape ' + (i + 1)"
         :data-index="i" :data-source="images[(i + 1) % images.length]" data-credit="Lorem Picsum"
         tabindex="0" @keydown.enter="$event.target.click()" />

@@ -2,6 +2,10 @@
 
 Image viewing for Vue 3, powered by [Viewer.js](https://github.com/fengyuanchen/viewerjs). Click an image to zoom, rotate and navigate.
 
+::: warning Upgrading an existing project
+This major rewrite includes breaking API changes. Components now recommend direct props, Vue events and ref methods. The legacy options prop remains compatible, but is deprecated. Read the [migration examples](./component#migration) before upgrading.
+:::
+
 <ClientOnly><ViewerConfigurator /></ClientOnly>
 
 ## Installation
@@ -14,7 +18,7 @@ Viewer.js is installed automatically as a dependency. Import the component, dire
 
 ### Custom styles
 
-The default stylesheet loads automatically. To customize its appearance, import your own global CSS in the page using v-viewer or in your application entry:
+Import global CSS to override the default styles:
 
 ```js
 import './viewer.css'
@@ -32,7 +36,7 @@ import './viewer.css'
 }
 ```
 
-These styles apply to all viewers. To customize one instance, set `className: 'custom-viewer'` in its `options` and replace `.viewer-container` in the selectors with `.custom-viewer`. Components, directives and the API all support this option.
+These styles apply to all viewers. To customize one instance, use `class-name="custom-viewer"` on the component, or set `className: 'custom-viewer'` in the directive or API configuration. Replace `.viewer-container` in the CSS selectors with `.custom-viewer`.
 
 Use global CSS or a `<style>` block without `scoped`. Modals mount to `body` by default, so overrides should not depend on an ancestor selector from the page container.
 
@@ -45,7 +49,7 @@ import { Viewer } from 'v-viewer/unstyled'
 import './viewer-theme.css'
 ```
 
-`viewer-theme.css` must provide the complete viewer styles, including layout and controls. Use the unstyled entry consistently throughout your project; importing from `v-viewer` anywhere still loads the default stylesheet.
+Provide complete layout and control styles. Use the unstyled entry throughout the project; any `v-viewer` import still loads the default stylesheet.
 
 ## Basic usage
 
@@ -58,7 +62,7 @@ const images = ['/photo.jpg']
 </script>
 
 <template>
-  <Viewer :images="images">
+  <Viewer :toolbar="true">
     <img v-for="src in images" :key="src" :src="src" />
   </Viewer>
 </template>

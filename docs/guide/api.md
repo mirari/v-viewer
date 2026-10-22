@@ -1,6 +1,6 @@
 # API
 
-从图片地址打开图库，或控制现有的图片容器。
+适合已有图片数组、无需在页面渲染源图片的场景；也可通过 `target` 控制现有图库。
 
 [演练场](/playground?example=api)
 
@@ -12,14 +12,15 @@ api vue3 zh
 
 ## 参数和返回值 {#reference}
 
-`useViewer({ images?, options?, target?, rebuild? })`
+`useViewer({ images?, options?, target?, rebuild?, observe? })`
 
-| 参数    | 说明                                                           |
-| ------- | -------------------------------------------------------------- |
-| images  | 临时图库的图片数组、ref 或 getter。                            |
-| options | Viewer.js 配置、ref 或 getter。                                |
-| target  | HTML 元素、id、CSS 选择器、ref 或 getter；省略时使用临时图库。 |
-| rebuild | 图片 DOM 变化时重建，默认 false。                              |
+| 参数    | 说明                                                                                                                                                |
+| ------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| images  | 临时图库的图片数组、ref 或 getter。                                                                                                                 |
+| options | Viewer.js 配置、ref 或 getter。                                                                                                                     |
+| target  | HTML 元素、id、CSS 选择器、ref 或 getter；省略时使用临时图库。                                                                                      |
+| rebuild | 图片 DOM 变化时重建，默认 false。                                                                                                                   |
+| observe | 仅用于 `target`。默认 `true` 在固定 50ms 窗口内合并图片 DOM 变化；`false` 关闭监听；非负数字指定窗口毫秒数（`0`：下一个任务）。支持 ref 或 getter。 |
 
 | 返回值       | 说明                               |
 | ------------ | ---------------------------------- |
