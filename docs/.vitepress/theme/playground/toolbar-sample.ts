@@ -32,23 +32,25 @@ ${script}
       <label><input v-model="custom" type="checkbox" /> ${english ? 'Replace the toolbar' : '替换整个工具栏'}</label>
     </div>
     <div class="toolbar-stage" :class="{ 'is-inline': inline }">
-    <Viewer :inline="inline" :min-height="320" :transition="false">
+    <Viewer :inline="inline" :min-height="320">
       <div v-show="!inline" class="gallery">
         <img v-for="(src, index) in images" :key="src" :src="src" :alt="'Landscape ' + (index + 1)" />
       </div>
       <template v-if="custom" ${slot('toolbar', '{ zoom, rotate, reset }')}>
-        <button class="viewer-slot-button" @click="zoom(0.1)">
+        <button type="button" class="viewer-slot-button" title="${english ? 'Zoom in' : '放大'}" aria-label="${english ? 'Zoom in' : '放大'}" @click="zoom(0.1)">
           <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h14M10 3v14" stroke="currentColor" stroke-width="2" /></svg>
-          ${english ? 'Zoom in' : '放大'}
         </button>
-        <button class="viewer-slot-button" @click="rotate(90)">
+        <button type="button" class="viewer-slot-button" title="${english ? 'Rotate' : '旋转'}" aria-label="${english ? 'Rotate' : '旋转'}" @click="rotate(90)">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 7a7 7 0 1 0 1 6M16 2v5h-5" /></svg>
-          ${english ? 'Rotate' : '旋转'}
         </button>
-        <button class="viewer-slot-button" @click="reset()">${english ? 'Reset' : '重置'}</button>
+        <button type="button" class="viewer-slot-button" title="${english ? 'Reset' : '重置'}" aria-label="${english ? 'Reset' : '重置'}" @click="reset()">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7a7 7 0 1 1-1 6M4 2v5h5" /></svg>
+        </button>
       </template>
       <template ${slot('toolbar-append', '{ image, index }')}>
-        <a v-if="image" class="viewer-slot-button" :href="image.src" :download="image.alt">${english ? 'Download image' : '下载图片'} {{ index + 1 }}</a>
+        <a v-if="image" class="viewer-slot-button" :href="image.src" :download="image.alt" :title="'${english ? 'Download image' : '下载图片'} ' + (index + 1)" :aria-label="'${english ? 'Download image' : '下载图片'} ' + (index + 1)">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 2v10m-4-4 4 4 4-4M3 12v5h14v-5" /></svg>
+        </a>
       </template>
     </Viewer>
     </div>
@@ -65,7 +67,8 @@ export const toolbarStyles = `.toolbar-example .controls { margin-bottom: 16px; 
 .toolbar-example .toolbar-stage { position: relative; }
 .toolbar-example .toolbar-stage.is-inline { min-height: 360px; }
 .toolbar-example .controls label { display: inline-flex; gap: 6px; align-items: center; }
-.viewer-toolbar .viewer-slot-button { display: inline-flex; align-items: center; gap: 4px; min-height: 28px; padding: 4px 10px; border: 1px solid #ffffff70; border-radius: 5px; background: #202127; color: #fff; font: 14px/1.4 'Segoe UI', 'Microsoft YaHei', sans-serif; text-decoration: none; cursor: pointer; }
-.viewer-toolbar .viewer-slot-button:hover { background: #35654e; }
-.viewer-toolbar .viewer-slot-button:focus-visible { outline: 2px solid #94c6a8; outline-offset: 2px; }
-.viewer-toolbar .v-viewer-toolbar-append-slot { margin-left: 8px; }`
+.viewer-toolbar .viewer-slot-button { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 24px; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; background: rgba(0, 0, 0, .5); color: #fff; text-decoration: none; cursor: pointer; transition: background-color .15s; }
+.viewer-toolbar .viewer-slot-button:hover, .viewer-toolbar .viewer-slot-button:focus-visible { background: rgba(0, 0, 0, .8); }
+.viewer-toolbar .viewer-slot-button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.viewer-toolbar .viewer-slot-button svg { display: block; flex-shrink: 0; }
+.viewer-toolbar .v-viewer-toolbar-slot { padding: 6px 0; }`

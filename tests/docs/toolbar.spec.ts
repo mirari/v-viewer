@@ -16,6 +16,11 @@ for (const vue2 of [false, true]) {
     await expect(
       toolbar.getByRole('link', { name: '下载图片 1' }),
     ).toHaveAttribute('href', /valley/)
+    const download = toolbar.getByRole('link', { name: '下载图片 1' })
+    await expect(download.locator('svg')).toBeVisible()
+    await expect(download).toHaveText('')
+    await expect(download).toHaveCSS('border-radius', '50%')
+    await expect(download).toHaveCSS('background-color', 'rgba(0, 0, 0, 0.5)')
     const iconButton = toolbar.locator('.viewer-zoom-in')
     const nativeButton = (await iconButton.boundingBox())!
     const appendedButton = (await toolbar
@@ -29,6 +34,8 @@ for (const vue2 of [false, true]) {
           appendedButton.height / 2,
       ),
     ).toBeLessThan(8)
+    expect(appendedButton.width).toBe(nativeButton.width)
+    expect(appendedButton.height).toBe(nativeButton.height)
     const width = (await image.boundingBox())!.width
     await iconButton.click()
     await expect
@@ -46,12 +53,16 @@ for (const vue2 of [false, true]) {
       'color',
       'rgb(255, 255, 255)',
     )
+    await expect(customZoom).toHaveText('')
+    await expect(customZoom).toHaveAttribute('title', '放大')
     const customWidth = (await image.boundingBox())!.width
     await customZoom.locator('path').click()
     await expect
       .poll(async () => (await image.boundingBox())!.width)
       .toBeGreaterThan(customWidth)
     await expect(toolbar.getByRole('button', { name: '旋转' })).toBeVisible()
+    await expect(image).toHaveClass(/viewer-transition/)
+    await expect(image).toHaveCSS('transition-duration', '0.3s')
     await toolbar.getByRole('button', { name: '旋转' }).focus()
     await page.keyboard.press('Enter')
     await expect(image).toHaveAttribute('style', /rotate\(90deg\)/)
