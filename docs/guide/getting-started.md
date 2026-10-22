@@ -1,7 +1,5 @@
 # 快速上手
 
-基于 [Viewer.js](https://github.com/fengyuanchen/viewerjs) 的 Vue 3 图片预览。点击图片，可以缩放、旋转或浏览下一张。
-
 ::: warning 旧项目升级注意
 本次主版本重构包含破坏性 API 变更。组件推荐改用直接属性、Vue 事件和 ref 方法；旧 options 传参保留兼容，但不推荐继续使用。升级前请对照[迁移示例](./component#migration)调整写法。
 :::

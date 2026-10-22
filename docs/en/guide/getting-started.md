@@ -1,7 +1,5 @@
 # Quick start
 
-Image viewing for Vue 3, powered by [Viewer.js](https://github.com/fengyuanchen/viewerjs). Click an image to zoom, rotate and navigate.
-
 ::: warning Upgrading an existing project
 This major rewrite includes breaking API changes. Components now recommend direct props, Vue events and ref methods. The legacy options prop remains compatible, but is deprecated. Read the [migration examples](./component#migration) before upgrading.
 :::
