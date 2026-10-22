@@ -2,7 +2,7 @@
 layout: home
 hero:
   name: v-viewer
-  text: Give every image a closer look.
+  text: A Vue image viewer with zoom, rotation and more
   tagline: Components, directives and composables for Vue. Powered by <a href="https://github.com/fengyuanchen/viewerjs">Viewer.js</a>.
   actions:
     - theme: brand

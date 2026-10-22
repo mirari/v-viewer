@@ -2,7 +2,7 @@
 layout: home
 hero:
   name: v-viewer
-  text: 每一张图片，都值得细看。
+  text: 支持缩放、旋转等功能的 Vue 图片浏览组件
   tagline: 为 Vue 提供组件、指令与组合式 API，基于 <a href="https://github.com/fengyuanchen/viewerjs">Viewer.js</a>。
   actions:
     - theme: brand
