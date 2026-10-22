@@ -2,26 +2,17 @@ import Vue from 'vue'
 import type { DirectiveOptions, PluginObject, VueConstructor } from 'vue'
 import type { Vue as VueInstanceType } from 'vue/types/vue.js'
 import type ViewerJsType from 'viewerjs'
-import {
-  createToolbarBridge,
-  toolbarState,
-  updateToolbarIcon,
-} from '../../core/src/toolbar.js'
+import { createToolbarBridge, toolbarState } from '../../core/src/toolbar.js'
 import type {
   ToolbarMount,
   ViewerToolbarScope,
-  ViewerToolbarIconScope,
 } from '../../core/src/toolbar.js'
 import type { VNode } from 'vue'
-export type {
-  ViewerToolbarScope,
-  ViewerToolbarIconScope,
-} from '../../core/src/toolbar.js'
+export type { ViewerToolbarScope } from '../../core/src/toolbar.js'
 export interface ViewerSlots {
   default?: (scope: { options: ViewerOptions }) => VNode[]
   toolbar?: (scope: ViewerToolbarScope) => VNode[]
   'toolbar-append'?: (scope: ViewerToolbarScope) => VNode[]
-  'toolbar-icon'?: (scope: ViewerToolbarIconScope) => VNode[]
 }
 import {
   ViewerJs,
@@ -117,20 +108,13 @@ function syncToolbar(vm: Vue) {
     const methods = bindViewerMethods(() => vm.$viewer)
     const portal = new Vue({
       parent: vm,
-      mounted() {
-        updateToolbarIcon(mount, this.$el as HTMLElement)
-      },
-      updated() {
-        updateToolbarIcon(mount, this.$el as HTMLElement)
-      },
       render(h) {
         const owner = vm as ViewerInstance
-        const scope: ViewerToolbarIconScope = {
+        const scope: ViewerToolbarScope = {
           ...methods,
           update: () => owner.update(),
           destroy: () => owner.destroy(),
           ...toolbarState(vm.$viewer),
-          name: mount.name ?? '',
         }
         return h(
           'span',
@@ -140,7 +124,6 @@ function syncToolbar(vm: Vue) {
       },
     }).$mount()
     mount.target.appendChild(portal.$el)
-    updateToolbarIcon(mount, portal.$el as HTMLElement)
     state.portals.set(mount, portal)
   }
 }

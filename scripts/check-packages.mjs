@@ -235,7 +235,7 @@ ${
     ? `
 const toolbarApp=new Vue({render(h){return h(pkg.Viewer,{ref:'gallery',props:{transition:false},scopedSlots:{
 default:()=>[h('img',{attrs:{src:'photo.jpg'}})],
-'toolbar-icon':({name})=>name==='zoomIn'?[h('b',{attrs:{'data-icon':'custom'}},['+'])]:[],
+toolbar:()=>[h('b',{attrs:{'data-toolbar':'custom'}},['Custom toolbar'])],
 'toolbar-append':({rotate})=>[h('button',{attrs:{'data-action':'custom'},on:{click:()=>rotate(90)}},['Rotate'])]
 }})}}).$mount(toolbarHost)
 toolbarComponent=toolbarApp.$refs.gallery
@@ -244,7 +244,7 @@ toolbarComponent=toolbarApp.$refs.gallery
 const toolbarRef=Vue.ref(null)
 const toolbarApp=Vue.createApp({render(){return Vue.h(pkg.Viewer,{ref:toolbarRef,transition:false},{
 default:()=>[Vue.h('img',{src:'photo.jpg'})],
-'toolbar-icon':({name})=>name==='zoomIn'?[Vue.h('b',{'data-icon':'custom'},'+')]:[],
+toolbar:()=>[Vue.h('b',{'data-toolbar':'custom'},'Custom toolbar')],
 'toolbar-append':({rotate})=>[Vue.h('button',{'data-action':'custom',onClick:()=>rotate(90)},'Rotate')]
 })}})
 toolbarApp.mount(toolbarHost)
@@ -256,7 +256,8 @@ await Vue.nextTick()
 await Vue.nextTick()
 const toolbarInstance=${line === 'vue2' ? 'toolbarComponent.$viewer' : 'toolbarComponent.viewer'}
 toolbarInstance.rotate=function(degree){assert.equal(degree,90);toolbarCalls++;return this}
-assert.ok(document.querySelector('.viewer-zoom-in.v-viewer-custom-icon [data-icon="custom"]'))
+assert.ok(document.querySelector('.v-viewer-toolbar-slot [data-toolbar="custom"]'))
+assert.equal(document.querySelector('.viewer-toolbar ul').style.display,'none')
 document.querySelector('[data-action="custom"]').click()
 assert.equal(toolbarCalls,1)
 toolbarComponent.rebuildViewer()
@@ -284,14 +285,12 @@ dom.window.close()
       `
 import type {ViewerOptionProps,ViewerEventMap,ViewerMethods} from 'v-viewer'
 import type {ViewerObserve,ViewerDirectiveOptions} from 'v-viewer'
-import type {ViewerToolbarScope,ViewerToolbarIconScope,ViewerSlots} from 'v-viewer'
-const toolbarSlots:ViewerSlots={toolbar:({zoom,image,index})=>{zoom(0.1);image?.src;index.toFixed();return []},'toolbar-icon':({name})=>{name.toUpperCase();return []}}
+import type {ViewerToolbarScope,ViewerSlots} from 'v-viewer'
+const toolbarSlots:ViewerSlots={toolbar:({zoom,image,index})=>{zoom(0.1);image?.src;index.toFixed();return []},'toolbar-append':({rotate})=>{rotate(90);return []}}
 const toolbarScope={} as ViewerToolbarScope
 toolbarScope.rotate(90)
 // @ts-expect-error toolbar methods retain their argument types
 toolbarScope.rotate('90')
-const iconScope={} as ViewerToolbarIconScope
-iconScope.name.toUpperCase()
 const observe:ViewerObserve=100
 const directiveOptions:ViewerDirectiveOptions={toolbar:false,observe}
 const disabledObservation:ViewerDirectiveOptions={observe:false}

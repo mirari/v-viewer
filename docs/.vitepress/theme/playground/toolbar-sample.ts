@@ -36,14 +36,15 @@ ${script}
       <div v-show="!inline" class="gallery">
         <img v-for="(src, index) in images" :key="src" :src="src" :alt="'Landscape ' + (index + 1)" />
       </div>
-      <template ${slot('toolbar-icon', '{ name }')}>
-        <svg v-if="name === 'zoomIn'" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
-          <path d="M3 10h14M10 3v14" stroke="currentColor" stroke-width="2" />
-        </svg>
-      </template>
       <template v-if="custom" ${slot('toolbar', '{ zoom, rotate, reset }')}>
-        <button class="viewer-slot-button" @click="zoom(0.1)">${english ? 'Zoom in' : '放大'}</button>
-        <button class="viewer-slot-button" @click="rotate(90)">${english ? 'Rotate' : '旋转'}</button>
+        <button class="viewer-slot-button" @click="zoom(0.1)">
+          <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h14M10 3v14" stroke="currentColor" stroke-width="2" /></svg>
+          ${english ? 'Zoom in' : '放大'}
+        </button>
+        <button class="viewer-slot-button" @click="rotate(90)">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 7a7 7 0 1 0 1 6M16 2v5h-5" /></svg>
+          ${english ? 'Rotate' : '旋转'}
+        </button>
         <button class="viewer-slot-button" @click="reset()">${english ? 'Reset' : '重置'}</button>
       </template>
       <template ${slot('toolbar-append', '{ image, index }')}>
@@ -64,7 +65,7 @@ export const toolbarStyles = `.toolbar-example .controls { margin-bottom: 16px; 
 .toolbar-example .toolbar-stage { position: relative; }
 .toolbar-example .toolbar-stage.is-inline { min-height: 360px; }
 .toolbar-example .controls label { display: inline-flex; gap: 6px; align-items: center; }
-.viewer-toolbar .viewer-slot-button { display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px; border: 1px solid #ffffff70; border-radius: 5px; background: #202127; color: #fff; font: 14px/1.4 'Segoe UI', 'Microsoft YaHei', sans-serif; text-decoration: none; cursor: pointer; }
+.viewer-toolbar .viewer-slot-button { display: inline-flex; align-items: center; gap: 4px; min-height: 28px; padding: 4px 10px; border: 1px solid #ffffff70; border-radius: 5px; background: #202127; color: #fff; font: 14px/1.4 'Segoe UI', 'Microsoft YaHei', sans-serif; text-decoration: none; cursor: pointer; }
 .viewer-toolbar .viewer-slot-button:hover { background: #35654e; }
 .viewer-toolbar .viewer-slot-button:focus-visible { outline: 2px solid #94c6a8; outline-offset: 2px; }
 .viewer-toolbar .v-viewer-toolbar-append-slot { margin-left: 8px; }`

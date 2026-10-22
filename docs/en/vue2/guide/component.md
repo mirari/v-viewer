@@ -196,15 +196,14 @@ Rendered HTML can also be used as the slot content:
 
 Use Vue templates, icon components and event bindings to customize the toolbar. These slots belong to the component; directives and the API continue to use Viewer.js toolbar options.
 
-| Slot             | Behavior                                                                                                                                                                               |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `toolbar-icon`   | Replace an existing button's icon. `name` is its toolbar option key, such as `zoomIn` or `oneToOne`. Empty content keeps the original icon and the button retains its existing action. |
-| `toolbar-append` | Add content after the toolbar, including after a custom `toolbar` slot.                                                                                                                |
-| `toolbar`        | Replace all built-in toolbar buttons. Takes precedence over `toolbar-icon`.                                                                                                            |
+| Slot             | Behavior                                                                         |
+| ---------------- | -------------------------------------------------------------------------------- |
+| `toolbar-append` | Add content after the toolbar, including after a custom `toolbar` slot.          |
+| `toolbar`        | Replace all built-in toolbar buttons with custom icons, layout and interactions. |
 
-All three slots receive `image` (the current preview's HTMLImageElement, or undefined before it is viewed), `index` (zero-based), and the component's Viewer.js methods, such as `zoom`, `rotate`, `reset` and `next`. Methods always target the current instance. State and slot content remain reactive without rebuilding the gallery.
+Both slots receive `image` (the current preview's HTMLImageElement, or undefined before it is viewed), `index` (zero-based), and the component's Viewer.js methods, such as `zoom`, `rotate`, `reset` and `next`. Methods always target the current instance. State and slot content remain reactive without rebuilding the gallery.
 
-`toolbar: false` hides the entire toolbar, including its slots. Without a replacement slot, the existing toolbar configuration still determines which buttons are present. Use `toolbar-icon` for icon content only; use the other slots for interactive buttons, with their own labels and styles.
+`toolbar: false` hides the entire toolbar, including its slots. Without a replacement slot, the existing toolbar configuration still determines which buttons are present. Bind custom buttons to the methods provided by the slots, with your own icons, labels and styles.
 
 The example uses Vue 2.5+ `slot-scope` syntax. On Vue 2.4, use `scope` instead.
 

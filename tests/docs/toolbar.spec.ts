@@ -17,16 +17,6 @@ for (const vue2 of [false, true]) {
       toolbar.getByRole('link', { name: '下载图片 1' }),
     ).toHaveAttribute('href', /valley/)
     const iconButton = toolbar.locator('.viewer-zoom-in')
-    await expect(iconButton).toHaveClass(/v-viewer-custom-icon/)
-    expect(
-      await iconButton.evaluate(
-        (el) => getComputedStyle(el, '::before').display,
-      ),
-    ).toBe('none')
-    await expect(iconButton.locator('svg')).toHaveCSS(
-      'color',
-      'rgb(255, 255, 255)',
-    )
     const nativeButton = (await iconButton.boundingBox())!
     const appendedButton = (await toolbar
       .getByRole('link', { name: '下载图片 1' })
@@ -40,7 +30,7 @@ for (const vue2 of [false, true]) {
       ),
     ).toBeLessThan(8)
     const width = (await image.boundingBox())!.width
-    await iconButton.locator('svg').click()
+    await iconButton.click()
     await expect
       .poll(async () => (await image.boundingBox())!.width)
       .toBeGreaterThan(width)
@@ -51,6 +41,16 @@ for (const vue2 of [false, true]) {
     await demo.getByRole('checkbox', { name: '替换整个工具栏' }).check()
     await expect(inline).toHaveAttribute('id', id!)
     await expect(toolbar.locator('ul')).toBeHidden()
+    const customZoom = toolbar.getByRole('button', { name: '放大' })
+    await expect(customZoom.locator('svg')).toHaveCSS(
+      'color',
+      'rgb(255, 255, 255)',
+    )
+    const customWidth = (await image.boundingBox())!.width
+    await customZoom.locator('path').click()
+    await expect
+      .poll(async () => (await image.boundingBox())!.width)
+      .toBeGreaterThan(customWidth)
     await expect(toolbar.getByRole('button', { name: '旋转' })).toBeVisible()
     await toolbar.getByRole('button', { name: '旋转' }).focus()
     await page.keyboard.press('Enter')
@@ -62,7 +62,7 @@ for (const vue2 of [false, true]) {
       .screenshot({ path: test.info().outputPath('toolbar-inline.png') })
     await demo.getByRole('checkbox', { name: '替换整个工具栏' }).uncheck()
     await expect(toolbar.locator('ul')).toBeVisible()
-    await expect(toolbar.locator('.viewer-zoom-in svg')).toBeVisible()
+    await expect(toolbar.locator('.viewer-zoom-in')).toBeVisible()
     await demo.getByRole('checkbox', { name: '内嵌模式' }).uncheck()
     await expect(inline).toHaveCount(0)
     await demo.locator('.gallery img').first().click()
@@ -71,7 +71,7 @@ for (const vue2 of [false, true]) {
     await expect(
       modal.getByRole('link', { name: '下载图片 1' }),
     ).toHaveAttribute('href', /valley/)
-    await expect(modal.locator('.viewer-zoom-in svg')).toBeVisible()
+    await expect(modal.locator('.viewer-zoom-in')).toBeVisible()
     await modal.screenshot({
       path: test.info().outputPath('toolbar-modal.png'),
     })

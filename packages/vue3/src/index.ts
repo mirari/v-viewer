@@ -33,40 +33,24 @@ import type {
   ViewerDirectiveOptions,
 } from '../../core/src/index.js'
 import type ViewerJs from 'viewerjs'
-import {
-  createToolbarBridge,
-  toolbarState,
-  updateToolbarIcon,
-} from '../../core/src/toolbar.js'
+import { createToolbarBridge, toolbarState } from '../../core/src/toolbar.js'
 import type {
   ToolbarMount,
   ViewerToolbarScope,
-  ViewerToolbarIconScope,
 } from '../../core/src/toolbar.js'
-export type {
-  ViewerToolbarScope,
-  ViewerToolbarIconScope,
-} from '../../core/src/toolbar.js'
+export type { ViewerToolbarScope } from '../../core/src/toolbar.js'
 import type { VNode } from 'vue'
 export interface ViewerSlots {
   default?: (scope: { options: ViewerOptions }) => VNode[]
   toolbar?: (scope: ViewerToolbarScope) => VNode[]
   'toolbar-append'?: (scope: ViewerToolbarScope) => VNode[]
-  'toolbar-icon'?: (scope: ViewerToolbarIconScope) => VNode[]
 }
 const ToolbarContent = defineComponent({
   props: {
-    mount: { type: Object as PropType<ToolbarMount>, required: true },
     content: {
       type: Function as PropType<() => VNode[] | undefined>,
       required: true,
     },
-  },
-  mounted() {
-    updateToolbarIcon(this.mount, this.$el)
-  },
-  updated() {
-    updateToolbarIcon(this.mount, this.$el)
   },
   render() {
     return h('span', { style: { display: 'contents' } }, this.content())
@@ -221,12 +205,7 @@ export const Viewer: DefineComponent<ViewerProps, ViewerExposed> =
         ...this.toolbarMounts.map((mount) =>
           h(Teleport, { to: mount.target, key: mount.key }, [
             h(ToolbarContent, {
-              mount,
-              content: () =>
-                this.$slots[mount.slot]?.({
-                  ...this.toolbarScope(),
-                  name: mount.name,
-                }),
+              content: () => this.$slots[mount.slot]?.(this.toolbarScope()),
             }),
           ]),
         ),

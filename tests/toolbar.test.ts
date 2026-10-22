@@ -19,7 +19,6 @@ for (const vue2 of [false, true]) {
   async function mount(inline = false) {
     const values = {
       full: false,
-      icons: true,
       append: true,
       label: 'Download',
       toolbar: true,
@@ -79,9 +78,6 @@ for (const vue2 of [false, true]) {
           node('img', { src: 'two.jpg' }),
         ],
       }
-      if (data.icons)
-        slots['toolbar-icon'] = (scope: any) =>
-          scope.name === 'zoomIn' ? [create(Icon)] : []
       if (data.append)
         slots['toolbar-append'] = (scope: any) => {
           slotScope(scope)
@@ -99,8 +95,11 @@ for (const vue2 of [false, true]) {
           if (!data.full) return []
           slotScope(scope)
           return [
-            node('button', { 'data-test': 'rotate' }, ['Rotate'], () =>
-              scope.rotate(90),
+            node(
+              'button',
+              { 'data-test': 'rotate' },
+              [create(Icon), 'Rotate'],
+              () => scope.rotate(90),
             ),
           ]
         }
@@ -155,34 +154,11 @@ for (const vue2 of [false, true]) {
     }
   }
 
-  test(`${vue2 ? 'Vue 2' : 'Vue 3'} icon slots keep native actions and fallback icons`, async () => {
-    const { instance, customZoom, state } = await mount()
-    const toolbar = instance().toolbar as HTMLElement
-    expect(toolbar.querySelector('svg')!.getAttribute('data-marker')).toBe(
-      'parent-context',
-    )
-    expect(
-      toolbar
-        .querySelector('.viewer-zoom-in')!
-        .classList.contains('v-viewer-custom-icon'),
-    ).toBe(true)
-    expect(
-      toolbar
-        .querySelector('.viewer-zoom-out')!
-        .classList.contains('v-viewer-custom-icon'),
-    ).toBe(false)
-    toolbar
-      .querySelector('path')!
-      .dispatchEvent(new MouseEvent('click', { bubbles: true }))
+  test(`${vue2 ? 'Vue 2' : 'Vue 3'} appended controls preserve native actions`, async () => {
+    const { instance, customZoom } = await mount()
+    instance().toolbar.querySelector('.viewer-zoom-in').click()
     expect(customZoom).toHaveBeenCalledOnce()
     expect(customZoom.mock.instances[0]).toBe(instance())
-    const previous = instance()
-    state.icons = false
-    await flush()
-    expect(instance()).toBe(previous)
-    expect(toolbar.querySelector('.v-viewer-custom-icon')).toBeNull()
-    expect(toolbar.querySelector('style')).toBeNull()
-    expect(toolbar.querySelector('svg')).toBeNull()
   })
 
   test(`${vue2 ? 'Vue 2' : 'Vue 3'} replacement, append and reactive content do not rebuild the gallery`, async () => {
@@ -192,9 +168,13 @@ for (const vue2 of [false, true]) {
     await flush()
     const toolbar = instance().toolbar as HTMLElement
     expect(toolbar.querySelector('ul')!.style.display).toBe('none')
-    expect(toolbar.querySelector('svg')).toBeNull()
+    expect(toolbar.querySelector('svg')!.getAttribute('data-marker')).toBe(
+      'parent-context',
+    )
     const rotate = vi.spyOn(instance(), 'rotate')
-    ;(toolbar.querySelector('[data-test="rotate"]') as HTMLElement).click()
+    toolbar
+      .querySelector('path')!
+      .dispatchEvent(new MouseEvent('click', { bubbles: true }))
     expect(rotate).toHaveBeenCalledExactlyOnceWith(90)
     state.label = 'Save'
     await flush()
@@ -211,7 +191,7 @@ for (const vue2 of [false, true]) {
     expect(toolbar.querySelector('ul')!.style.display).toBe('')
     expect(toolbar.querySelector('[data-test="rotate"]')).toBeNull()
     expect(toolbar.querySelector('[data-test="download"]')).toBeNull()
-    expect(toolbar.querySelector('svg')).not.toBeNull()
+    expect(toolbar.querySelector('svg')).toBeNull()
   })
 
   test(`${vue2 ? 'Vue 2' : 'Vue 3'} scope follows viewed images and methods follow rebuilt instances`, async () => {
