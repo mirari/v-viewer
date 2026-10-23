@@ -7,7 +7,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "vue": "2.7.16",
+    "vue": "3.0.0",
     "viewerjs": "^1.11.7"
   }
 }
