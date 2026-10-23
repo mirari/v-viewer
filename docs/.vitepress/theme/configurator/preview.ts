@@ -42,6 +42,8 @@ function createOptions(settings) {
     }
   }
   options.className = 'viewer-config-viewer ' + (options.className || '')
+  // Inline previews must not move the documentation page to a focused thumbnail.
+  options.focus = !options.inline
   return options
 }
 export default {

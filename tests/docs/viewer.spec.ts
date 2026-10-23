@@ -15,6 +15,7 @@ for (const english of [false, true]) {
     await expect(example.locator('pre, code, h2')).toHaveCount(0)
     await expect(page.locator('body > .viewer-container')).toHaveCount(0)
     await expect(viewer.locator('.viewer-list > li')).toHaveCount(5)
+    await expect(page.locator('.VPHomeHero h1')).toBeInViewport()
     await viewer.getByRole('button', { name: 'Next', exact: true }).click()
     await expect(image).toHaveAttribute('src', /river/)
     await viewer.getByRole('button', { name: 'Previous', exact: true }).click()

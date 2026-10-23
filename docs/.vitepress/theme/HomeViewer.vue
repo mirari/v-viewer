@@ -8,7 +8,7 @@ import 'viewerjs/dist/viewer.css'
 const { lang } = useData()
 const english = computed(() => lang.value.startsWith('en'))
 const images = defaultImages
-const options = { inline: true, button: false, title: false }
+const options = { inline: true, button: false, title: false, focus: false }
 </script>
 
 <template>

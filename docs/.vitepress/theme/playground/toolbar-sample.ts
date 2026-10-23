@@ -31,7 +31,7 @@ ${script}
       <label><input v-model="custom" type="checkbox" /> ${english ? 'Replace the toolbar' : '替换整个工具栏'}</label>
     </div>
     <div class="toolbar-stage" :class="{ 'is-inline': inline }">
-    <Viewer :inline="inline" :min-height="320">
+    <Viewer :inline="inline" :focus="!inline" :min-height="320">
       <div v-show="!inline" class="gallery">
         <img v-for="(src, index) in images" :key="src" :src="src" :alt="'Landscape ' + (index + 1)" />
       </div>
