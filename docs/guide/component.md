@@ -14,7 +14,7 @@ Vue 3 的 5.x 是包含破坏性变更的主版本重构。现在可以在组件
 component vue3 zh
 ```
 
-## 迁移示例 {#migration}
+## 旧版本迁移 {#migration}
 
 ```vue
 <!-- 旧写法：仍兼容，但不推荐 -->

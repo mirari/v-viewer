@@ -14,7 +14,7 @@ The Vue 2 (4.x) line is a rewrite with breaking changes. You can now use Viewer.
 component vue2 en
 ```
 
-## Migration examples {#migration}
+## Migrating from older versions {#migration}
 
 ```vue
 <!-- Legacy: supported, but deprecated -->
