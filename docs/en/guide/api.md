@@ -14,13 +14,13 @@ api vue3 en
 
 `useViewer({ images?, options?, target?, rebuild?, observe? })`
 
-| Parameter | Description                                                                                                                                                                                                                 |
-| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| images    | Image array, ref or getter for temporary galleries.                                                                                                                                                                         |
-| options   | Viewer.js options, ref or getter.                                                                                                                                                                                           |
-| target    | HTML element, id, CSS selector, ref or getter. Omit for a temporary gallery.                                                                                                                                                |
-| rebuild   | Recreate on image DOM changes; defaults to false.                                                                                                                                                                           |
-| observe   | Applies only to `target`. `true` (default) batches image DOM changes in a fixed 50ms window; `false` disables observation; a non-negative number sets the window in milliseconds (`0`: next task). Accepts a ref or getter. |
+| Parameter | Description                                                                                                                                                                                                                                    |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| images    | Image array, ref or getter for temporary galleries.                                                                                                                                                                                            |
+| options   | Viewer.js options, ref or getter.                                                                                                                                                                                                              |
+| target    | HTML element, id, CSS selector, ref or getter. Omit for a temporary gallery.                                                                                                                                                                   |
+| rebuild   | Recreate on image DOM changes; defaults to false.                                                                                                                                                                                              |
+| observe   | Applies only to `target`. Supports a ref or getter; default `true` batches changes over 50ms, `0` adds no batching delay, and `false` disables observation. See [automatic updates](./component#observe) for details and other numeric values. |
 
 | Return value | Description                                   |
 | ------------ | --------------------------------------------- |
