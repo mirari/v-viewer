@@ -18,6 +18,10 @@ Rendered HTML works the same way:
 <article v-viewer v-html="html" />
 ```
 
+## Migrating from older versions {#migration}
+
+The `.static` modifier has been removed; replace it with `{ observe: false }`.
+
 ## Binding and modifiers {#reference}
 
 | Binding                         | Description                                                                                      |
@@ -33,8 +37,6 @@ Rendered HTML works the same way:
 By default, additions, removals and attribute changes of `<img>` elements inside the element the directive is bound to automatically update the gallery. Access the instance as `element.$viewer`. Unmounting disconnects the observer and destroys the instance.
 
 See [automatic updates with observe](/en/guide/observe) for values, update timing and usage guidance.
-
-The `.static` modifier has been removed; replace it with `{ observe: false }`.
 
 ```ts
 import type { ViewerElement } from 'v-viewer'

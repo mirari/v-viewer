@@ -18,6 +18,10 @@ directive vue2 zh
 <article v-viewer v-html="html" />
 ```
 
+## 旧版本迁移 {#migration}
+
+旧版 `.static` 修饰符已移除，请替换为 `{ observe: false }`。
+
 ## 绑定值与修饰符 {#reference}
 
 | 用法                            | 说明                                                                      |
@@ -33,8 +37,6 @@ directive vue2 zh
 默认监听指令绑定元素内部 `<img>` 元素的增删和属性变化，自动更新图库。可通过 `element.$viewer` 获取实例；卸载时会断开监听并销毁实例。
 
 取值、更新时机及适用场景详见[自动更新 observe](/guide/observe)。
-
-旧版 `.static` 修饰符已移除，请替换为 `{ observe: false }`。
 
 ```ts
 import type { ViewerElement } from 'v-viewer'
