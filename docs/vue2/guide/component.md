@@ -16,20 +16,6 @@ Vue 2 的 4.x 是包含破坏性变更的主版本重构。现在可以在组件
 component vue2 zh
 ```
 
-## 旧版本迁移 {#migration}
-
-```vue
-<!-- 旧写法：仍兼容，但不推荐 -->
-<viewer :options="{ toolbar: false, viewed: onViewed }">
-  <img src="/photo.jpg" />
-</viewer>
-
-<!-- 推荐写法 -->
-<viewer :toolbar="false" @viewed="onViewed">
-  <img src="/photo.jpg" />
-</viewer>
-```
-
 ## 属性 {#props}
 
 ### Viewer.js 原生属性 {#viewerjs-props}
@@ -203,3 +189,17 @@ toolbar vue2 zh
 ```
 
 :::
+
+## 旧版本迁移 {#migration}
+
+```vue
+<!-- 旧写法：仍兼容，但不推荐 -->
+<viewer :options="{ toolbar: false, viewed: onViewed }">
+  <img src="/photo.jpg" />
+</viewer>
+
+<!-- 推荐写法 -->
+<viewer :toolbar="false" @viewed="onViewed">
+  <img src="/photo.jpg" />
+</viewer>
+```

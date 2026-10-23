@@ -16,20 +16,6 @@ Vue 3 的 5.x 是包含破坏性变更的主版本重构。现在可以在组件
 component vue3 zh
 ```
 
-## 旧版本迁移 {#migration}
-
-```vue
-<!-- 旧写法：仍兼容，但不推荐 -->
-<Viewer :options="{ toolbar: false, viewed: onViewed }">
-  <img src="/photo.jpg" />
-</Viewer>
-
-<!-- 推荐写法 -->
-<Viewer :toolbar="false" @viewed="onViewed">
-  <img src="/photo.jpg" />
-</Viewer>
-```
-
 ## 属性 {#props}
 
 ### Viewer.js 原生属性 {#viewerjs-props}
@@ -201,3 +187,17 @@ toolbar vue3 zh
 ```
 
 :::
+
+## 旧版本迁移 {#migration}
+
+```vue
+<!-- 旧写法：仍兼容，但不推荐 -->
+<Viewer :options="{ toolbar: false, viewed: onViewed }">
+  <img src="/photo.jpg" />
+</Viewer>
+
+<!-- 推荐写法 -->
+<Viewer :toolbar="false" @viewed="onViewed">
+  <img src="/photo.jpg" />
+</Viewer>
+```

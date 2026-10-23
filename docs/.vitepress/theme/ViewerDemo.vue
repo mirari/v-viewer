@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import { useData, withBase } from 'vitepress'
 import 'viewerjs/dist/viewer.css'
 import { moduleUrl } from './playground/compile'
@@ -34,8 +34,31 @@ onMounted(async () => {
     if (disposed) return
     const { mount } = await import(/* @vite-ignore */ moduleUrl(source))
     if (disposed) return
+    // Preserve a visible hash target when replacing the loading placeholder.
+    // Avoid moving the page if the reader scrolls or navigates while mounting.
+    const hash = location.hash
+    let anchor: HTMLElement | null = null
+    try {
+      anchor = document.getElementById(decodeURIComponent(hash.slice(1)))
+    } catch {
+      // A malformed fragment has no matching target.
+    }
+    const anchorTop = anchor?.getBoundingClientRect().top
+    const scrollY = window.scrollY
     unmount = mount(host.value, props.mode, lang.value.startsWith('en'))
     ready.value = true
+    await nextTick()
+    if (
+      !disposed &&
+      anchor?.isConnected &&
+      anchorTop !== undefined &&
+      anchorTop >= 0 &&
+      anchorTop < window.innerHeight &&
+      location.hash === hash &&
+      window.scrollY === scrollY
+    ) {
+      window.scrollBy(0, anchor.getBoundingClientRect().top - anchorTop)
+    }
   } catch (reason) {
     if (!disposed) error.value = String(reason)
   }

@@ -18,10 +18,6 @@ directive vue3 zh
 <article v-viewer v-html="html" />
 ```
 
-## 旧版本迁移 {#migration}
-
-旧版 `.static` 修饰符已移除，请替换为 `{ observe: false }`。
-
 ## 绑定值与修饰符 {#reference}
 
 | 用法                            | 说明                                                                      |
@@ -43,3 +39,7 @@ import type { ViewerElement } from 'v-viewer'
 const element = document.querySelector<ViewerElement>('#gallery')
 element?.$viewer?.show()
 ```
+
+## 旧版本迁移 {#migration}
+
+旧版 `.static` 修饰符已移除，请替换为 `{ observe: false }`。

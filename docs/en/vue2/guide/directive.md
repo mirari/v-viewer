@@ -18,10 +18,6 @@ Rendered HTML works the same way:
 <article v-viewer v-html="html" />
 ```
 
-## Migrating from older versions {#migration}
-
-The `.static` modifier has been removed; replace it with `{ observe: false }`.
-
 ## Binding and modifiers {#reference}
 
 | Binding                         | Description                                                                                      |
@@ -43,3 +39,7 @@ import type { ViewerElement } from 'v-viewer'
 const element = document.querySelector<ViewerElement>('#gallery')
 element?.$viewer?.show()
 ```
+
+## Migrating from older versions {#migration}
+
+The `.static` modifier has been removed; replace it with `{ observe: false }`.

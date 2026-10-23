@@ -16,20 +16,6 @@ The Vue 3 (5.x) line is a rewrite with breaking changes. You can now use Viewer.
 component vue3 en
 ```
 
-## Migrating from older versions {#migration}
-
-```vue
-<!-- Legacy: supported, but deprecated -->
-<Viewer :options="{ toolbar: false, viewed: onViewed }">
-  <img src="/photo.jpg" />
-</Viewer>
-
-<!-- Recommended -->
-<Viewer :toolbar="false" @viewed="onViewed">
-  <img src="/photo.jpg" />
-</Viewer>
-```
-
 ## Props {#props}
 
 ### Viewer.js props {#viewerjs-props}
@@ -201,3 +187,17 @@ toolbar vue3 en
 ```
 
 :::
+
+## Migrating from older versions {#migration}
+
+```vue
+<!-- Legacy: supported, but deprecated -->
+<Viewer :options="{ toolbar: false, viewed: onViewed }">
+  <img src="/photo.jpg" />
+</Viewer>
+
+<!-- Recommended -->
+<Viewer :toolbar="false" @viewed="onViewed">
+  <img src="/photo.jpg" />
+</Viewer>
+```

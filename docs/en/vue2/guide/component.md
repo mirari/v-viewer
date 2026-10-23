@@ -16,20 +16,6 @@ The Vue 2 (4.x) line is a rewrite with breaking changes. You can now use Viewer.
 component vue2 en
 ```
 
-## Migrating from older versions {#migration}
-
-```vue
-<!-- Legacy: supported, but deprecated -->
-<viewer :options="{ toolbar: false, viewed: onViewed }">
-  <img src="/photo.jpg" />
-</viewer>
-
-<!-- Recommended -->
-<viewer :toolbar="false" @viewed="onViewed">
-  <img src="/photo.jpg" />
-</viewer>
-```
-
 ## Props {#props}
 
 ### Viewer.js props {#viewerjs-props}
@@ -203,3 +189,17 @@ toolbar vue2 en
 ```
 
 :::
+
+## Migrating from older versions {#migration}
+
+```vue
+<!-- Legacy: supported, but deprecated -->
+<viewer :options="{ toolbar: false, viewed: onViewed }">
+  <img src="/photo.jpg" />
+</viewer>
+
+<!-- Recommended -->
+<viewer :toolbar="false" @viewed="onViewed">
+  <img src="/photo.jpg" />
+</viewer>
+```
