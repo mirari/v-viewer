@@ -21,3 +21,17 @@ api vue2 en
 Call `destroy()` on page unmount to clean up an open gallery.
 
 Access all Viewer.js methods on the instance. [Viewer.js methods](https://github.com/fengyuanchen/viewerjs#methods)
+
+## Viewer.js options {#options}
+
+Pass these settings through `options` in `viewerApi({ images, options })`. The API always opens in modal mode: `inline` is forced to `false`, so inline-only settings do not apply.
+
+These match [Viewer.js options](https://github.com/fengyuanchen/viewerjs#options). Each name links to its original documentation; available settings and defaults depend on the installed Viewer.js version.
+
+<!--@include: ../../../.vitepress/fragments/viewer-options.en.md-->
+
+### Event callbacks {#callbacks}
+
+Set callbacks such as `viewed(event)` on the same `options` object. They receive the original DOM event, with operation data in `event.detail`. Click an event name for its [Viewer.js documentation](https://github.com/fengyuanchen/viewerjs#events).
+
+<!--@include: ../../../.vitepress/fragments/viewer-events.en.md-->

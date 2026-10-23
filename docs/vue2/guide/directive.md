@@ -18,6 +18,20 @@ directive vue2 zh
 <article v-viewer v-html="html" />
 ```
 
+## Viewer.js 配置项 {#options}
+
+直接放入 `v-viewer="options"` 绑定的配置对象。配置及其嵌套值变化后会重建实例；`observe` 和 `rebuild` 属于 v-viewer 扩展配置，见下方说明。
+
+对应 [Viewer.js 配置项](https://github.com/fengyuanchen/viewerjs#options)，点击属性名可查看原文档。可用配置和默认值以安装的 Viewer.js 版本为准。
+
+<!--@include: ../../.vitepress/fragments/viewer-options.zh.md-->
+
+### 事件回调 {#callbacks}
+
+在同一个 `options` 对象中设置 `viewed(event)` 等回调。参数为原始 DOM 事件，操作数据位于 `event.detail`；点击事件名可查看 [Viewer.js 原文档](https://github.com/fengyuanchen/viewerjs#events)。
+
+<!--@include: ../../.vitepress/fragments/viewer-events.zh.md-->
+
 ## 绑定值与修饰符 {#reference}
 
 | 用法                            | 说明                                                                      |

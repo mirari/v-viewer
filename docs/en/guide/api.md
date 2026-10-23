@@ -36,3 +36,17 @@ Call useViewer inside setup. It cleans up on scope disposal.
 Closing or destroying the preview removes its temporary DOM. Changes to images or options during a preview apply the next time it opens. Calling `show(index)` again switches images within the current gallery.
 
 Use `viewer.value` to call all Viewer.js methods. [Viewer.js methods](https://github.com/fengyuanchen/viewerjs#methods)
+
+## Viewer.js options {#options}
+
+Pass these settings through `options` in `useViewer({ images, options })`. The API always opens in modal mode: `inline` is forced to `false`, so inline-only settings do not apply.
+
+These match [Viewer.js options](https://github.com/fengyuanchen/viewerjs#options). Each name links to its original documentation; available settings and defaults depend on the installed Viewer.js version.
+
+<!--@include: ../../.vitepress/fragments/viewer-options.en.md-->
+
+### Event callbacks {#callbacks}
+
+Set callbacks such as `viewed(event)` on the same `options` object. They receive the original DOM event, with operation data in `event.detail`. Click an event name for its [Viewer.js documentation](https://github.com/fengyuanchen/viewerjs#events).
+
+<!--@include: ../../.vitepress/fragments/viewer-events.en.md-->

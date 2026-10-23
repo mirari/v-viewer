@@ -36,3 +36,17 @@ api vue3 zh
 关闭或销毁预览后会删除临时 DOM。打开期间修改图片数组或配置，下次打开时生效；重复调用 `show(index)` 会在当前图库内切换图片。
 
 通过 `viewer.value` 调用 Viewer.js 的全部方法。 [Viewer.js methods](https://github.com/fengyuanchen/viewerjs#methods)
+
+## Viewer.js 配置项 {#options}
+
+通过 `useViewer({ images, options })` 的 `options` 传入。API 固定使用弹窗模式，`inline` 会被设为 `false`，仅用于内嵌模式的配置不生效。
+
+对应 [Viewer.js 配置项](https://github.com/fengyuanchen/viewerjs#options)，点击属性名可查看原文档。可用配置和默认值以安装的 Viewer.js 版本为准。
+
+<!--@include: ../.vitepress/fragments/viewer-options.zh.md-->
+
+### 事件回调 {#callbacks}
+
+在同一个 `options` 对象中设置 `viewed(event)` 等回调。参数为原始 DOM 事件，操作数据位于 `event.detail`；点击事件名可查看 [Viewer.js 原文档](https://github.com/fengyuanchen/viewerjs#events)。
+
+<!--@include: ../.vitepress/fragments/viewer-events.zh.md-->
