@@ -161,7 +161,7 @@ component vue2 zh
 
 ### 默认插槽 {#default-slot}
 
-在默认插槽中渲染图片及自定义布局。插槽参数仅保留兼容用的 `options`，其内容为原始 options 属性。
+在默认插槽中渲染图片及自定义布局。
 
 ```vue
 <viewer :toolbar="false">

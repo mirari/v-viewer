@@ -161,7 +161,7 @@ For underlying instance data, read `gallery.value.viewer`.
 
 ### Default slot {#default-slot}
 
-Render images and custom layouts in the default slot. Its only parameter is the legacy `options`, containing the original options prop.
+Render images and custom layouts in the default slot.
 
 ```vue
 <Viewer :toolbar="false">
