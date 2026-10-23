@@ -10,7 +10,7 @@ Image viewer components, directives and composables for Vue, powered by [Viewer.
 The rewrite is under development on v4. The new version lines have not been published yet.
 
 > [!WARNING]
-> The Vue 2 (4.x) and Vue 3 (5.x) lines are a major rewrite with breaking changes. Existing users should migrate component settings to props, callbacks to Vue events, and calls to component ref methods. The old `options` prop is retained for gradual migration, but is deprecated. See the migration examples in the [Vue 3 component guide](docs/guide/component.md#migration) or [Vue 2 component guide](docs/vue2/guide/component.md#migration).
+> The Vue 2 (4.x) and Vue 3 (5.x) lines are a major rewrite with breaking changes. You can now use Viewer.js props, events and methods directly on the component. The old `options` prop is retained for gradual migration, but is deprecated. See the migration examples in the [Vue 3 component guide](docs/guide/component.md#migration) or [Vue 2 component guide](docs/vue2/guide/component.md#migration).
 
 ## Vue 3
 
