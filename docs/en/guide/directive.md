@@ -50,7 +50,7 @@ These match [Viewer.js options](https://github.com/fengyuanchen/viewerjs#options
 
 ## Events {#events}
 
-Viewer.js dispatches native DOM events on the HTML element bound to the directive. Both Vue 2 and Vue 3 can listen with `@viewed`; no directive event forwarding is needed. The handler receives the original event, with operation data in `event.detail`. Use `@show.prevent` to cancel opening.
+Viewer.js dispatches native DOM events on the HTML element bound to the directive. Vue 3 can listen with `@viewed`; no directive event forwarding is needed. The handler receives the original event, with operation data in `event.detail`. Use `@show.prevent` to cancel opening.
 
 ```vue
 <div v-viewer="options" @viewed="onViewed">
