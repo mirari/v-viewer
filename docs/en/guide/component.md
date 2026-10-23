@@ -16,8 +16,6 @@ component vue3 en
 
 ## Migration and legacy options {#migration}
 
-Prefer direct props and Vue events in new code. Move each setting out of options and each callback to its corresponding event:
-
 ```vue
 <!-- Legacy: supported, but deprecated -->
 <Viewer :options="{ toolbar: false, viewed: onViewed }">
@@ -29,21 +27,6 @@ Prefer direct props and Vue events in new code. Move each setting out of options
   <img src="/photo.jpg" />
 </Viewer>
 ```
-
-Call `gallery.value.show()` on the component ref; the component forwards to its current instance. The component method for Viewer.js's `tooltip()` is `showTooltip()`, since `tooltip` is a Boolean prop.
-
-**The `inited` event has been removed.** Component methods do not require a saved underlying instance. Use `ready` for UI readiness and `viewed` for image display.
-
-**The component’s `images` and `trigger` props and the `images` slot parameter have been removed.** Render images in the default slot using your own data. To open a gallery from an image array without rendering images yourself, use `useViewer({ images })`.
-
-The compatibility rules are:
-
-- Explicit props override same-named settings in `options`. Omitted or `undefined` props fall back to `options`, then Viewer.js defaults.
-- The merge is shallow: a direct `toolbar` object replaces the entire `options.toolbar` object. The component does not mutate the supplied options.
-- Changes to `options`, including nested values, still rebuild the viewer. Legacy event callbacks remain supported, including cancellation with `event.preventDefault()`.
-- If both `options.viewed` and `@viewed` are provided, both run. Bind each handler through one entry point to avoid duplicate work.
-
-The directive binding and API's `options` remain supported and are not deprecated; this recommendation applies only to components.
 
 ## Props {#props}
 

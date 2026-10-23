@@ -16,8 +16,6 @@ component vue3 zh
 
 ## 迁移与 options 兼容入口 {#migration}
 
-新代码推荐直接属性和 Vue 事件。将 options 中的配置逐项移到组件属性，将回调移到对应事件：
-
 ```vue
 <!-- 旧写法：仍兼容，但不推荐 -->
 <Viewer :options="{ toolbar: false, viewed: onViewed }">
@@ -29,21 +27,6 @@ component vue3 zh
   <img src="/photo.jpg" />
 </Viewer>
 ```
-
-通过组件 ref 直接调用 `gallery.value.show()`，组件会转发到当前实例。Viewer.js 的 `tooltip()` 在组件上改用 `showTooltip()`，避免与布尔属性 `tooltip` 重名。
-
-**`inited` 事件已移除。** 调用组件方法无需保存底层实例；界面就绪监听 `ready`，图片显示完成监听 `viewed`。
-
-**组件的 `images`、`trigger` 属性及插槽中的 `images` 参数已移除。** 使用页面自己的数据在默认插槽中渲染图片；只传图片数组打开图库，请使用 `useViewer({ images })`。
-
-兼容规则如下：
-
-- 显式传入的属性优先于 `options` 中的同名配置。未传或值为 `undefined` 时，先使用 `options`，再沿用 Viewer.js 默认值。
-- 配置按浅合并处理：直接传入 `toolbar` 对象会整体替换 `options.toolbar`，不会合并其内部字段，也不会修改调用者的 options 对象。
-- `options` 及其嵌套值变化仍会重建实例；原有事件回调继续有效，也可使用 `event.preventDefault()` 取消操作。
-- 若同时传入 `options.viewed` 和 `@viewed`，两者都会执行。同一个处理函数只保留一种绑定方式，避免重复执行。
-
-指令绑定值和 API 的 `options` 继续正常使用，不属于弃用范围；上述建议仅针对组件。
 
 ## 属性 {#props}
 
