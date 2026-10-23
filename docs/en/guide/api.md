@@ -39,7 +39,7 @@ Use `viewer.value` to call all Viewer.js methods. [Viewer.js methods](https://gi
 
 ## Options {#options}
 
-Pass these settings through `options` in `useViewer({ images, options })`. **The API always opens in modal mode. `inline` is fixed to `false` and cannot be overridden.** Inline-only settings are omitted from the table below.
+Pass these settings through `options` in `useViewer({ images, options })`. **The API always opens in modal mode. `inline` is fixed to `false` and cannot be overridden.**
 
 These match [Viewer.js options](https://github.com/fengyuanchen/viewerjs#options). Each name links to its original documentation; available settings and defaults depend on the installed Viewer.js version.
 

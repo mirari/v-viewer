@@ -12,4 +12,4 @@ Vue 3 requires modern browsers. `<script setup>` examples require Vue 3.2+; Vue 
 
 The component initializes after mounting. SSR applications can use the component or call useViewer inside setup; call its returned show() method only in browser event handlers.
 
-Browser builds select an entry that imports CSS automatically; Node.js / SSR selects the same runtime without CSS imports. In Nuxt, the client build includes the styles while server imports remain safe.
+Browser builds load styles automatically; server imports do not load CSS. Nuxt supports importing `v-viewer` in both client and server builds.

@@ -3,8 +3,8 @@ layout: doc
 aside: false
 ---
 
-# Playground · Vue 3
+# Playground
 
-Edit App.vue and run the current workspace version. JavaScript and CSS are supported; logs and runtime errors appear below the preview.
+Edit `App.vue` and run the preview. JavaScript and CSS are supported; logs and runtime errors appear below the preview.
 
 <ClientOnly><ViewerPlayground /></ClientOnly>

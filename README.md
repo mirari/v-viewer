@@ -33,7 +33,7 @@ const images = ['/photo.jpg']
 
 The component’s `images` and `trigger` props and the `images` slot parameter have been removed. Render images in the slot; for image-array input use `useViewer({ images })` (Vue 3) or `viewerApi({ images })` (Vue 2).
 
-The `inited` event has been removed. Call methods on the component ref (`gallery.value.show()` in Vue 3, `this.$refs.gallery.show()` in Vue 2); the component always forwards to its current Viewer.js instance.
+The `inited` event has been removed. Call methods on the component ref (`gallery.value.show()` in Vue 3, `this.$refs.gallery.show()` in Vue 2).
 
 The component accepts Viewer.js settings directly as props (`:toolbar="false"`, `inline`), emits Vue events (`@viewed`, `@show.prevent`), and exposes methods on its ref (`gallery.value.show()`). The legacy `options` prop and callbacks remain compatible but are deprecated. Explicit props take precedence; legacy callbacks and Vue listeners both run when provided together. `showTooltip()` forwards Viewer.js’s `tooltip()` method while `tooltip` remains a Boolean prop.
 
@@ -60,7 +60,7 @@ Use `<viewer>`, `v-viewer` or `this.$viewerApi({ images })`. You can also import
 - [Development and releases](https://github.com/mirari/v-viewer/blob/master/CONTRIBUTING.md)
 - [Vue 2 changelog](https://github.com/mirari/v-viewer/blob/master/packages/vue2/CHANGELOG.md) · [Vue 3 changelog](https://github.com/mirari/v-viewer/blob/master/packages/vue3/CHANGELOG.md)
 
-Viewer.js is installed automatically as a dependency. Browser builds include its stylesheet automatically through the browser entry; Node.js / SSR imports use a CSS-free entry. Both use the same runtime implementation, and styles come from the installed Viewer.js version. Direct CDN/UMD usage still needs the Viewer.js CSS link. Viewer.js options and callbacks are passed unchanged through the component's options prop, the directive binding or API options.
+Viewer.js is installed automatically as a dependency. Browser builds automatically load its stylesheet; Node.js / SSR imports do not load CSS. Direct CDN/UMD usage requires a Viewer.js CSS link. Viewer.js options and callbacks are passed unchanged through the component's options prop, the directive binding or API options.
 
 To replace the default stylesheet entirely, import from `v-viewer/unstyled` and load your own complete viewer CSS. This entry provides the same exports without automatic CSS loading, for both Vue versions.
 

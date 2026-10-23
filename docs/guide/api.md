@@ -39,7 +39,7 @@ api vue3 zh
 
 ## 配置项 {#options}
 
-通过 `useViewer({ images, options })` 的 `options` 传入。**API 固定使用弹窗模式，`inline` 始终为 `false`，不可改写。** 下表不包含仅适用于内嵌模式的配置。
+通过 `useViewer({ images, options })` 的 `options` 传入。**API 固定使用弹窗模式，`inline` 始终为 `false`，不可改写。**
 
 对应 [Viewer.js 配置项](https://github.com/fengyuanchen/viewerjs#options)，点击属性名可查看原文档。可用配置和默认值以安装的 Viewer.js 版本为准。
 

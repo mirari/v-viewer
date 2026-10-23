@@ -40,7 +40,7 @@ See [automatic updates with observe](/en/guide/observe) for values, update timin
 
 These are [Viewer.js events](https://github.com/fengyuanchen/viewerjs#events) exposed as Vue events. Click an event name for its original documentation.
 
-Events forward the original DOM event synchronously, with operation data in `event.detail`. Use `@show.prevent` or `event.preventDefault()` to cancel a cancelable operation.
+Event handlers receive the original DOM event, with operation data in `event.detail`. Use `@show.prevent` or `event.preventDefault()` to cancel a cancelable operation.
 
 <!--@include: ../../../.vitepress/fragments/viewer-events.en.md-->
 
@@ -80,9 +80,9 @@ Call these through the component ref. Each name links to the corresponding [View
 | [`update()`](https://github.com/fengyuanchen/viewerjs#updateoptions)                                            | Refresh the gallery after source images are added, removed or reordered.                                                    |
 | [`destroy()`](https://github.com/fengyuanchen/viewerjs#destroy)                                                 | Dispose of the viewer instance.                                                                                             |
 
-Wait for `@viewed` before manipulating an image. Forwarded methods return the current Viewer.js instance, or `undefined` when none exists.
+Wait for `@viewed` before manipulating an image. Except for `update()` and `destroy()`, the methods listed above return the Viewer.js instance, or `undefined` when none exists.
 
-The component wraps `update()` and `destroy()` to manage its lifecycle; both return nothing. `update()` creates a missing instance and takes no options—change props to configure the component. `destroy()` also disconnects observation and clears the component’s instance reference, retaining the source images.
+`update()` and `destroy()` return nothing. `update()` creates a missing instance and takes no options—change props to configure the component. `destroy()` also disconnects observation and clears the component’s instance reference, retaining the source images.
 
 ### v-viewer-specific methods {#v-viewer-methods}
 
@@ -115,16 +115,16 @@ Rendered HTML can also be used as the slot content:
 
 ### Toolbar slots {#toolbar-slots}
 
-Use Vue templates, icon components and event bindings to customize the toolbar. These slots belong to the component; directives and the API continue to use Viewer.js toolbar options.
+Use Vue templates, icon components and event bindings to customize the toolbar.
 
 | Slot             | Behavior                                                                         |
 | ---------------- | -------------------------------------------------------------------------------- |
 | `toolbar-append` | Add content after the toolbar, including after a custom `toolbar` slot.          |
 | `toolbar`        | Replace all built-in toolbar buttons with custom icons, layout and interactions. |
 
-Both slots receive `image` (the current preview's HTMLImageElement, or undefined before it is viewed), `index` (zero-based), and the component's Viewer.js methods, such as `zoom`, `rotate`, `reset` and `next`. Methods always target the current instance. State and slot content remain reactive without rebuilding the gallery.
+Both slots receive `image` (the current preview's HTMLImageElement, or undefined before it is viewed), `index` (zero-based), and the component's Viewer.js methods, such as `zoom`, `rotate`, `reset` and `next`. Slot parameters update with the preview state.
 
-`toolbar: false` hides the entire toolbar, including its slots. Without a replacement slot, the existing toolbar configuration still determines which buttons are present. Bind custom buttons to the methods provided by the slots, with your own icons, labels and styles.
+`toolbar: false` hides the entire toolbar, including its slots. Without a replacement slot, the existing toolbar configuration still determines which buttons are present.
 
 The example uses Vue 2.5+ `slot-scope` syntax. On Vue 2.4, use `scope` instead.
 

@@ -40,7 +40,7 @@ component vue2 zh
 
 以下均为 [Viewer.js 原生事件](https://github.com/fengyuanchen/viewerjs#events)，通过 Vue 事件使用；点击事件名可查看原文档。
 
-事件参数为原始 DOM 事件，操作数据位于 `event.detail`。事件同步转发，可通过 `@show.prevent` 或 `event.preventDefault()` 取消操作。
+事件参数为原始 DOM 事件，操作数据位于 `event.detail`。对于支持取消的操作，可使用 `@show.prevent` 或 `event.preventDefault()` 阻止执行。
 
 <!--@include: ../../.vitepress/fragments/viewer-events.zh.md-->
 
@@ -80,9 +80,9 @@ component vue2 zh
 | [`update()`](https://github.com/fengyuanchen/viewerjs#updateoptions)                                            | 源图片增删或排序变化后，更新查看器的图片列表。                                             |
 | [`destroy()`](https://github.com/fengyuanchen/viewerjs#destroy)                                                 | 销毁查看器并移除实例。                                                                     |
 
-图片操作需等待 `@viewed`。转发方法返回当前 Viewer.js 实例；没有实例时返回 `undefined`。
+图片操作需等待 `@viewed`。除 `update()` 和 `destroy()` 外，上述方法返回 Viewer.js 实例；没有实例时返回 `undefined`。
 
-组件对 `update()` 和 `destroy()` 增加了生命周期管理，两者均无返回值。`update()` 会在实例不存在时创建实例，不接收 options，配置通过属性修改；`destroy()` 同时断开监听并清空组件的实例引用，保留源图片。
+`update()` 和 `destroy()` 均无返回值。`update()` 会在实例不存在时创建实例，不接收 options，配置通过属性修改；`destroy()` 同时断开监听并清空组件的实例引用，保留源图片。
 
 ### v-viewer 独有方法 {#v-viewer-methods}
 
@@ -115,16 +115,16 @@ component vue2 zh
 
 ### 工具栏插槽 {#toolbar-slots}
 
-通过 Vue 模板、图标组件和事件绑定定制工具栏。插槽属于组件能力，指令和 API 继续使用 Viewer.js 的 toolbar 配置。
+通过 Vue 模板、图标组件和事件绑定定制工具栏。
 
 | 插槽             | 作用                                                  |
 | ---------------- | ----------------------------------------------------- |
 | `toolbar-append` | 在工具栏后追加内容，也可与自定义 `toolbar` 同时使用。 |
 | `toolbar`        | 替换全部内置工具栏按钮，自定义图标、排列和交互。      |
 
-两个插槽均提供 `image`（当前预览图片的 HTMLImageElement，图片显示前为 undefined）、`index`（从 0 开始），以及 `zoom`、`rotate`、`reset`、`next` 等组件上的 Viewer.js 方法。方法始终作用于当前实例；状态和插槽内容响应式更新，无需重建图库。
+两个插槽均提供 `image`（当前预览图片的 HTMLImageElement，图片显示前为 undefined）、`index`（从 0 开始），以及 `zoom`、`rotate`、`reset`、`next` 等组件上的 Viewer.js 方法。插槽参数随预览状态更新。
 
-`toolbar: false` 会隐藏整个工具栏，包括插槽内容。不使用完整替换插槽时，原 toolbar 配置仍决定按钮是否显示。自定义按钮通过插槽提供的方法绑定行为，并自行设置图标、名称和样式。
+`toolbar: false` 会隐藏整个工具栏，包括插槽内容。不使用完整替换插槽时，原 toolbar 配置仍决定按钮是否显示。
 
 示例使用 Vue 2.5+ 的 `slot-scope` 写法；Vue 2.4 请改用 `scope`。
 

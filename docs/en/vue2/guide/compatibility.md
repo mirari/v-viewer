@@ -16,4 +16,4 @@ import 'v-viewer/polyfills'
 
 The component initializes after mounting. Use the component in SSR applications; register directives in a client plugin. Call viewerApi or this.$viewerApi only in browser event handlers.
 
-Browser builds select an entry that imports CSS automatically; Node.js / SSR selects the same runtime without CSS imports. In Nuxt, the client build includes the styles while server imports remain safe.
+Browser builds load styles automatically; server imports do not load CSS. Nuxt supports importing `v-viewer` in both client and server builds.

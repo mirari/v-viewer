@@ -16,4 +16,4 @@ import 'v-viewer/polyfills'
 
 组件在挂载后初始化。SSR 应用可使用组件；指令在客户端插件中注册。viewerApi 或 this.$viewerApi 只在浏览器事件处理函数中调用。
 
-浏览器构建通过条件导出选择自动引入 CSS 的入口；Node.js / SSR 使用不导入 CSS 的同一份运行时实现。Nuxt 由客户端构建加载样式，服务端可以正常导入。
+样式由浏览器构建自动加载，服务端导入不加载 CSS。Nuxt 的客户端和服务端均可直接导入 `v-viewer`。
