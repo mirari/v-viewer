@@ -5887,16 +5887,16 @@ var Gu = Object.fromEntries(Au.map((e) => [e, function(...t) {
 //#region \0virtual:viewer-example/component-zh
 Q.use(Zu);
 var Qu = [
-	"/v-viewer/images/photo-01.jpg",
-	"/v-viewer/images/photo-02.jpg",
-	"/v-viewer/images/photo-03.jpg",
-	"/v-viewer/images/photo-04.jpg",
-	"/v-viewer/images/photo-05.jpg",
-	"/v-viewer/images/photo-06.jpg",
-	"/v-viewer/images/photo-07.jpg",
-	"/v-viewer/images/photo-08.jpg",
-	"/v-viewer/images/photo-09.jpg",
-	"/v-viewer/images/photo-10.jpg"
+	"/images/photo-01.jpg",
+	"/images/photo-02.jpg",
+	"/images/photo-03.jpg",
+	"/images/photo-04.jpg",
+	"/images/photo-05.jpg",
+	"/images/photo-06.jpg",
+	"/images/photo-07.jpg",
+	"/images/photo-08.jpg",
+	"/images/photo-09.jpg",
+	"/images/photo-10.jpg"
 ].map((e) => ({
 	src: e.replace("/images/", "/images/thumbnails/"),
 	"data-source": e
@@ -5927,16 +5927,16 @@ var Qu = [
 //#region \0virtual:viewer-example/component-en
 $u.template = "\n  <main class=\"viewer-example\">\n    <div class=\"controls\">\n      <button :disabled=\"images.length === sourceImages.length\" @click=\"add\">添加图片</button>\n      <button :disabled=\"images.length === 0\" @click=\"remove\">删除图片</button>\n      <button class=\"open\" :disabled=\"images.length === 0\" @click=\"show()\">显示viewer</button>\n      <div class=\"toolbar\" role=\"group\" aria-label=\"切换工具栏\">\n        <span>切换工具栏</span>\n        <button :aria-pressed=\"toolbar ? 'true' : 'false'\" @click=\"toolbar = true\">开启</button>\n        <button :aria-pressed=\"toolbar ? 'false' : 'true'\" @click=\"toolbar = false\">关闭</button>\n      </div>\n    </div>\n    <viewer ref=\"gallery\" :toolbar=\"toolbar\" url=\"data-source\" @viewed=\"onViewed\" class=\"gallery\"><img v-for=\"(image, index) in images\" :key=\"image.src\" :src=\"image.src\" :data-source=\"image['data-source']\" :alt=\"`Landscape ${index + 1}`\" /></viewer>\n  </main>\n", Q.use(Zu);
 var ed = [
-	"/v-viewer/images/photo-01.jpg",
-	"/v-viewer/images/photo-02.jpg",
-	"/v-viewer/images/photo-03.jpg",
-	"/v-viewer/images/photo-04.jpg",
-	"/v-viewer/images/photo-05.jpg",
-	"/v-viewer/images/photo-06.jpg",
-	"/v-viewer/images/photo-07.jpg",
-	"/v-viewer/images/photo-08.jpg",
-	"/v-viewer/images/photo-09.jpg",
-	"/v-viewer/images/photo-10.jpg"
+	"/images/photo-01.jpg",
+	"/images/photo-02.jpg",
+	"/images/photo-03.jpg",
+	"/images/photo-04.jpg",
+	"/images/photo-05.jpg",
+	"/images/photo-06.jpg",
+	"/images/photo-07.jpg",
+	"/images/photo-08.jpg",
+	"/images/photo-09.jpg",
+	"/images/photo-10.jpg"
 ].map((e) => ({
 	src: e.replace("/images/", "/images/thumbnails/"),
 	"data-source": e
@@ -5967,16 +5967,16 @@ var ed = [
 //#region \0virtual:viewer-example/directive-zh
 td.template = "\n  <main class=\"viewer-example\">\n    <div class=\"controls\">\n      <button :disabled=\"images.length === sourceImages.length\" @click=\"add\">Add image</button>\n      <button :disabled=\"images.length === 0\" @click=\"remove\">Remove image</button>\n      <button class=\"open\" :disabled=\"images.length === 0\" @click=\"show()\">Show viewer</button>\n      <div class=\"toolbar\" role=\"group\" aria-label=\"Toggle toolbar\">\n        <span>Toggle toolbar</span>\n        <button :aria-pressed=\"toolbar ? 'true' : 'false'\" @click=\"toolbar = true\">On</button>\n        <button :aria-pressed=\"toolbar ? 'false' : 'true'\" @click=\"toolbar = false\">Off</button>\n      </div>\n    </div>\n    <viewer ref=\"gallery\" :toolbar=\"toolbar\" url=\"data-source\" @viewed=\"onViewed\" class=\"gallery\"><img v-for=\"(image, index) in images\" :key=\"image.src\" :src=\"image.src\" :data-source=\"image['data-source']\" :alt=\"`Landscape ${index + 1}`\" /></viewer>\n  </main>\n", Q.use(Zu);
 var nd = [
-	"/v-viewer/images/photo-01.jpg",
-	"/v-viewer/images/photo-02.jpg",
-	"/v-viewer/images/photo-03.jpg",
-	"/v-viewer/images/photo-04.jpg",
-	"/v-viewer/images/photo-05.jpg",
-	"/v-viewer/images/photo-06.jpg",
-	"/v-viewer/images/photo-07.jpg",
-	"/v-viewer/images/photo-08.jpg",
-	"/v-viewer/images/photo-09.jpg",
-	"/v-viewer/images/photo-10.jpg"
+	"/images/photo-01.jpg",
+	"/images/photo-02.jpg",
+	"/images/photo-03.jpg",
+	"/images/photo-04.jpg",
+	"/images/photo-05.jpg",
+	"/images/photo-06.jpg",
+	"/images/photo-07.jpg",
+	"/images/photo-08.jpg",
+	"/images/photo-09.jpg",
+	"/images/photo-10.jpg"
 ].map((e) => ({
 	src: e.replace("/images/", "/images/thumbnails/"),
 	"data-source": e
@@ -6010,16 +6010,16 @@ var nd = [
 //#region \0virtual:viewer-example/directive-en
 rd.template = "\n  <main class=\"viewer-example\">\n    <div class=\"controls\">\n      <button :disabled=\"images.length === sourceImages.length\" @click=\"add\">添加图片</button>\n      <button :disabled=\"images.length === 0\" @click=\"remove\">删除图片</button>\n      <button class=\"open\" :disabled=\"images.length === 0\" @click=\"show()\">显示viewer</button>\n      <div class=\"toolbar\" role=\"group\" aria-label=\"切换工具栏\">\n        <span>切换工具栏</span>\n        <button :aria-pressed=\"options.toolbar ? 'true' : 'false'\" @click=\"options.toolbar = true\">开启</button>\n        <button :aria-pressed=\"options.toolbar ? 'false' : 'true'\" @click=\"options.toolbar = false\">关闭</button>\n      </div>\n    </div>\n    <div ref=\"gallery\" v-viewer=\"options\" @viewed=\"onViewed\" class=\"gallery\"><img v-for=\"(image, index) in images\" :key=\"image.src\" :src=\"image.src\" :data-source=\"image['data-source']\" :alt=\"`Landscape ${index + 1}`\" /></div>\n  </main>\n", Q.use(Zu);
 var id = [
-	"/v-viewer/images/photo-01.jpg",
-	"/v-viewer/images/photo-02.jpg",
-	"/v-viewer/images/photo-03.jpg",
-	"/v-viewer/images/photo-04.jpg",
-	"/v-viewer/images/photo-05.jpg",
-	"/v-viewer/images/photo-06.jpg",
-	"/v-viewer/images/photo-07.jpg",
-	"/v-viewer/images/photo-08.jpg",
-	"/v-viewer/images/photo-09.jpg",
-	"/v-viewer/images/photo-10.jpg"
+	"/images/photo-01.jpg",
+	"/images/photo-02.jpg",
+	"/images/photo-03.jpg",
+	"/images/photo-04.jpg",
+	"/images/photo-05.jpg",
+	"/images/photo-06.jpg",
+	"/images/photo-07.jpg",
+	"/images/photo-08.jpg",
+	"/images/photo-09.jpg",
+	"/images/photo-10.jpg"
 ].map((e) => ({
 	src: e.replace("/images/", "/images/thumbnails/"),
 	"data-source": e
@@ -6053,16 +6053,16 @@ var id = [
 //#region \0virtual:viewer-example/api-zh
 ad.template = "\n  <main class=\"viewer-example\">\n    <div class=\"controls\">\n      <button :disabled=\"images.length === sourceImages.length\" @click=\"add\">Add image</button>\n      <button :disabled=\"images.length === 0\" @click=\"remove\">Remove image</button>\n      <button class=\"open\" :disabled=\"images.length === 0\" @click=\"show()\">Show viewer</button>\n      <div class=\"toolbar\" role=\"group\" aria-label=\"Toggle toolbar\">\n        <span>Toggle toolbar</span>\n        <button :aria-pressed=\"options.toolbar ? 'true' : 'false'\" @click=\"options.toolbar = true\">On</button>\n        <button :aria-pressed=\"options.toolbar ? 'false' : 'true'\" @click=\"options.toolbar = false\">Off</button>\n      </div>\n    </div>\n    <div ref=\"gallery\" v-viewer=\"options\" @viewed=\"onViewed\" class=\"gallery\"><img v-for=\"(image, index) in images\" :key=\"image.src\" :src=\"image.src\" :data-source=\"image['data-source']\" :alt=\"`Landscape ${index + 1}`\" /></div>\n  </main>\n", Q.use(Zu);
 var od = [
-	"/v-viewer/images/photo-01.jpg",
-	"/v-viewer/images/photo-02.jpg",
-	"/v-viewer/images/photo-03.jpg",
-	"/v-viewer/images/photo-04.jpg",
-	"/v-viewer/images/photo-05.jpg",
-	"/v-viewer/images/photo-06.jpg",
-	"/v-viewer/images/photo-07.jpg",
-	"/v-viewer/images/photo-08.jpg",
-	"/v-viewer/images/photo-09.jpg",
-	"/v-viewer/images/photo-10.jpg"
+	"/images/photo-01.jpg",
+	"/images/photo-02.jpg",
+	"/images/photo-03.jpg",
+	"/images/photo-04.jpg",
+	"/images/photo-05.jpg",
+	"/images/photo-06.jpg",
+	"/images/photo-07.jpg",
+	"/images/photo-08.jpg",
+	"/images/photo-09.jpg",
+	"/images/photo-10.jpg"
 ].map((e) => ({
 	src: e.replace("/images/", "/images/thumbnails/"),
 	"data-source": e
@@ -6100,16 +6100,16 @@ var od = [
 //#region \0virtual:viewer-example/api-en
 sd.template = "\n  <main class=\"viewer-example\">\n    <div class=\"controls\">\n      <button :disabled=\"images.length === sourceImages.length\" @click=\"add\">添加图片</button>\n      <button :disabled=\"images.length === 0\" @click=\"remove\">删除图片</button>\n      <button class=\"open\" :disabled=\"images.length === 0\" @click=\"show()\">显示viewer</button>\n      <div class=\"toolbar\" role=\"group\" aria-label=\"切换工具栏\">\n        <span>切换工具栏</span>\n        <button :aria-pressed=\"options.toolbar ? 'true' : 'false'\" @click=\"options.toolbar = true\">开启</button>\n        <button :aria-pressed=\"options.toolbar ? 'false' : 'true'\" @click=\"options.toolbar = false\">关闭</button>\n      </div>\n    </div>\n    <p>图片数量：{{ images.length }}</p>\n  </main>\n", Q.use(Zu);
 var cd = [
-	"/v-viewer/images/photo-01.jpg",
-	"/v-viewer/images/photo-02.jpg",
-	"/v-viewer/images/photo-03.jpg",
-	"/v-viewer/images/photo-04.jpg",
-	"/v-viewer/images/photo-05.jpg",
-	"/v-viewer/images/photo-06.jpg",
-	"/v-viewer/images/photo-07.jpg",
-	"/v-viewer/images/photo-08.jpg",
-	"/v-viewer/images/photo-09.jpg",
-	"/v-viewer/images/photo-10.jpg"
+	"/images/photo-01.jpg",
+	"/images/photo-02.jpg",
+	"/images/photo-03.jpg",
+	"/images/photo-04.jpg",
+	"/images/photo-05.jpg",
+	"/images/photo-06.jpg",
+	"/images/photo-07.jpg",
+	"/images/photo-08.jpg",
+	"/images/photo-09.jpg",
+	"/images/photo-10.jpg"
 ].map((e) => ({
 	src: e.replace("/images/", "/images/thumbnails/"),
 	"data-source": e
@@ -6150,11 +6150,11 @@ var ud = {
 	components: { Viewer: Ku },
 	data: () => ({
 		images: [
-			"/v-viewer/images/photo-01.jpg",
-			"/v-viewer/images/photo-02.jpg",
-			"/v-viewer/images/photo-03.jpg",
-			"/v-viewer/images/photo-04.jpg",
-			"/v-viewer/images/photo-05.jpg"
+			"/images/photo-01.jpg",
+			"/images/photo-02.jpg",
+			"/images/photo-03.jpg",
+			"/images/photo-04.jpg",
+			"/images/photo-05.jpg"
 		],
 		inline: !0,
 		custom: !1
@@ -6167,11 +6167,11 @@ var dd = {
 	components: { Viewer: Ku },
 	data: () => ({
 		images: [
-			"/v-viewer/images/photo-01.jpg",
-			"/v-viewer/images/photo-02.jpg",
-			"/v-viewer/images/photo-03.jpg",
-			"/v-viewer/images/photo-04.jpg",
-			"/v-viewer/images/photo-05.jpg"
+			"/images/photo-01.jpg",
+			"/images/photo-02.jpg",
+			"/images/photo-03.jpg",
+			"/images/photo-04.jpg",
+			"/images/photo-05.jpg"
 		],
 		inline: !0,
 		custom: !1

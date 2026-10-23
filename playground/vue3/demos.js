@@ -9285,16 +9285,16 @@ var Yh = { class: "viewer-example" }, Xh = { class: "controls" }, Zh = ["disable
 	__name: "App",
 	setup(e) {
 		let t = [
-			"/v-viewer/images/photo-01.jpg",
-			"/v-viewer/images/photo-02.jpg",
-			"/v-viewer/images/photo-03.jpg",
-			"/v-viewer/images/photo-04.jpg",
-			"/v-viewer/images/photo-05.jpg",
-			"/v-viewer/images/photo-06.jpg",
-			"/v-viewer/images/photo-07.jpg",
-			"/v-viewer/images/photo-08.jpg",
-			"/v-viewer/images/photo-09.jpg",
-			"/v-viewer/images/photo-10.jpg"
+			"/images/photo-01.jpg",
+			"/images/photo-02.jpg",
+			"/images/photo-03.jpg",
+			"/images/photo-04.jpg",
+			"/images/photo-05.jpg",
+			"/images/photo-06.jpg",
+			"/images/photo-07.jpg",
+			"/images/photo-08.jpg",
+			"/images/photo-09.jpg",
+			"/images/photo-10.jpg"
 		].map((e) => ({
 			src: e.replace("/images/", "/images/thumbnails/"),
 			"data-source": e
@@ -9366,16 +9366,16 @@ var Yh = { class: "viewer-example" }, Xh = { class: "controls" }, Zh = ["disable
 	__name: "App",
 	setup(e) {
 		let t = [
-			"/v-viewer/images/photo-01.jpg",
-			"/v-viewer/images/photo-02.jpg",
-			"/v-viewer/images/photo-03.jpg",
-			"/v-viewer/images/photo-04.jpg",
-			"/v-viewer/images/photo-05.jpg",
-			"/v-viewer/images/photo-06.jpg",
-			"/v-viewer/images/photo-07.jpg",
-			"/v-viewer/images/photo-08.jpg",
-			"/v-viewer/images/photo-09.jpg",
-			"/v-viewer/images/photo-10.jpg"
+			"/images/photo-01.jpg",
+			"/images/photo-02.jpg",
+			"/images/photo-03.jpg",
+			"/images/photo-04.jpg",
+			"/images/photo-05.jpg",
+			"/images/photo-06.jpg",
+			"/images/photo-07.jpg",
+			"/images/photo-08.jpg",
+			"/images/photo-09.jpg",
+			"/images/photo-10.jpg"
 		].map((e) => ({
 			src: e.replace("/images/", "/images/thumbnails/"),
 			"data-source": e
@@ -9447,16 +9447,16 @@ var Yh = { class: "viewer-example" }, Xh = { class: "controls" }, Zh = ["disable
 	__name: "App",
 	setup(e) {
 		let t = [
-			"/v-viewer/images/photo-01.jpg",
-			"/v-viewer/images/photo-02.jpg",
-			"/v-viewer/images/photo-03.jpg",
-			"/v-viewer/images/photo-04.jpg",
-			"/v-viewer/images/photo-05.jpg",
-			"/v-viewer/images/photo-06.jpg",
-			"/v-viewer/images/photo-07.jpg",
-			"/v-viewer/images/photo-08.jpg",
-			"/v-viewer/images/photo-09.jpg",
-			"/v-viewer/images/photo-10.jpg"
+			"/images/photo-01.jpg",
+			"/images/photo-02.jpg",
+			"/images/photo-03.jpg",
+			"/images/photo-04.jpg",
+			"/images/photo-05.jpg",
+			"/images/photo-06.jpg",
+			"/images/photo-07.jpg",
+			"/images/photo-08.jpg",
+			"/images/photo-09.jpg",
+			"/images/photo-10.jpg"
 		].map((e) => ({
 			src: e.replace("/images/", "/images/thumbnails/"),
 			"data-source": e
@@ -9526,16 +9526,16 @@ var Yh = { class: "viewer-example" }, Xh = { class: "controls" }, Zh = ["disable
 	__name: "App",
 	setup(e) {
 		let t = [
-			"/v-viewer/images/photo-01.jpg",
-			"/v-viewer/images/photo-02.jpg",
-			"/v-viewer/images/photo-03.jpg",
-			"/v-viewer/images/photo-04.jpg",
-			"/v-viewer/images/photo-05.jpg",
-			"/v-viewer/images/photo-06.jpg",
-			"/v-viewer/images/photo-07.jpg",
-			"/v-viewer/images/photo-08.jpg",
-			"/v-viewer/images/photo-09.jpg",
-			"/v-viewer/images/photo-10.jpg"
+			"/images/photo-01.jpg",
+			"/images/photo-02.jpg",
+			"/images/photo-03.jpg",
+			"/images/photo-04.jpg",
+			"/images/photo-05.jpg",
+			"/images/photo-06.jpg",
+			"/images/photo-07.jpg",
+			"/images/photo-08.jpg",
+			"/images/photo-09.jpg",
+			"/images/photo-10.jpg"
 		].map((e) => ({
 			src: e.replace("/images/", "/images/thumbnails/"),
 			"data-source": e
@@ -9601,16 +9601,16 @@ var Yh = { class: "viewer-example" }, Xh = { class: "controls" }, Zh = ["disable
 	__name: "App",
 	setup(e) {
 		let t = [
-			"/v-viewer/images/photo-01.jpg",
-			"/v-viewer/images/photo-02.jpg",
-			"/v-viewer/images/photo-03.jpg",
-			"/v-viewer/images/photo-04.jpg",
-			"/v-viewer/images/photo-05.jpg",
-			"/v-viewer/images/photo-06.jpg",
-			"/v-viewer/images/photo-07.jpg",
-			"/v-viewer/images/photo-08.jpg",
-			"/v-viewer/images/photo-09.jpg",
-			"/v-viewer/images/photo-10.jpg"
+			"/images/photo-01.jpg",
+			"/images/photo-02.jpg",
+			"/images/photo-03.jpg",
+			"/images/photo-04.jpg",
+			"/images/photo-05.jpg",
+			"/images/photo-06.jpg",
+			"/images/photo-07.jpg",
+			"/images/photo-08.jpg",
+			"/images/photo-09.jpg",
+			"/images/photo-10.jpg"
 		].map((e) => ({
 			src: e.replace("/images/", "/images/thumbnails/"),
 			"data-source": e
@@ -9667,16 +9667,16 @@ var Yh = { class: "viewer-example" }, Xh = { class: "controls" }, Zh = ["disable
 	__name: "App",
 	setup(e) {
 		let t = [
-			"/v-viewer/images/photo-01.jpg",
-			"/v-viewer/images/photo-02.jpg",
-			"/v-viewer/images/photo-03.jpg",
-			"/v-viewer/images/photo-04.jpg",
-			"/v-viewer/images/photo-05.jpg",
-			"/v-viewer/images/photo-06.jpg",
-			"/v-viewer/images/photo-07.jpg",
-			"/v-viewer/images/photo-08.jpg",
-			"/v-viewer/images/photo-09.jpg",
-			"/v-viewer/images/photo-10.jpg"
+			"/images/photo-01.jpg",
+			"/images/photo-02.jpg",
+			"/images/photo-03.jpg",
+			"/images/photo-04.jpg",
+			"/images/photo-05.jpg",
+			"/images/photo-06.jpg",
+			"/images/photo-07.jpg",
+			"/images/photo-08.jpg",
+			"/images/photo-09.jpg",
+			"/images/photo-10.jpg"
 		].map((e) => ({
 			src: e.replace("/images/", "/images/thumbnails/"),
 			"data-source": e
@@ -9734,11 +9734,11 @@ var Yh = { class: "viewer-example" }, Xh = { class: "controls" }, Zh = ["disable
 	__name: "App",
 	setup(e) {
 		let t = [
-			"/v-viewer/images/photo-01.jpg",
-			"/v-viewer/images/photo-02.jpg",
-			"/v-viewer/images/photo-03.jpg",
-			"/v-viewer/images/photo-04.jpg",
-			"/v-viewer/images/photo-05.jpg"
+			"/images/photo-01.jpg",
+			"/images/photo-02.jpg",
+			"/images/photo-03.jpg",
+			"/images/photo-04.jpg",
+			"/images/photo-05.jpg"
 		], n = /* @__PURE__ */ H(!0), r = /* @__PURE__ */ H(!1);
 		return (e, i) => (G(), K("main", $g, [q("div", e_, [q("label", null, [Or(q("input", {
 			"onUpdate:modelValue": i[0] ||= (e) => n.value = e,
@@ -9858,11 +9858,11 @@ var Yh = { class: "viewer-example" }, Xh = { class: "controls" }, Zh = ["disable
 		__name: "App",
 		setup(e) {
 			let t = [
-				"/v-viewer/images/photo-01.jpg",
-				"/v-viewer/images/photo-02.jpg",
-				"/v-viewer/images/photo-03.jpg",
-				"/v-viewer/images/photo-04.jpg",
-				"/v-viewer/images/photo-05.jpg"
+				"/images/photo-01.jpg",
+				"/images/photo-02.jpg",
+				"/images/photo-03.jpg",
+				"/images/photo-04.jpg",
+				"/images/photo-05.jpg"
 			], n = /* @__PURE__ */ H(!0), r = /* @__PURE__ */ H(!1);
 			return (e, i) => (G(), K("main", c_, [q("div", l_, [q("label", null, [Or(q("input", {
 				"onUpdate:modelValue": i[0] ||= (e) => n.value = e,
