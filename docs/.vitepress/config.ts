@@ -88,6 +88,10 @@ function navigation(english: boolean, vue2 = false) {
       {
         text: english ? 'Reference' : '参考',
         items: [
+          {
+            text: english ? 'Automatic updates' : '自动更新',
+            link: english ? '/en/guide/observe' : '/guide/observe',
+          },
           { text: english ? 'FAQ' : '常见问题', link: link('/guide/faq') },
           {
             text: english ? 'Feedback' : '问题反馈',
