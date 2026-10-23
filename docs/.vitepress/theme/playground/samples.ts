@@ -11,7 +11,11 @@ export function sample(
   // Use absolute URLs inside the opaque-origin preview frame.
   const base = typeof location === 'undefined' ? '' : location.origin
   const images = sampleImages.map((path) => base + withBase(path))
-  const sourceImages = `const sourceImages = ${JSON.stringify(images, null, 2)}`
+  const sourceImages = `const sourceImages = ${JSON.stringify(images, null, 2)}${kind === 'api' ? ".map(src => ({ src, 'data-source': src }))" : ''}`
+  const viewerOptions =
+    kind === 'api'
+      ? "{ toolbar: true, url: 'data-source', initialViewIndex: 0 }"
+      : '{ toolbar: true }'
   const add = english ? 'Add image' : '添加图片'
   const remove = english ? 'Remove image' : '删除图片'
   const showLabel = english ? 'Show viewer' : '显示viewer'
@@ -34,7 +38,7 @@ Vue.use(VueViewer)
 ${sourceImages}
 export default {
   data() {
-    return { sourceImages, images: sourceImages.slice(0, ${defaultImageCount}), ${kind === 'component' ? 'toolbar: true' : 'options: { toolbar: true }'} }
+    return { sourceImages, images: sourceImages.slice(0, ${defaultImageCount}), ${kind === 'component' ? 'toolbar: true' : `options: ${viewerOptions}`} }
   },
   ${kind === 'api' ? 'beforeDestroy() { this.viewerInstance?.destroy() },' : ''}
   methods: {
@@ -66,7 +70,7 @@ function show() { gallery.value.${kind === 'component' ? '' : '$viewer.'}show() 
 import { ${imports} } from 'v-viewer'
 ${sourceImages}
 const images = ref(sourceImages.slice(0, ${defaultImageCount}))
-${kind === 'component' ? 'const toolbar = ref(true)\nfunction onViewed(event) { console.log(event.detail.index) }' : 'const options = ref({ toolbar: true })'}
+${kind === 'component' ? 'const toolbar = ref(true)\nfunction onViewed(event) { console.log(event.detail.index) }' : `const options = ref(${viewerOptions})`}
 ${show}
 function add() { images.value.push(sourceImages[images.value.length]) }
 function remove() { images.value.pop() }`

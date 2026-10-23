@@ -12,6 +12,8 @@ Suitable for scenarios such as opening a specified image array after a button cl
 api vue3 en
 ```
 
+`url: 'data-source'` uses the image’s `data-source` attribute as the preview URL; `initialViewIndex` sets the starting image index (from 0).
+
 ## Parameters and return values {#reference}
 
 `useViewer({ images?, options? })`
@@ -31,27 +33,6 @@ api vue3 en
 
 Call useViewer inside setup. It cleans up on scope disposal.
 
-## Temporary galleries
-
-`show()` creates a modal gallery from the current `images` and `options`. Closing or destroying it removes the temporary DOM. It is also cleaned up when its owning component unmounts.
-
-Changes to images or options do not affect an open preview; they apply the next time it opens. Calling `show(index)` again switches images within the current gallery.
-
-```vue
-<script setup>
-import { useViewer } from 'v-viewer'
-
-const { show } = useViewer({
-  images: [
-    { src: '/thumb.jpg', 'data-source': '/large.jpg', alt: 'Landscape' },
-  ],
-  options: { url: 'data-source', initialViewIndex: 0 },
-})
-</script>
-
-<template>
-  <button @click="show()">Show viewer</button>
-</template>
-```
+Closing or destroying the preview removes its temporary DOM. Changes to images or options during a preview apply the next time it opens. Calling `show(index)` again switches images within the current gallery.
 
 Use `viewer.value` to call all Viewer.js methods. [Viewer.js methods](https://github.com/fengyuanchen/viewerjs#methods)

@@ -12,6 +12,8 @@
 api vue3 zh
 ```
 
+`url: 'data-source'` 使用图片的 `data-source` 属性作为预览地址；`initialViewIndex` 指定首次显示的图片下标（从 0 开始）。
+
 ## 参数和返回值 {#reference}
 
 `useViewer({ images?, options? })`
@@ -31,27 +33,6 @@ api vue3 zh
 
 在 setup 中调用 useViewer，作用域结束时自动清理。
 
-## 临时图库
-
-`show()` 根据当前 `images` 和 `options` 创建弹窗图库。关闭或销毁后会自动删除临时 DOM，离开所属组件时也会自动清理。
-
-打开期间修改图片数组或配置不会影响当前预览，下次打开时生效。重复调用 `show(index)` 会在当前图库内切换图片。
-
-```vue
-<script setup>
-import { useViewer } from 'v-viewer'
-
-const { show } = useViewer({
-  images: [
-    { src: '/thumb.jpg', 'data-source': '/large.jpg', alt: 'Landscape' },
-  ],
-  options: { url: 'data-source', initialViewIndex: 0 },
-})
-</script>
-
-<template>
-  <button @click="show()">显示viewer</button>
-</template>
-```
+关闭或销毁预览后会删除临时 DOM。打开期间修改图片数组或配置，下次打开时生效；重复调用 `show(index)` 会在当前图库内切换图片。
 
 通过 `viewer.value` 调用 Viewer.js 的全部方法。 [Viewer.js methods](https://github.com/fengyuanchen/viewerjs#methods)
