@@ -2,6 +2,9 @@ packages:
   - packages/vue2
   - packages/vue3
 
+overrides:
+  vitepress>vite: 6.4.4
+
 allowBuilds:
   core-js: false
   esbuild: true

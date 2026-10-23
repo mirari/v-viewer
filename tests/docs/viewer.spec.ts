@@ -377,7 +377,7 @@ for (const vue2 of [false, true]) {
       await open(true)
       await page
         .locator('.vp-doc')
-        .getByRole('link', { name: '演练场', exact: true })
+        .getByRole('link', { name: '编辑此示例', exact: true })
         .evaluate((link) => (link as HTMLAnchorElement).click())
       await expect(page.locator('.viewer-demo')).toHaveCount(0)
       await expect(page.getByRole('dialog')).toBeHidden()
