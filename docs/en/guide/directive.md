@@ -4,7 +4,7 @@ Suitable for simple image browsing without complex customization, while also sup
 
 ## Playground {#playground}
 
-[Playground](/en/playground?example=directive)
+[Edit this example](/en/playground?example=directive)
 
 <ClientOnly><ViewerDemo mode="directive" /></ClientOnly>
 

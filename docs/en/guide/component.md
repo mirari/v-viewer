@@ -8,7 +8,7 @@ The Vue 3 (5.x) line is a rewrite with breaking changes. You can now use Viewer.
 
 ## Playground {#playground}
 
-[Playground](/en/playground?example=component)
+[Edit this example](/en/playground?example=component)
 
 <ClientOnly><ViewerDemo mode="component" /></ClientOnly>
 

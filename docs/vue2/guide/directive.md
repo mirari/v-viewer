@@ -4,7 +4,7 @@
 
 ## 演练场 {#playground}
 
-[演练场](/vue2/playground?example=directive)
+[编辑此示例](/vue2/playground?example=directive)
 
 <ClientOnly><ViewerDemo vue2 mode="directive" /></ClientOnly>
 

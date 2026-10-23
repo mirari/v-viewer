@@ -8,7 +8,7 @@ Vue 2 的 4.x 是包含破坏性变更的主版本重构。现在可以在组件
 
 ## 演练场 {#playground}
 
-[演练场](/vue2/playground?example=component)
+[编辑此示例](/vue2/playground?example=component)
 
 <ClientOnly><ViewerDemo vue2 mode="component" /></ClientOnly>
 

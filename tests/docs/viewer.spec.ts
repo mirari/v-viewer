@@ -453,7 +453,7 @@ for (const vue2 of [false, true]) {
         await page
           .locator('.vp-doc')
           .getByRole('link', {
-            name: english ? 'Playground' : '演练场',
+            name: english ? 'Edit this example' : '编辑此示例',
             exact: true,
           })
           .click()

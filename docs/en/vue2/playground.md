@@ -5,6 +5,6 @@ aside: false
 
 # Playground
 
-Edit `App.vue` and run the preview. JavaScript and CSS are supported; logs and runtime errors appear below the preview.
+Choose a component, directive or API example, edit the code, then click **Run** to preview your changes.
 
 <ClientOnly><ViewerPlayground vue2 /></ClientOnly>

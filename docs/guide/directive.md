@@ -4,7 +4,7 @@
 
 ## 演练场 {#playground}
 
-[演练场](/playground?example=directive)
+[编辑此示例](/playground?example=directive)
 
 <ClientOnly><ViewerDemo mode="directive" /></ClientOnly>
 

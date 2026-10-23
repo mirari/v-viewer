@@ -4,7 +4,7 @@ Suitable for scenarios such as opening a specified image array after a button cl
 
 ## Playground {#playground}
 
-[Playground](/en/playground?example=api)
+[Edit this example](/en/playground?example=api)
 
 <ClientOnly><ViewerDemo mode="api" /></ClientOnly>
 

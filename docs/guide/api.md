@@ -4,7 +4,7 @@
 
 ## 演练场 {#playground}
 
-[演练场](/playground?example=api)
+[编辑此示例](/playground?example=api)
 
 <ClientOnly><ViewerDemo mode="api" /></ClientOnly>
 

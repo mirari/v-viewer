@@ -4,7 +4,7 @@ Suitable for simple image browsing without complex customization, while also sup
 
 ## Playground {#playground}
 
-[Playground](/en/vue2/playground?example=directive)
+[Edit this example](/en/vue2/playground?example=directive)
 
 <ClientOnly><ViewerDemo vue2 mode="directive" /></ClientOnly>
 

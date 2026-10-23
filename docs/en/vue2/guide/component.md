@@ -8,7 +8,7 @@ The Vue 2 (4.x) line is a rewrite with breaking changes. You can now use Viewer.
 
 ## Playground {#playground}
 
-[Playground](/en/vue2/playground?example=component)
+[Edit this example](/en/vue2/playground?example=component)
 
 <ClientOnly><ViewerDemo vue2 mode="component" /></ClientOnly>
 

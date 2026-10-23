@@ -4,7 +4,7 @@ Suitable for scenarios such as opening a specified image array after a button cl
 
 ## Playground {#playground}
 
-[Playground](/en/vue2/playground?example=api)
+[Edit this example](/en/vue2/playground?example=api)
 
 <ClientOnly><ViewerDemo vue2 mode="api" /></ClientOnly>
 
