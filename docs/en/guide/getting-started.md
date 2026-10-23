@@ -104,7 +104,7 @@ const { Viewer, vViewer, useViewer } = require('v-viewer')
 ```html
 <link rel="stylesheet" href="https://unpkg.com/viewerjs/dist/viewer.css" />
 <script src="https://unpkg.com/vue"></script>
-<script src="https://unpkg.com/viewerjs"></script>
+<script src="https://unpkg.com/viewerjs/dist/viewer.min.js"></script>
 <script src="https://unpkg.com/v-viewer"></script>
 <div id="app">
   <div v-viewer><img src="photo.jpg" /></div>
