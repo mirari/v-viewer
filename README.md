@@ -55,9 +55,9 @@ Use `<viewer>`, `v-viewer` or `this.$viewerApi({ images })`. You can also import
 
 ## Documentation
 
-- [Documentation and demos](https://mirari.github.io/v-viewer/)
-- [Vue 3 quick start](https://mirari.github.io/v-viewer/en/guide/getting-started)
-- [Vue 2 quick start](https://mirari.github.io/v-viewer/en/vue2/)
+- [Documentation and demos](https://v-viewer.mirari.cc/)
+- [Vue 3 quick start](https://v-viewer.mirari.cc/en/guide/getting-started)
+- [Vue 2 quick start](https://v-viewer.mirari.cc/en/vue2/)
 - [Development and releases](https://github.com/mirari/v-viewer/blob/master/CONTRIBUTING.md)
 - [Vue 2 changelog](https://github.com/mirari/v-viewer/blob/master/packages/vue2/CHANGELOG.md) · [Vue 3 changelog](https://github.com/mirari/v-viewer/blob/master/packages/vue3/CHANGELOG.md)
 
