@@ -1,6 +1,6 @@
 # Development
 
-Use Node 24 and pnpm 11.25.0. Work directly in the repository; the temporary v4 branch holds the rewrite. After release, development and releases use master.
+Use Node 24 and pnpm 11.25.0. Work directly in the repository. Development and releases use master.
 
 Read [AGENTS.md](./AGENTS.md) for collaboration rules and the [Issue fixing workflow](./.github/ISSUE_FIXING.md) when investigating a reported problem.
 
