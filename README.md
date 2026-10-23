@@ -7,7 +7,7 @@ Image viewer components, directives and composables for Vue, powered by [Viewer.
 | 3.0+ | 5.x              | latest  |
 | 2.4+ | 4.x              | legacy  |
 
-The rewrite is under development on v4. The new version lines have not been published yet.
+Both version lines are published from this repository. Development and releases use master.
 
 > [!WARNING]
 > The Vue 2 (4.x) and Vue 3 (5.x) lines are a major rewrite with breaking changes. You can now use Viewer.js props, events and methods directly on the component. The old `options` prop is retained for gradual migration, but is deprecated. See the migration examples in the [Vue 3 component guide](docs/guide/component.md#migration) or [Vue 2 component guide](docs/vue2/guide/component.md#migration).
@@ -55,8 +55,9 @@ Use `<viewer>`, `v-viewer` or `this.$viewerApi({ images })`. You can also import
 
 ## Documentation
 
-- [Vue 3 quick start](https://github.com/mirari/v-viewer/blob/master/docs/guide/getting-started.md)
-- [Vue 2 quick start](https://github.com/mirari/v-viewer/blob/master/docs/vue2/index.md)
+- [Documentation and demos](https://mirari.github.io/v-viewer/)
+- [Vue 3 quick start](https://mirari.github.io/v-viewer/en/guide/getting-started)
+- [Vue 2 quick start](https://mirari.github.io/v-viewer/en/vue2/)
 - [Development and releases](https://github.com/mirari/v-viewer/blob/master/CONTRIBUTING.md)
 - [Vue 2 changelog](https://github.com/mirari/v-viewer/blob/master/packages/vue2/CHANGELOG.md) · [Vue 3 changelog](https://github.com/mirari/v-viewer/blob/master/packages/vue3/CHANGELOG.md)
 
