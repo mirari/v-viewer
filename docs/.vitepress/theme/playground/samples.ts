@@ -11,11 +11,11 @@ export function sample(
   // Use absolute URLs inside the opaque-origin preview frame.
   const base = typeof location === 'undefined' ? '' : location.origin
   const images = sampleImages.map((path) => base + withBase(path))
-  const sourceImages = `const sourceImages = ${JSON.stringify(images, null, 2)}${kind === 'api' ? ".map(original => ({ src: original.replace('/images/', '/images/thumbnails/'), 'data-source': original }))" : ''}`
+  const sourceImages = `const sourceImages = ${JSON.stringify(images, null, 2)}.map(original => ({ src: original.replace('/images/', '/images/thumbnails/'), 'data-source': original }))`
   const viewerOptions =
     kind === 'api'
       ? "{ toolbar: true, url: 'data-source', initialViewIndex: 0 }"
-      : '{ toolbar: true }'
+      : "{ toolbar: true, url: 'data-source' }"
   const add = english ? 'Add image' : '添加图片'
   const remove = english ? 'Remove image' : '删除图片'
   const showLabel = english ? 'Show viewer' : '显示viewer'
@@ -24,7 +24,7 @@ export function sample(
   let script: string
   let gallery: string
   const imageTemplate =
-    '<img v-for="(src, index) in images" :key="src" :src="src" :alt="`Landscape ${index + 1}`" />'
+    '<img v-for="(image, index) in images" :key="image.src" :src="image.src" :data-source="image[\'data-source\']" :alt="`Landscape ${index + 1}`" />'
   if (vue2) {
     const show =
       kind === 'api'
@@ -50,7 +50,7 @@ export default {
 }`
     gallery =
       kind === 'component'
-        ? `<viewer ref="gallery" :toolbar="toolbar" @viewed="onViewed" class="gallery">${imageTemplate}</viewer>`
+        ? `<viewer ref="gallery" :toolbar="toolbar" url="data-source" @viewed="onViewed" class="gallery">${imageTemplate}</viewer>`
         : kind === 'directive'
           ? `<div ref="gallery" v-viewer="options" class="gallery">${imageTemplate}</div>`
           : ''
@@ -76,7 +76,7 @@ function add() { images.value.push(sourceImages[images.value.length]) }
 function remove() { images.value.pop() }`
     gallery =
       kind === 'component'
-        ? `<Viewer ref="gallery" :toolbar="toolbar" @viewed="onViewed" class="gallery">${imageTemplate}</Viewer>`
+        ? `<Viewer ref="gallery" :toolbar="toolbar" url="data-source" @viewed="onViewed" class="gallery">${imageTemplate}</Viewer>`
         : kind === 'directive'
           ? `<div ref="gallery" v-viewer="options" class="gallery">${imageTemplate}</div>`
           : `<p>{{ isShown ? '${english ? 'Gallery open' : '正在预览'}' : '${english ? 'Ready to explore' : '等待预览'}' }}</p>`
