@@ -15,7 +15,7 @@ for (const vue2 of [false, true]) {
     const toolbar = inline.locator('.viewer-toolbar')
     await expect(
       toolbar.getByRole('link', { name: '下载图片 1' }),
-    ).toHaveAttribute('href', /valley/)
+    ).toHaveAttribute('href', /photo-01/)
     const download = toolbar.getByRole('link', { name: '下载图片 1' })
     await expect(download.locator('svg')).toBeVisible()
     await expect(download).toHaveText('')
@@ -44,7 +44,7 @@ for (const vue2 of [false, true]) {
     await toolbar.locator('.viewer-next').click()
     await expect(
       toolbar.getByRole('link', { name: '下载图片 2' }),
-    ).toHaveAttribute('href', /river/)
+    ).toHaveAttribute('href', /photo-02/)
     await demo.getByRole('checkbox', { name: '替换整个工具栏' }).check()
     await expect(inline).toHaveAttribute('id', id!)
     await expect(toolbar.locator('ul')).toBeHidden()
@@ -87,7 +87,7 @@ for (const vue2 of [false, true]) {
     await expect(modal).toBeVisible()
     await expect(
       modal.getByRole('link', { name: '下载图片 1' }),
-    ).toHaveAttribute('href', /valley/)
+    ).toHaveAttribute('href', /photo-01/)
     await expect(modal.locator('.viewer-zoom-in')).toBeVisible()
     await modal.screenshot({
       path: test.info().outputPath('toolbar-modal.png'),
@@ -97,7 +97,7 @@ for (const vue2 of [false, true]) {
     await demo.locator('.gallery img').nth(1).click()
     await expect(
       modal.getByRole('link', { name: '下载图片 2' }),
-    ).toHaveAttribute('href', /river/)
+    ).toHaveAttribute('href', /photo-02/)
     await modal.locator('.viewer-close').click()
     await demo.getByRole('checkbox', { name: '内嵌模式' }).check()
     await expect(modal).toHaveCount(0)

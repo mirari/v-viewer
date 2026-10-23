@@ -11,15 +11,15 @@ for (const english of [false, true]) {
     const viewer = example.locator('.viewer-container')
     const image = viewer.locator('.viewer-canvas img')
     await expect(image).toBeVisible()
-    await expect(image).toHaveAttribute('src', /valley/)
+    await expect(image).toHaveAttribute('src', /photo-01/)
     await expect(example.locator('pre, code, h2')).toHaveCount(0)
     await expect(page.locator('body > .viewer-container')).toHaveCount(0)
     await expect(viewer.locator('.viewer-list > li')).toHaveCount(5)
     await expect(page.locator('.VPHomeHero h1')).toBeInViewport()
     await viewer.getByRole('button', { name: 'Next', exact: true }).click()
-    await expect(image).toHaveAttribute('src', /river/)
+    await expect(image).toHaveAttribute('src', /photo-02/)
     await viewer.getByRole('button', { name: 'Previous', exact: true }).click()
-    await expect(image).toHaveAttribute('src', /valley/)
+    await expect(image).toHaveAttribute('src', /photo-01/)
     await page.setViewportSize({ width: 390, height: 844 })
     await expect(image).toBeVisible()
     await expect
@@ -63,7 +63,7 @@ for (const vue2 of [false, true]) {
     await expect(
       panel.getByRole('button', { name: '添加图片', exact: true }),
     ).toBeEnabled()
-    await expect(image).toHaveAttribute('src', /valley/)
+    await expect(image).toHaveAttribute('src', /photo-01/)
     const add = panel.getByRole('button', { name: '添加图片', exact: true })
     const remove = panel.getByRole('button', { name: '删除图片', exact: true })
     const reset = panel.getByRole('button', { name: '重置示例', exact: true })
@@ -80,7 +80,7 @@ for (const vue2 of [false, true]) {
     await reset.click()
     await expect(sourceImages).toHaveCount(5)
     await expect(panel.locator('.viewer-list > li')).toHaveCount(5)
-    await expect(image).toHaveAttribute('src', /valley/)
+    await expect(image).toHaveAttribute('src', /photo-01/)
     const navbar = await page.locator('.viewer-navbar').boundingBox()
     const toolbarBottom = await page
       .locator('.viewer-toolbar [role="button"]')
@@ -91,9 +91,9 @@ for (const vue2 of [false, true]) {
       )
     expect(toolbarBottom).toBeLessThanOrEqual(navbar!.y)
     await page.getByRole('button', { name: 'Next', exact: true }).click()
-    await expect(image).toHaveAttribute('src', /river/)
+    await expect(image).toHaveAttribute('src', /photo-02/)
     await page.getByRole('button', { name: 'Previous', exact: true }).click()
-    await expect(image).toHaveAttribute('src', /valley/)
+    await expect(image).toHaveAttribute('src', /photo-01/)
 
     await search.fill('toolbar')
     await panel
@@ -117,12 +117,12 @@ for (const vue2 of [false, true]) {
     await panel
       .getByRole('spinbutton', { name: 'initialViewIndex', exact: true })
       .press('Tab')
-    await expect(image).toHaveAttribute('src', /river/)
+    await expect(image).toHaveAttribute('src', /photo-02/)
     await search.fill('url')
     await panel
       .getByRole('combobox', { name: 'url', exact: true })
       .selectOption({ label: 'data-source（不同图片）' })
-    await expect(image).toHaveAttribute('src', /ridge/)
+    await expect(image).toHaveAttribute('src', /photo-03/)
     await panel.getByRole('button', { name: '重置示例' }).click()
     await search.fill('inline')
     await panel.getByRole('radio', { name: 'modal', exact: true }).check()
@@ -290,7 +290,7 @@ for (const vue2 of [false, true]) {
         .click()
       // URL-only API images use their filenames as the default title.
       await expect(frame.getByRole('dialog')).toHaveAccessibleName(
-        mode === 'api' ? /river/ : /Landscape 2/,
+        mode === 'api' ? /photo-02/ : /Landscape 2/,
       )
       await close()
       const add = frame.getByRole('button', { name: '添加图片', exact: true })

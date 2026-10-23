@@ -1,6 +1,13 @@
 # Demo photographs
 
-Downloaded from Lorem Picsum at 960 × 640: IDs 1018 (valley), 1015 (river), 1016 (ridge), and 10–16 (`photo-10` through `photo-16`).
+Downloaded from Lorem Picsum at 960 × 640. Files are numbered in display order: `photo-01.jpg` through `photo-10.jpg`.
+
+| Local file                    | Picsum ID           |
+| ----------------------------- | ------------------- |
+| `photo-01.jpg`                | 1018                |
+| `photo-02.jpg`                | 1015                |
+| `photo-03.jpg`                | 1016                |
+| `photo-04.jpg`–`photo-10.jpg` | 10–16, respectively |
 
 Examples initially show five images. The component, directive and API examples can add images from the ten-image pool.
 
