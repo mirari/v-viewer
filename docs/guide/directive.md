@@ -50,7 +50,7 @@ element?.$viewer?.show()
 
 ## 事件 {#events}
 
-Viewer.js 会在指令绑定的原生 HTML 元素上派发 DOM 事件，Vue 3 可以通过 `@viewed` 监听，无需指令额外转发。参数为原始事件，操作数据位于 `event.detail`；可通过 `@show.prevent` 阻止打开。
+Viewer.js 会在指令绑定的原生 HTML 元素上派发 DOM 事件，可以通过 `@viewed` 监听，无需指令额外转发。参数为原始事件，操作数据位于 `event.detail`；可通过 `@show.prevent` 阻止打开。
 
 ```vue
 <div v-viewer="options" @viewed="onViewed">
