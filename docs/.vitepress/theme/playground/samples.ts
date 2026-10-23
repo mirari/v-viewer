@@ -45,14 +45,14 @@ export default {
     add() { this.images.push(this.sourceImages[this.images.length]) },
     remove() { this.images.pop() },
     show() { ${show} },
-    ${kind === 'component' ? 'onViewed(event) { console.log(event.detail.index) },' : ''}
+    ${kind !== 'api' ? 'onViewed(event) { console.log(event.detail.index) },' : ''}
   },
 }`
     gallery =
       kind === 'component'
         ? `<viewer ref="gallery" :toolbar="toolbar" url="data-source" @viewed="onViewed" class="gallery">${imageTemplate}</viewer>`
         : kind === 'directive'
-          ? `<div ref="gallery" v-viewer="options" class="gallery">${imageTemplate}</div>`
+          ? `<div ref="gallery" v-viewer="options" @viewed="onViewed" class="gallery">${imageTemplate}</div>`
           : ''
   } else {
     const imports =
@@ -71,14 +71,14 @@ import { ${imports} } from 'v-viewer'
 ${sourceImages}
 const images = ref(sourceImages.slice(0, ${defaultImageCount}))
 ${kind === 'component' ? 'const toolbar = ref(true)\nfunction onViewed(event) { console.log(event.detail.index) }' : `const options = ref(${viewerOptions})`}
-${show}
+${kind === 'directive' ? 'function onViewed(event) { console.log(event.detail.index) }\n' : ''}${show}
 function add() { images.value.push(sourceImages[images.value.length]) }
 function remove() { images.value.pop() }`
     gallery =
       kind === 'component'
         ? `<Viewer ref="gallery" :toolbar="toolbar" url="data-source" @viewed="onViewed" class="gallery">${imageTemplate}</Viewer>`
         : kind === 'directive'
-          ? `<div ref="gallery" v-viewer="options" class="gallery">${imageTemplate}</div>`
+          ? `<div ref="gallery" v-viewer="options" @viewed="onViewed" class="gallery">${imageTemplate}</div>`
           : `<p>{{ isShown ? '${english ? 'Gallery open' : '正在预览'}' : '${english ? 'Ready to explore' : '等待预览'}' }}</p>`
   }
   if (kind === 'api')

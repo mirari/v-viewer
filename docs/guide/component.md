@@ -44,6 +44,10 @@ component vue3 zh
 
 <!--@include: ../.vitepress/fragments/viewer-events.zh.md-->
 
+## 回调 {#callbacks}
+
+兼容入口 `options` 仍支持 `options.viewed` 等 Viewer.js 回调，但不推荐继续使用，优先使用 `@viewed` 等 Vue 事件。回调参数与组件事件是同一个原始 DOM 事件；同时设置时，两者都会执行。
+
 ## 方法 {#methods}
 
 ### Viewer.js 原生方法 {#viewerjs-methods}

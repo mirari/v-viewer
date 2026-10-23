@@ -48,11 +48,31 @@ element?.$viewer?.show()
 
 <!--@include: ../.vitepress/fragments/viewer-options.zh.md-->
 
-## 回调 {#callbacks}
+## 事件 {#events}
 
-在 `options` 中设置 `viewed(event)` 等回调函数，对应 [Viewer.js 原生事件](https://github.com/fengyuanchen/viewerjs#events)。回调参数为原始 DOM 事件，操作数据位于 `event.detail`；点击名称可查看原文档。
+Viewer.js 会在指令绑定的原生 HTML 元素上派发 DOM 事件，Vue 2 和 Vue 3 都可以通过 `@viewed` 监听，无需指令额外转发。参数为原始事件，操作数据位于 `event.detail`；可通过 `@show.prevent` 阻止打开。
+
+```vue
+<div v-viewer="options" @viewed="onViewed">
+  <img src="/images/photo-01.jpg" />
+</div>
+```
 
 <!--@include: ../.vitepress/fragments/viewer-events.zh.md-->
+
+## 回调 {#callbacks}
+
+也可以在 `options` 中设置 Viewer.js 回调，名称与参数对应上面的事件：
+
+```js
+const options = {
+  viewed(event) {
+    console.log(event.detail.index)
+  },
+}
+```
+
+同时设置 `@viewed` 和 `options.viewed` 时，两者都会执行；处理相同逻辑时选用一种即可。
 
 ## 旧版本迁移 {#migration}
 

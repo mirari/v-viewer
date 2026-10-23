@@ -222,6 +222,10 @@ for (const vue2 of [false, true]) {
       page,
     }) => {
       const errors: string[] = []
+      const viewed: string[] = []
+      page.on('console', (message) => {
+        if (message.type() === 'log') viewed.push(message.text())
+      })
       page.on('pageerror', (error) => errors.push(error.message))
       await page.emulateMedia({ colorScheme: 'dark' })
       await page.goto(`${prefix}guide/${mode}`)
@@ -273,6 +277,7 @@ for (const vue2 of [false, true]) {
           await expect(frame.locator('.v-viewer-token')).toHaveCount(0)
       }
       await open()
+      if (mode !== 'api') await expect.poll(() => viewed).toEqual(['0'])
       await expect(
         frame.getByRole('dialog').locator('.viewer-list > li'),
       ).toHaveCount(5)
@@ -312,6 +317,7 @@ for (const vue2 of [false, true]) {
       await expect(frame.getByRole('dialog')).toHaveAccessibleName(
         mode === 'api' ? /photo-02/ : /Landscape 2/,
       )
+      if (mode !== 'api') await expect.poll(() => viewed).toEqual(['0', '1'])
       await close()
       const add = frame.getByRole('button', { name: '添加图片', exact: true })
       const remove = frame.getByRole('button', {

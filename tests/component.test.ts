@@ -1,8 +1,11 @@
 import { afterEach, expect, test, vi } from 'vitest'
-import { createApp, h, nextTick, reactive, ref } from 'vue'
+import { createApp, h, nextTick, reactive, ref, withDirectives } from 'vue'
 import ViewerJs from 'viewerjs'
-import { Viewer } from '../packages/vue3/src/index'
-import { Viewer as Viewer2 } from '../packages/vue2/src/index'
+import { Viewer, vViewer } from '../packages/vue3/src/index'
+import {
+  Viewer as Viewer2,
+  vViewer as vViewer2,
+} from '../packages/vue2/src/index'
 import {
   viewerOptionProps,
   viewerEvents,
@@ -353,5 +356,66 @@ for (const vue2 of [false, true]) {
     component.show()
     expect(instance()).toBeUndefined()
     expect(document.querySelector('.viewer-container')).toBeNull()
+  })
+}
+
+for (const vue2 of [false, true]) {
+  test(`${vue2 ? 'Vue 2' : 'Vue 3'} directive native listeners coexist with callbacks and can cancel opening`, () => {
+    const host = document.createElement('div')
+    document.body.append(host)
+    const onShow = vi.fn((event: Event) => event.preventDefault())
+    const onShown = vi.fn()
+    const showCallback = vi.fn()
+    const shownCallback = vi.fn()
+    const options = {
+      transition: false,
+      show: showCallback,
+      shown: shownCallback,
+    }
+    let element: HTMLElement & { $viewer?: ViewerJs }
+    if (vue2) {
+      const app = new Vue2({
+        directives: { viewer: vViewer2 },
+        render(create: any) {
+          return create(
+            'div',
+            {
+              directives: [{ name: 'viewer', value: options }],
+              on: { show: onShow, shown: onShown },
+            },
+            [create('img', { attrs: { src: 'photo.jpg' } })],
+          )
+        },
+      }).$mount(host)
+      element = app.$el
+      cleanups.push(() => app.$destroy())
+    } else {
+      const app = createApp({
+        render: () =>
+          withDirectives(
+            h('div', { onShow, onShown }, [h('img', { src: 'photo.jpg' })]),
+            [[vViewer, options]],
+          ),
+      })
+      app.mount(host)
+      element = host.firstElementChild as typeof element
+      cleanups.push(() => app.unmount())
+    }
+    const viewer = element.$viewer!
+    viewer.show()
+    expect(onShow).toHaveBeenCalledOnce()
+    expect(showCallback).toHaveBeenCalledOnce()
+    expect(onShow.mock.calls[0][0]).toBe(showCallback.mock.calls[0][0])
+    expect(onShow.mock.calls[0][0].target).toBe(element)
+    expect(onShow.mock.calls[0][0].defaultPrevented).toBe(true)
+    expect(viewer.isShown).toBe(false)
+    expect(onShown).not.toHaveBeenCalled()
+    expect(shownCallback).not.toHaveBeenCalled()
+    onShow.mockImplementation(() => {})
+    viewer.show()
+    expect(viewer.isShown).toBe(true)
+    expect(onShown).toHaveBeenCalledOnce()
+    expect(shownCallback).toHaveBeenCalledOnce()
+    expect(onShown.mock.calls[0][0]).toBe(shownCallback.mock.calls[0][0])
   })
 }

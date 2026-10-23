@@ -44,6 +44,10 @@ Events forward the original DOM event synchronously, with operation data in `eve
 
 <!--@include: ../../.vitepress/fragments/viewer-events.en.md-->
 
+## Callbacks {#callbacks}
+
+The legacy `options` prop still accepts Viewer.js callbacks such as `options.viewed`. This compatibility entry is deprecated; prefer Vue events such as `@viewed`. Callbacks receive the same original DOM event as the component event. When both are supplied, both run.
+
 ## Methods {#methods}
 
 ### Viewer.js methods {#viewerjs-methods}

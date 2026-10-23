@@ -48,11 +48,31 @@ These match [Viewer.js options](https://github.com/fengyuanchen/viewerjs#options
 
 <!--@include: ../../.vitepress/fragments/viewer-options.en.md-->
 
-## Callbacks {#callbacks}
+## Events {#events}
 
-Set callback functions such as `viewed(event)` in `options`. They correspond to [Viewer.js events](https://github.com/fengyuanchen/viewerjs#events) and receive the original DOM event, with operation data in `event.detail`. Click a name for its original documentation.
+Viewer.js dispatches native DOM events on the HTML element bound to the directive. Both Vue 2 and Vue 3 can listen with `@viewed`; no directive event forwarding is needed. The handler receives the original event, with operation data in `event.detail`. Use `@show.prevent` to cancel opening.
+
+```vue
+<div v-viewer="options" @viewed="onViewed">
+  <img src="/images/photo-01.jpg" />
+</div>
+```
 
 <!--@include: ../../.vitepress/fragments/viewer-events.en.md-->
+
+## Callbacks {#callbacks}
+
+You can also set Viewer.js callbacks in `options`, using the names and parameters listed above:
+
+```js
+const options = {
+  viewed(event) {
+    console.log(event.detail.index)
+  },
+}
+```
+
+When `@viewed` and `options.viewed` are both supplied, both run for the same event. Use either when they perform the same work.
 
 ## Migrating from older versions {#migration}
 
