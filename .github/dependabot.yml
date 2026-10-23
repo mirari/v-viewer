@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    # Preserve security updates without enabling unsolicited version-update PRs.
+    open-pull-requests-limit: 0
+    ignore:
+      # Vue 2 and Vue 3 are separate compatibility targets in this workspace.
+      - dependency-name: vue
+        update-types: ['version-update:semver-major']
+      # These aliases deliberately exercise the minimum supported versions.
+      - dependency-name: vue2-min
+      - dependency-name: vue3-min
+      - dependency-name: viewerjs-min

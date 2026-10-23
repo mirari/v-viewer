@@ -89,7 +89,10 @@ jobs:
           RELEASE_TAG: ${{ github.ref_name }}
           VERSION: ${{ needs.validate.outputs.version }}
           PRERELEASE: ${{ needs.validate.outputs.prerelease }}
+          CHANNEL: ${{ needs.validate.outputs.channel }}
         run: |
-          args=(--verify-tag --title "$RELEASE_TAG" --notes-file artifacts/notes.md --latest=false)
+          latest=false
+          if [ "$CHANNEL" = latest ] && [ "$PRERELEASE" = false ]; then latest=true; fi
+          args=(--verify-tag --title "$RELEASE_TAG" --notes-file artifacts/notes.md --latest="$latest")
           if [ "$PRERELEASE" = true ]; then args+=(--prerelease); fi
           gh release create "$RELEASE_TAG" "artifacts/v-viewer-$VERSION.tgz" "${args[@]}"
