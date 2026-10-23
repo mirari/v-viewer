@@ -30,6 +30,9 @@ await catv({
   packageFiles: [`packages/${line}/package.json`],
   bumpFiles: [`packages/${line}/package.json`],
   infile: `packages/${line}/CHANGELOG.md`,
+  scripts: {
+    postchangelog: `node node_modules/prettier/bin/prettier.cjs --write packages/${line}/CHANGELOG.md`,
+  },
   preset: {
     name: new URL('./release-preset.mjs', import.meta.url).href,
     legacyHashes,
@@ -41,5 +44,5 @@ await catv({
   ],
 })
 console.log(
-  'Review the release commit and tag, then push with git push --follow-tags origin master.',
+  `Review the release commit and tag, then push with git push --follow-tags origin ${git('branch', '--show-current')}.`,
 )
