@@ -6,6 +6,8 @@
 Vue 3 的 5.x 是包含破坏性变更的主版本重构。现在可以在组件上直接使用 Viewer.js 的属性、事件和方法。**旧的 options 属性保留兼容，但不推荐继续使用**，现有项目可以逐步迁移。
 :::
 
+## 演练场 {#playground}
+
 [演练场](/playground?example=component)
 
 <ClientOnly><ViewerDemo mode="component" /></ClientOnly>

@@ -6,6 +6,8 @@ Suitable for complex scenarios involving custom toolbars or images in dynamicall
 The Vue 3 (5.x) line is a rewrite with breaking changes. You can now use Viewer.js props, events and methods directly on the component. **The legacy options prop is retained for compatibility, but is deprecated.** Existing options-based galleries can migrate gradually.
 :::
 
+## Playground {#playground}
+
 [Playground](/en/playground?example=component)
 
 <ClientOnly><ViewerDemo mode="component" /></ClientOnly>

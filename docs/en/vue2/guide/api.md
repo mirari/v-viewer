@@ -2,6 +2,8 @@
 
 Suitable for opening a specified image array after a button click.
 
+## Playground {#playground}
+
 [Playground](/en/vue2/playground?example=api)
 
 <ClientOnly><ViewerDemo vue2 mode="api" /></ClientOnly>

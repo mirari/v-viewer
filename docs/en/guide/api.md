@@ -2,6 +2,8 @@
 
 Suitable for opening a specified image array after a button click.
 
+## Playground {#playground}
+
 [Playground](/en/playground?example=api)
 
 <ClientOnly><ViewerDemo mode="api" /></ClientOnly>

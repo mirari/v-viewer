@@ -2,6 +2,8 @@
 
 适合按钮触发后打开指定图片数组的场景。
 
+## 演练场 {#playground}
+
 [演练场](/playground?example=api)
 
 <ClientOnly><ViewerDemo mode="api" /></ClientOnly>

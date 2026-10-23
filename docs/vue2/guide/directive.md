@@ -2,6 +2,8 @@
 
 适合无需复杂定制需求的简单浏览场景，同时支持动态渲染 Markdown 或 HTML 等未知图片内容。默认监听指令绑定元素内部 `<img>` 元素的增删和属性变化，自动更新图库。
 
+## 演练场 {#playground}
+
 [演练场](/vue2/playground?example=directive)
 
 <ClientOnly><ViewerDemo vue2 mode="directive" /></ClientOnly>

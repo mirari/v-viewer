@@ -2,6 +2,8 @@
 
 Suitable for simple image browsing without complex customization, while also supporting images in dynamically rendered Markdown or HTML whose content is not known in advance. By default, it watches additions, removals and attribute changes of `<img>` elements inside the element the directive is bound to and automatically updates the gallery.
 
+## Playground {#playground}
+
 [Playground](/en/vue2/playground?example=directive)
 
 <ClientOnly><ViewerDemo vue2 mode="directive" /></ClientOnly>

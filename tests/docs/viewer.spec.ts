@@ -414,8 +414,16 @@ for (const vue2 of [false, true]) {
       page,
     }) => {
       const prefix = `${english ? 'en/' : ''}${vue2 ? 'vue2/' : ''}`
+      await page.setViewportSize({ width: 1680, height: 900 })
       for (const mode of ['component', 'directive', 'api']) {
         await page.goto(`${prefix}guide/${mode}`)
+        await expect(page.locator('h2#playground')).toContainText(
+          english ? 'Playground' : '演练场',
+        )
+        const outlineLink = page.locator('.VPDocAside a[href="#playground"]')
+        await expect(outlineLink).toHaveText(english ? 'Playground' : '演练场')
+        await outlineLink.click()
+        await expect(page.locator('h2#playground')).toBeInViewport()
         await page
           .locator('.vp-doc')
           .getByRole('link', {
