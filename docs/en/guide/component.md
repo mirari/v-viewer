@@ -14,7 +14,7 @@ The Vue 3 (5.x) line is a rewrite with breaking changes. You can now use Viewer.
 component vue3 en
 ```
 
-## Migration and legacy options {#migration}
+## Migration examples {#migration}
 
 ```vue
 <!-- Legacy: supported, but deprecated -->

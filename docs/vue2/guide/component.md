@@ -14,7 +14,7 @@ Vue 2 的 4.x 是包含破坏性变更的主版本重构。现在可以在组件
 component vue2 zh
 ```
 
-## 迁移与 options 兼容入口 {#migration}
+## 迁移示例 {#migration}
 
 ```vue
 <!-- 旧写法：仍兼容，但不推荐 -->
