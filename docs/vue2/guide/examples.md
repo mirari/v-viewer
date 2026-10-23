@@ -1,10 +1,10 @@
 # 更多示例
 
-- [Directive](https://codepen.io/mirari/pen/PePrVq)
-- [Component](https://codepen.io/mirari/pen/PowNyEY)
-- [API](https://codepen.io/mirari/pen/NWpwVdd)
-- [Thumbnail & source](https://codepen.io/mirari/pen/LYENgMM)
-- [Viewer callback](https://codepen.io/mirari/pen/ZwpGBO)
-- [Custom toolbar](https://codepen.io/mirari/pen/GRMBrBv)
-- [Filter images](https://codepen.io/mirari/pen/vvPoQb)
-- [Change images](https://codepen.io/mirari/pen/ZdMbOK)
+- [指令形式调用](https://codepen.io/mirari/pen/PePrVq)
+- [组件形式调用](https://codepen.io/mirari/pen/PowNyEY)
+- [API 形式调用](https://codepen.io/mirari/pen/NWpwVdd)
+- [缩略图和原图](https://codepen.io/mirari/pen/LYENgMM)
+- [Viewer 回调方法](https://codepen.io/mirari/pen/ZwpGBO)
+- [自定义工具栏](https://codepen.io/mirari/pen/GRMBrBv)
+- [过滤图片](https://codepen.io/mirari/pen/vvPoQb)
+- [图片发生变更](https://codepen.io/mirari/pen/ZdMbOK)
