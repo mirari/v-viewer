@@ -18,20 +18,6 @@ Rendered HTML works the same way:
 <article v-viewer v-html="html" />
 ```
 
-## Options {#options}
-
-Pass these settings directly in the object bound to `v-viewer="options"`. Deep changes rebuild the instance; `observe` and `rebuild` are v-viewer settings described below.
-
-These match [Viewer.js options](https://github.com/fengyuanchen/viewerjs#options). Each name links to its original documentation; available settings and defaults depend on the installed Viewer.js version.
-
-<!--@include: ../../../.vitepress/fragments/viewer-options.en.md-->
-
-## Events {#events}
-
-Set callbacks such as `viewed(event)` on the same `options` object. They receive the original DOM event, with operation data in `event.detail`. Click an event name for its [Viewer.js documentation](https://github.com/fengyuanchen/viewerjs#events).
-
-<!--@include: ../../../.vitepress/fragments/viewer-events.en.md-->
-
 ## Binding and modifiers {#reference}
 
 | Binding                         | Description                                                                                      |
@@ -53,6 +39,20 @@ import type { ViewerElement } from 'v-viewer'
 const element = document.querySelector<ViewerElement>('#gallery')
 element?.$viewer?.show()
 ```
+
+## Options {#options}
+
+Pass these settings directly in the object bound to `v-viewer="options"`. Deep changes rebuild the instance; `observe` and `rebuild` are v-viewer settings described above.
+
+These match [Viewer.js options](https://github.com/fengyuanchen/viewerjs#options). Each name links to its original documentation; available settings and defaults depend on the installed Viewer.js version.
+
+<!--@include: ../../../.vitepress/fragments/viewer-options.en.md-->
+
+## Events {#events}
+
+Set callbacks such as `viewed(event)` on the same `options` object. They receive the original DOM event, with operation data in `event.detail`. Click an event name for its [Viewer.js documentation](https://github.com/fengyuanchen/viewerjs#events).
+
+<!--@include: ../../../.vitepress/fragments/viewer-events.en.md-->
 
 ## Migrating from older versions {#migration}
 
