@@ -109,6 +109,23 @@ export default defineConfig({
   cleanUrls: true,
   markdown: {
     config(md) {
+      // Includes are expanded before Markdown parsing. Keep one options table,
+      // excluding inline-only settings when it is used by the modal API.
+      md.core.ruler.before('block', 'viewer-modal-options', (state) => {
+        state.src = state.src.replace(
+          /<!-- viewer-options:modal -->([\s\S]*?)<!-- \/viewer-options:modal -->/g,
+          (_, table: string) =>
+            table
+              .split('\n')
+              .filter(
+                (line) =>
+                  !/^\| \[`(?:inline|minWidth|minHeight|zIndexInline)`\]/.test(
+                    line,
+                  ),
+              )
+              .join('\n'),
+        )
+      })
       md.core.ruler.after('block', 'viewer-examples', (state) => {
         for (const token of state.tokens) {
           if (token.type !== 'fence' || token.info !== 'viewer-example')

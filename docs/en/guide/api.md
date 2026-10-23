@@ -37,15 +37,17 @@ Closing or destroying the preview removes its temporary DOM. Changes to images o
 
 Use `viewer.value` to call all Viewer.js methods. [Viewer.js methods](https://github.com/fengyuanchen/viewerjs#methods)
 
-## Viewer.js options {#options}
+## Options {#options}
 
-Pass these settings through `options` in `useViewer({ images, options })`. The API always opens in modal mode: `inline` is forced to `false`, so inline-only settings do not apply.
+Pass these settings through `options` in `useViewer({ images, options })`. **The API always opens in modal mode. `inline` is fixed to `false` and cannot be overridden.** Inline-only settings are omitted from the table below.
 
 These match [Viewer.js options](https://github.com/fengyuanchen/viewerjs#options). Each name links to its original documentation; available settings and defaults depend on the installed Viewer.js version.
 
+<!-- viewer-options:modal -->
 <!--@include: ../../.vitepress/fragments/viewer-options.en.md-->
+<!-- /viewer-options:modal -->
 
-### Event callbacks {#callbacks}
+## Events {#events}
 
 Set callbacks such as `viewed(event)` on the same `options` object. They receive the original DOM event, with operation data in `event.detail`. Click an event name for its [Viewer.js documentation](https://github.com/fengyuanchen/viewerjs#events).
 
