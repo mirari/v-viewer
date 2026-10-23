@@ -45,4 +45,4 @@ git push --follow-tags origin master
 
 Pushing vue2-v* or vue3-v* triggers CI, npm publishing and a GitHub Release. Stable Vue 2 uses legacy; Vue 3 uses latest; prereleases use vue2-beta or vue3-beta. CI publishes the exact tarball it validated. Configure npm Trusted Publishing for mirari/v-viewer, release.yml, environment npm before the first publication. Credentials must not be added to this repository.
 
-GitHub Pages builds VitePress and deploys to the existing gh-pages branch. The default deployment base is /v-viewer/; change DOCS_BASE and configure the custom domain together if moving to a domain root.
+The documentation workflow builds VitePress and publishes to gh-pages. The production site is https://v-viewer.mirari.cc/ and uses the root base path. Cloudflare Pages serves the generated files from gh-pages without an additional build. Keep the CNAME file and hosting domain configuration aligned.
