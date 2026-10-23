@@ -15,10 +15,13 @@ hero:
       text: Vue 2
       link: /vue2/
 features:
-  - title: 三种使用方式
-    details: 组件和指令处理图片 DOM，支持 Markdown 与动态 HTML；API 接收图片数组。
-  - title: 生命周期管理
-    details: 自动跟随图片变化，并在组件卸载时释放实例。
-  - title: 兼顾新旧项目
-    details: 同仓库维护 Vue 2 和 Vue 3，提供 TypeScript 类型和 SSR 导入支持。
+  - title: 组件
+    details: 通过属性、事件和方法控制图片浏览，使用插槽定制工具栏，自动监听内部图片变化。
+    link: /guide/component
+  - title: 指令
+    details: 为现有元素添加图片浏览功能，自动监听内部图片变化，适合简单浏览和动态 Markdown、HTML 内容。
+    link: /guide/directive
+  - title: API
+    details: 通过 useViewer 打开指定图片数组，适合按钮触发预览等场景。
+    link: /guide/api
 ---

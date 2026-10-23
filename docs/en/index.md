@@ -15,10 +15,13 @@ hero:
       text: Vue 2
       link: /en/vue2/
 features:
-  - title: Three ways to use
-    details: Components and directives handle image DOM, including Markdown and dynamic HTML; the API accepts image arrays.
-  - title: Lifecycle managed
-    details: Dynamic galleries update automatically and instances are released when their owner unmounts.
-  - title: Two Vue generations
-    details: One repository for Vue 2 and Vue 3, with TypeScript declarations and SSR-safe imports.
+  - title: Component
+    details: Control the viewer with props, events and methods, customize toolbars with slots, and automatically track changes to images inside the component.
+    link: /en/guide/component
+  - title: Directive
+    details: Add image browsing to existing elements and automatically track image changes, including dynamically rendered Markdown and HTML.
+    link: /en/guide/directive
+  - title: API
+    details: Open a specified image array with useViewer, for scenarios such as previews triggered by a button.
+    link: /en/guide/api
 ---
