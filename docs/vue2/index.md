@@ -83,7 +83,7 @@ export default { data: () => ({ images: ['/photo.jpg'] }) }
 
 ### API
 
-适合按钮触发后打开指定图片数组的场景。详细用法见 [API](/vue2/guide/api)。
+适合按钮触发后打开指定图片数组等场景。详细用法见 [API](/vue2/guide/api)。
 
 ```vue
 <template><button @click="show">Open gallery</button></template>

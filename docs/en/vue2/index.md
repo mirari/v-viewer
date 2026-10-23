@@ -83,7 +83,7 @@ Suitable for simple image browsing without complex customization, while also sup
 
 ### API
 
-Suitable for opening a specified image array after a button click. See the [API guide](/en/vue2/guide/api).
+Suitable for scenarios such as opening a specified image array after a button click. See the [API guide](/en/vue2/guide/api).
 
 ```vue
 <template><button @click="show">Open gallery</button></template>

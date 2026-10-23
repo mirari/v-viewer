@@ -80,7 +80,7 @@ import { vViewer } from 'v-viewer'
 
 ### API
 
-Suitable for opening a specified image array after a button click. See the [API guide](/en/guide/api).
+Suitable for scenarios such as opening a specified image array after a button click. See the [API guide](/en/guide/api).
 
 ```vue
 <script setup>

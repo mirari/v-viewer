@@ -1,6 +1,6 @@
 # API
 
-Suitable for opening a specified image array after a button click.
+Suitable for scenarios such as opening a specified image array after a button click.
 
 ## Playground {#playground}
 

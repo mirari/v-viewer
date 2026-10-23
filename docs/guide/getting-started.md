@@ -80,7 +80,7 @@ import { vViewer } from 'v-viewer'
 
 ### API
 
-适合按钮触发后打开指定图片数组的场景。详细用法见 [API](/guide/api)。
+适合按钮触发后打开指定图片数组等场景。详细用法见 [API](/guide/api)。
 
 ```vue
 <script setup>
