@@ -14,7 +14,7 @@ Set the component’s `url` prop, or `options.url` for the API / directive, to a
 
 ## How do I migrate from the previous release?
 
-Replace the default plugin with local imports. component becomes Viewer; directive() becomes vViewer; api becomes useViewer, with images, options and an optional target in one configuration object and automatic scope cleanup. The old Viewer class export is now ViewerJs.
+Replace the default plugin with local imports. component becomes Viewer; directive() becomes vViewer; api becomes useViewer, with images and options in one configuration object and automatic scope cleanup. The old Viewer class export is now ViewerJs.
 
 The component’s `options` prop remains compatible but is deprecated. See [component migration](./component#migration) for direct props, Vue events and ref methods.
 

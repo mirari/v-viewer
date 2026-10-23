@@ -170,10 +170,11 @@ app.$destroy()
 assert.equal(document.querySelector('.viewer-container'),null)
 `
     : `
-const app=Vue.createApp({setup(){const target=Vue.ref(null);api=pkg.useViewer({target});return()=>Vue.h('div',{ref:target},[Vue.h('img',{src:'photo.jpg'})])}})
+const app=Vue.createApp({setup(){api=pkg.useViewer({images:Vue.ref(['photo.jpg']),options:{transition:false}});return()=>Vue.h('div')}})
 app.mount('#app')
+assert.equal(api.viewer.value,undefined)
+api.show()
 assert.ok(api.viewer.value)
-api.viewer.value.show(true)
 assert.equal(api.isShown.value,true)
 app.unmount()
 assert.equal(api.viewer.value,undefined)
@@ -277,10 +278,10 @@ dom.window.close()
     })
     const use =
       line === 'vue3'
-        ? `import {ref} from 'vue'\nimport {useViewer} from 'v-viewer'\nconst api=useViewer({target:ref<HTMLElement|null>(null),options:ref({toolbar:true})})\napi.show(0)\n`
+        ? `import {ref} from 'vue'\nimport {useViewer} from 'v-viewer'\nconst api=useViewer({images:ref(['photo.jpg']),options:ref({toolbar:true})})\napi.show(0)\n`
         : `import {Vue} from 'vue/types/vue.js'\nimport plugin from 'v-viewer'\nVue.use(plugin)\n`
     const source =
-      `import {Viewer,vViewer,ViewerJs} from 'v-viewer'\nimport type {ViewerOptions,ViewerImage} from 'v-viewer'\nconst options:ViewerOptions={toolbar:true}\nconst images:ViewerImage[]=['photo.jpg']\n${line === 'vue2' ? "import {viewerApi} from 'v-viewer'\nconst viewer:ViewerJs=viewerApi({images,options})\nviewer.destroy()\n// @ts-expect-error showViewer is no longer a Vue 2 export\nimport {showViewer} from 'v-viewer'" : "import type {UseViewerOptions} from 'v-viewer'\nconst config:UseViewerOptions={images,options}\nconst viewer:ViewerJs|undefined=useViewer(config).show()\nviewer?.destroy()\nuseViewer({target:()=>document.body})\nuseViewer({target:'photos'})\nuseViewer()\n// @ts-expect-error showViewer is no longer a Vue 3 export\nimport {showViewer} from 'v-viewer'\n// @ts-expect-error target belongs in the configuration object\nuseViewer(document.body)\n// @ts-expect-error the old two-argument signature is removed\nuseViewer(undefined,{images})"}\nvoid Viewer;void vViewer\n` +
+      `import {Viewer,vViewer,ViewerJs} from 'v-viewer'\nimport type {ViewerOptions,ViewerImage} from 'v-viewer'\nconst options:ViewerOptions={toolbar:true}\nconst images:ViewerImage[]=['photo.jpg']\n${line === 'vue2' ? "import {viewerApi} from 'v-viewer'\nconst viewer:ViewerJs=viewerApi({images,options})\nviewer.destroy()\n// @ts-expect-error showViewer is no longer a Vue 2 export\nimport {showViewer} from 'v-viewer'" : "import type {UseViewerOptions} from 'v-viewer'\nconst config:UseViewerOptions={images,options}\nconst viewer:ViewerJs|undefined=useViewer(config).show()\nviewer?.destroy()\nuseViewer({images:()=>images,options:()=>options})\nuseViewer()\n// @ts-expect-error showViewer is no longer a Vue 3 export\nimport {showViewer} from 'v-viewer'\n// @ts-expect-error DOM targets are no longer supported\nuseViewer(document.body)\n// @ts-expect-error the old two-argument signature is removed\nuseViewer(undefined,{images})"}\nvoid Viewer;void vViewer\n` +
       use +
       `
 import type {ViewerOptionProps,ViewerEventMap,ViewerMethods} from 'v-viewer'
@@ -312,10 +313,14 @@ ${
   line === 'vue3'
     ? `import type {ViewerProps} from 'v-viewer'
 const componentProps:ViewerProps={toolbar:false,observe:100,onViewed:event=>event.detail.index}
-useViewer({target:document.body,observe:ref<boolean|number>(false)})
-useViewer({target:document.body,observe:()=>100})
-// @ts-expect-error observe is not a string
-useViewer({target:document.body,observe:'100'})
+// @ts-expect-error API galleries do not observe DOM changes
+useViewer({images,observe:true})
+// @ts-expect-error API galleries do not rebuild on DOM changes
+useViewer({images,rebuild:true})
+// @ts-expect-error use the component or directive for an existing DOM target
+useViewer({target:document.body})
+// @ts-expect-error the composable no longer exposes a target update method
+api.update()
 // @ts-expect-error inited was removed; read the instance through the component ref
 const removedEvent:ViewerProps={onInited:()=>{}}
 // @ts-expect-error component images are rendered in the slot

@@ -1,6 +1,6 @@
 # Automatic updates with observe
 
-Applies to components, directives and `useViewer` with a `target`.
+Applies to components and directives.
 
 `observe` controls automatic image DOM observation and how often the gallery updates. It watches additions, removals, reordering and attribute changes (such as `src` and `alt`) of `<img>` elements inside the container, including images replaced by rendered Markdown or HTML. Unrelated text, container styling and Viewer.js-generated UI do not trigger gallery updates.
 

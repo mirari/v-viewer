@@ -21,14 +21,12 @@ import type {
 import {
   createViewerController,
   createDirectiveHooks,
-  resolveTarget,
   showViewer,
 } from '../../core/src/index.js'
 import type {
   ViewerController,
   ViewerImage,
   ViewerOptions,
-  ViewerTarget,
   ViewerObserve,
   ViewerDirectiveOptions,
 } from '../../core/src/index.js'
@@ -227,14 +225,9 @@ export const vViewer: ObjectDirective<
 
 export type MaybeRefOrGetter<T> = T | Ref<T> | (() => T)
 export interface UseViewerOptions {
-  /** Omit to create a temporary gallery from images. */
-  target?: MaybeRefOrGetter<ViewerTarget>
   options?: MaybeRefOrGetter<ViewerOptions>
-  /** Without a target, show() creates a temporary gallery from these images. */
+  /** Images are read when opening a new temporary gallery. */
   images?: MaybeRefOrGetter<readonly ViewerImage[]>
-  rebuild?: boolean
-  /** Only applies when target is provided. */
-  observe?: MaybeRefOrGetter<ViewerObserve>
 }
 const read = <T>(value: MaybeRefOrGetter<T>): T =>
   typeof value === 'function' ? (value as () => T)() : unref(value)
@@ -244,118 +237,66 @@ export interface UseViewerReturn {
   isShown: Ref<boolean>
   show: (index?: number) => ViewerJs | undefined
   hide: () => void
-  update: () => void
   destroy: () => void
 }
 export function useViewer(config: UseViewerOptions = {}): UseViewerReturn {
-  const target = config.target
   const viewer = shallowRef<ViewerJs>()
   const isShown = ref(false)
-  let controller: ViewerController | undefined
-  let element: HTMLElement | undefined
   let disposed = false
-  const options = (): ViewerOptions => {
-    const value = config.options ? read(config.options) : {}
-    return {
-      ...value,
-      shown(event) {
-        isShown.value = true
-        value.shown?.call(this, event)
-      },
-      hidden(event) {
-        isShown.value = false
-        if (!controller) viewer.value = undefined
-        value.hidden?.call(this, event)
-      },
-    }
-  }
   function destroy() {
-    controller?.dispose()
-    if (!controller) viewer.value?.destroy()
-    controller = undefined
-    element = undefined
+    viewer.value?.destroy()
     viewer.value = undefined
     isShown.value = false
   }
-  function ensure() {
-    if (disposed || typeof document === 'undefined') return undefined
-    const nextElement =
-      target === undefined ? undefined : resolveTarget(read(target))
-    if (target !== undefined && !nextElement) return undefined
-    if (nextElement !== element) destroy()
-    if (nextElement && !controller) {
-      element = nextElement
-      controller = createViewerController(nextElement, {
-        options: options(),
-        rebuild: config.rebuild,
-        observe: config.observe === undefined ? true : read(config.observe),
-        onInit: (instance) => {
-          viewer.value = instance
-        },
-      })
-    }
-    return viewer.value
-  }
   function show(index?: number) {
     if (disposed || typeof document === 'undefined') return undefined
-    let current = ensure()
-    if (!current && target === undefined) {
+    const existing = viewer.value
+    if (existing) {
+      if (index === undefined) existing.show()
+      else existing.view(index)
+      return existing
+    }
+    const options = config.options ? read(config.options) : {}
+    const { shown, hidden } = options
+    let current: ViewerJs
+    try {
       current = showViewer({
         images: config.images ? read(config.images) : [],
         options: {
-          ...options(),
+          ...options,
           ...(index === undefined ? {} : { initialViewIndex: index }),
+          shown(event) {
+            isShown.value = true
+            shown?.call(this, event)
+          },
+          hidden(event) {
+            isShown.value = false
+            viewer.value = undefined
+            hidden?.call(this, event)
+          },
         },
       })
-      viewer.value = current
-    } else if (current) {
-      if (index === undefined) current.show()
-      else current.view(index)
+    } catch (error) {
+      isShown.value = false
+      throw error
     }
+    const originalDestroy = current.destroy.bind(current)
+    current.destroy = () => {
+      try {
+        return originalDestroy()
+      } finally {
+        if (viewer.value === current) {
+          viewer.value = undefined
+          isShown.value = false
+        }
+      }
+    }
+    viewer.value = current
     return current
   }
   function hide() {
     viewer.value?.hide()
   }
-  function update() {
-    ensure()
-    controller?.refresh(false)
-  }
-  if (target !== undefined)
-    watch(
-      () => read(target),
-      () => {
-        destroy()
-        ensure()
-      },
-      { flush: 'post' },
-    )
-  if (config.options)
-    watch(
-      () => read(config.options!),
-      () => {
-        if (controller) controller.configure({ options: options() })
-        else destroy()
-      },
-      { deep: true, flush: 'post' },
-    )
-  if (config.observe !== undefined)
-    watch(
-      () => read(config.observe!),
-      (observe) => controller?.configure({ observe }),
-      { flush: 'post' },
-    )
-  if (config.images)
-    watch(
-      () => read(config.images!),
-      () => {
-        if (!controller) destroy()
-      },
-      { deep: true, flush: 'post' },
-    )
-  onMounted(() => {
-    if (target !== undefined) ensure()
-  })
   const dispose = () => {
     disposed = true
     destroy()
@@ -363,5 +304,5 @@ export function useViewer(config: UseViewerOptions = {}): UseViewerReturn {
   // Vue 3.0 has component cleanup but no effect scopes yet.
   if (VueRuntime.getCurrentScope?.()) VueRuntime.onScopeDispose(dispose)
   else onBeforeUnmount(dispose)
-  return { viewer, isShown, show, hide, update, destroy }
+  return { viewer, isShown, show, hide, destroy }
 }

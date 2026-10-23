@@ -14,15 +14,12 @@ api vue3 zh
 
 ## 参数和返回值 {#reference}
 
-`useViewer({ images?, options?, target?, rebuild?, observe? })`
+`useViewer({ images?, options? })`
 
-| 参数    | 说明                                                                                                                                                    |
-| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| images  | 临时图库的图片数组、ref 或 getter。                                                                                                                     |
-| options | Viewer.js 配置、ref 或 getter。                                                                                                                         |
-| target  | HTML 元素、id、CSS 选择器、ref 或 getter；省略时使用临时图库。                                                                                          |
-| rebuild | 图片 DOM 变化时重建，默认 false。                                                                                                                       |
-| observe | 仅用于 `target`，支持 ref 或 getter；默认 `true` 合并 50ms 内的变化，`0` 不额外等待，`false` 关闭监听。其他数字和更新时机见[自动更新](/guide/observe)。 |
+| 参数    | 说明                                |
+| ------- | ----------------------------------- |
+| images  | 临时图库的图片数组、ref 或 getter。 |
+| options | Viewer.js 配置、ref 或 getter。     |
 
 | 返回值       | 说明                               |
 | ------------ | ---------------------------------- |
@@ -30,27 +27,15 @@ api vue3 zh
 | isShown      | 弹层是否显示的响应式状态。         |
 | show(index?) | 打开图库，可指定图片下标。         |
 | hide()       | 关闭预览。                         |
-| update()     | 更新现有目标的图片。               |
 | destroy()    | 释放实例；再次 show() 可重新创建。 |
 
-在 setup 中调用 useViewer，作用域结束时自动清理。选择器在挂载或打开时解析，未匹配到元素会抛出错误。
-
-```vue
-<script setup lang="ts">
-import { ref } from 'vue'
-import { useViewer } from 'v-viewer'
-const target = ref<HTMLElement | null>(null)
-const { show } = useViewer({ target })
-</script>
-<template>
-  <div ref="target"><img src="/photo.jpg" /></div>
-  <button @click="show()">Open</button>
-</template>
-```
+在 setup 中调用 useViewer，作用域结束时自动清理。
 
 ## 临时图库
 
-不指定 `target` 时，`show()` 根据 `images` 创建弹窗图库。关闭或销毁后会自动删除临时 DOM，离开所属组件时也会自动清理。
+`show()` 根据当前 `images` 和 `options` 创建弹窗图库。关闭或销毁后会自动删除临时 DOM，离开所属组件时也会自动清理。
+
+打开期间修改图片数组或配置不会影响当前预览，下次打开时生效。重复调用 `show(index)` 会在当前图库内切换图片。
 
 ```vue
 <script setup>

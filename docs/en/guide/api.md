@@ -14,15 +14,12 @@ api vue3 en
 
 ## Parameters and return values {#reference}
 
-`useViewer({ images?, options?, target?, rebuild?, observe? })`
+`useViewer({ images?, options? })`
 
-| Parameter | Description                                                                                                                                                                                                                                  |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| images    | Image array, ref or getter for temporary galleries.                                                                                                                                                                                          |
-| options   | Viewer.js options, ref or getter.                                                                                                                                                                                                            |
-| target    | HTML element, id, CSS selector, ref or getter. Omit for a temporary gallery.                                                                                                                                                                 |
-| rebuild   | Recreate on image DOM changes; defaults to false.                                                                                                                                                                                            |
-| observe   | Applies only to `target`. Supports a ref or getter; default `true` batches changes over 50ms, `0` adds no batching delay, and `false` disables observation. See [automatic updates](/en/guide/observe) for details and other numeric values. |
+| Parameter | Description                                         |
+| --------- | --------------------------------------------------- |
+| images    | Image array, ref or getter for temporary galleries. |
+| options   | Viewer.js options, ref or getter.                   |
 
 | Return value | Description                                   |
 | ------------ | --------------------------------------------- |
@@ -30,27 +27,15 @@ api vue3 en
 | isShown      | Reactive modal visibility.                    |
 | show(index?) | Open at an optional image index.              |
 | hide()       | Close the preview.                            |
-| update()     | Refresh an existing target.                   |
 | destroy()    | Release the instance; show() can recreate it. |
 
-Call useViewer inside setup. It cleans up on scope disposal. Selectors are resolved when mounted or shown; missing targets throw an error.
-
-```vue
-<script setup lang="ts">
-import { ref } from 'vue'
-import { useViewer } from 'v-viewer'
-const target = ref<HTMLElement | null>(null)
-const { show } = useViewer({ target })
-</script>
-<template>
-  <div ref="target"><img src="/photo.jpg" /></div>
-  <button @click="show()">Open</button>
-</template>
-```
+Call useViewer inside setup. It cleans up on scope disposal.
 
 ## Temporary galleries
 
-Without `target`, `show()` creates a modal gallery from `images`. Closing or destroying it removes the temporary DOM. It is also cleaned up when its owning component unmounts.
+`show()` creates a modal gallery from the current `images` and `options`. Closing or destroying it removes the temporary DOM. It is also cleaned up when its owning component unmounts.
+
+Changes to images or options do not affect an open preview; they apply the next time it opens. Calling `show(index)` again switches images within the current gallery.
 
 ```vue
 <script setup>

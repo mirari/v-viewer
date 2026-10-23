@@ -34,7 +34,6 @@ vi.mock('viewerjs', () => ({
 import {
   createViewerController,
   createDirectiveHooks,
-  resolveTarget,
   showViewer,
   type ViewerDirectiveOptions,
 } from '../packages/core/src/index.js'
@@ -133,14 +132,6 @@ describe('shared lifecycle', () => {
     expect(instances[1].options.toolbar.zoomIn).toBe(false)
     hooks.unmount(el)
     expect(instances[1].destroy).toHaveBeenCalledOnce()
-  })
-  it('supports elements, ids and selectors; never silently targets body', () => {
-    const el = gallery()
-    el.id = 'gallery'
-    expect(resolveTarget(el)).toBe(el)
-    expect(resolveTarget('gallery')).toBe(el)
-    expect(resolveTarget('#gallery')).toBe(el)
-    expect(() => resolveTarget('#missing')).toThrow('not found')
   })
 })
 
@@ -435,23 +426,6 @@ describe('batched image observation', () => {
       expect(instances[0].options).not.toHaveProperty('observe')
     },
   )
-
-  it('accepts a reactive observation window for useViewer targets', async () => {
-    const el = gallery()
-    const observe = ref<boolean | number>(false)
-    mount(() => {
-      useViewer({ target: el, observe })
-      return () => h('div')
-    })
-    el.append(document.createElement('img'))
-    await advance(100)
-    expect(instances[0].update).not.toHaveBeenCalled()
-    observe.value = 20
-    await nextTick()
-    await advance(20)
-    expect(instances[0].update).toHaveBeenCalledOnce()
-    expect(instances).toHaveLength(1)
-  })
 })
 
 describe('temporary galleries', () => {
@@ -531,47 +505,10 @@ describe('Vue 3', () => {
     api!.show()
     expect(instances).toHaveLength(2)
   })
-  it('switches ref targets and clears detached instances', async () => {
-    const first = gallery()
-    const second = gallery()
-    const target = ref<HTMLElement | null>(first)
-    let api: ReturnType<typeof useViewer>
-    mount(() => {
-      api = useViewer({ target })
-      return () => h('div')
-    })
-    expect(instances[0].element).toBe(first)
-    target.value = second
-    await settle()
-    expect(instances[0].destroy).toHaveBeenCalledOnce()
-    expect(instances[1].element).toBe(second)
-    target.value = null
-    await settle()
-    expect(api!.viewer.value).toBeUndefined()
-  })
-  it('accepts an element or reactive getter in the configuration', async () => {
-    const first = gallery()
-    const second = gallery()
-    const target = ref(first)
-    let direct: ReturnType<typeof useViewer>
-    let getter: ReturnType<typeof useViewer>
-    const app = mount(() => {
-      direct = useViewer({ target: first })
-      getter = useViewer({ target: () => target.value })
-      return () => h('div')
-    })
-    expect(direct!.viewer.value!.element).toBe(first)
-    expect(getter!.viewer.value!.element).toBe(first)
-    target.value = second
-    await settle()
-    expect(getter!.viewer.value!.element).toBe(second)
-    app.unmount()
-    expect(direct!.viewer.value).toBeUndefined()
-    expect(getter!.viewer.value).toBeUndefined()
-  })
+
   it('reopens temporary galleries with current images and options', async () => {
     const images = ref(['a.jpg'])
-    const options = ref({ toolbar: true })
+    const options = ref({ toolbar: { zoomIn: true } })
     let api: ReturnType<typeof useViewer>
     mount(() => {
       api = useViewer({ images, options })
@@ -580,29 +517,106 @@ describe('Vue 3', () => {
     api!.show()
     const previous = instances.at(-1)
     images.value.push('b.jpg')
-    options.value.toolbar = false
+    options.value.toolbar.zoomIn = false
     await settle()
+    expect(previous.element.isConnected).toBe(true)
+    expect(previous.element.querySelectorAll('img')).toHaveLength(1)
+    expect(previous.options.toolbar.zoomIn).toBe(true)
+    expect(api!.viewer.value).toBe(previous)
+    api!.hide()
     expect(previous.element.isConnected).toBe(false)
     expect(api!.viewer.value).toBeUndefined()
     api!.show(1)
     const current = instances.at(-1)
     expect(current.element.querySelectorAll('img')).toHaveLength(2)
-    expect(current.options.toolbar).toBe(false)
+    expect(current.options.toolbar.zoomIn).toBe(false)
     expect(current.options.initialViewIndex).toBe(1)
   })
-  it('resolves string targets at show time and prevents work after unmount', () => {
-    const el = gallery()
-    el.id = 'photos'
+
+  it('reads getters only on opening and reuses the current gallery', () => {
+    const images = vi.fn(() => ['a.jpg', 'b.jpg'])
+    const options = vi.fn(() => ({ toolbar: true }))
     let api: ReturnType<typeof useViewer>
     const app = mount(() => {
-      api = useViewer({ target: 'photos' })
+      api = useViewer({ images, options })
       return () => h('div')
     })
-    api!.show(2)
-    expect(instances[0].view).toHaveBeenCalledWith(2)
+    expect(images).not.toHaveBeenCalled()
+    const first = api!.show()
+    expect(api!.show(1)).toBe(first)
+    expect(instances[0].view).toHaveBeenCalledWith(1)
+    expect(images).toHaveBeenCalledOnce()
+    expect(options).toHaveBeenCalledOnce()
+    first!.destroy()
+    expect(api!.viewer.value).toBeUndefined()
+    expect(api!.isShown.value).toBe(false)
+    expect(document.querySelector('.v-viewer-token')).toBeNull()
+    expect(api!.show()).not.toBe(first)
+    expect(images).toHaveBeenCalledTimes(2)
     app.unmount()
     expect(api!.show()).toBeUndefined()
-    expect(instances).toHaveLength(1)
+    expect(instances).toHaveLength(2)
+  })
+  it('keeps image attributes and callbacks fixed until the next opening', async () => {
+    const hidden = vi.fn()
+    const replacement = vi.fn()
+    const images = ref([{ src: 'a.jpg', alt: 'Original' }])
+    const options = ref({ hidden })
+    let api: ReturnType<typeof useViewer>
+    mount(() => {
+      api = useViewer({ images, options })
+      return () => h('div')
+    })
+    const first = api!.show()!
+    images.value[0].alt = 'Changed'
+    options.value.hidden = replacement
+    await settle()
+    expect(first.element.querySelector('img')?.alt).toBe('Original')
+    api!.hide()
+    expect(hidden).toHaveBeenCalledOnce()
+    expect(replacement).not.toHaveBeenCalled()
+    const next = api!.show()!
+    expect(next.element.querySelector('img')?.alt).toBe('Changed')
+    api!.hide()
+    expect(replacement).toHaveBeenCalledOnce()
+  })
+  it('retains a new gallery opened from the hidden callback', () => {
+    let api: ReturnType<typeof useViewer>
+    mount(() => {
+      api = useViewer({
+        images: ['a.jpg'],
+        options: {
+          hidden() {
+            api.show()
+          },
+        },
+      })
+      return () => h('div')
+    })
+    const first = api!.show()
+    api!.hide()
+    expect(api!.viewer.value).not.toBe(first)
+    expect(api!.viewer.value).toBe(instances[1])
+    expect(api!.isShown.value).toBe(true)
+    expect(document.querySelectorAll('.v-viewer-token')).toHaveLength(1)
+  })
+  it('resets visibility and removes temporary DOM when opening fails', () => {
+    let api: ReturnType<typeof useViewer>
+    mount(() => {
+      api = useViewer({
+        images: ['a.jpg'],
+        options: {
+          shown() {
+            throw new Error('failed')
+          },
+        },
+      })
+      return () => h('div')
+    })
+    expect(() => api!.show()).toThrow('failed')
+    expect(api!.viewer.value).toBeUndefined()
+    expect(api!.isShown.value).toBe(false)
+    expect(document.querySelector('.v-viewer-token')).toBeNull()
   })
   it('destroys a temporary gallery when its owner unmounts', () => {
     let api: ReturnType<typeof useViewer>

@@ -17,19 +17,6 @@ export interface ViewerApiOptions {
 export interface ViewerElement extends HTMLElement {
   $viewer?: ViewerJs
 }
-export type ViewerTarget = HTMLElement | string | null | undefined
-
-export function resolveTarget(target: ViewerTarget): HTMLElement | undefined {
-  if (typeof document === 'undefined' || !target) return undefined
-  if (typeof target !== 'string') return target
-  const element =
-    document.getElementById(target) || document.querySelector(target)
-  if (!element) throw new Error(`v-viewer: target "${target}" was not found`)
-  if (!(element instanceof HTMLElement))
-    throw new Error('v-viewer: target must be an HTML element')
-  return element
-}
-
 // Track identity as well as attributes: replacing identical HTML creates new
 // source nodes that Viewer.js must pick up. Ignore its own generated UI.
 function imageState(element: HTMLElement) {
@@ -252,7 +239,10 @@ export function showViewer({
   document.body.appendChild(element)
   let viewer: ViewerJs
   try {
-    viewer = new ViewerJs(element, { ...options, inline: false })
+    viewer = new ViewerJs(element, {
+      ...(snapshot(options) as ViewerOptions),
+      inline: false,
+    })
   } catch (error) {
     element.remove()
     throw error

@@ -37,7 +37,7 @@ The `inited` event has been removed. Call methods on the component ref (`gallery
 
 The component accepts Viewer.js settings directly as props (`:toolbar="false"`, `inline`), emits Vue events (`@viewed`, `@show.prevent`), and exposes methods on its ref (`gallery.value.show()`). The legacy `options` prop and callbacks remain compatible but are deprecated. Explicit props take precedence; legacy callbacks and Vue listeners both run when provided together. `showTooltip()` forwards Viewer.js’s `tooltip()` method while `tooltip` remains a Boolean prop.
 
-Use `vViewer` for existing galleries or `useViewer` for a reactive API with scope cleanup. `useViewer({ images, options })` returns a `show()` method that opens a temporary gallery; pass `target` in the same configuration object to control an existing gallery. `ViewerJs` exposes the underlying Viewer.js class. No global plugin is installed in Vue 3. The script setup example requires Vue 3.2+.
+Use `vViewer` for existing galleries or `useViewer` for image arrays with scope cleanup. `useViewer({ images, options })` reads the latest images and options when `show()` opens a new temporary gallery. Changes during a preview apply the next time it opens. `ViewerJs` exposes the underlying Viewer.js class. No global plugin is installed in Vue 3. The script setup example requires Vue 3.2+.
 
 ## Vue 2
 

@@ -14,7 +14,7 @@ Vite / Webpack 等浏览器构建会自动引入样式。直接通过 CDN 使用
 
 ## 如何从旧版本迁移？
 
-默认插件改为局部引入：component 改为 Viewer，directive() 改为 vViewer，api 改为 useViewer，通过配置对象传入 images、options 和可选的 target，并自动管理生命周期。旧的 Viewer 类改名为 ViewerJs。
+默认插件改为局部引入：component 改为 Viewer，directive() 改为 vViewer，api 改为 useViewer，通过配置对象传入 images 和 options，并自动管理生命周期。旧的 Viewer 类改名为 ViewerJs。
 
 组件的 `options` 保留兼容但不推荐使用，迁移为直接属性、Vue 事件和 ref 方法的示例见[组件迁移说明](./component#migration)。
 
