@@ -23,13 +23,13 @@ api vue3 zh
 | images  | 临时图库的图片数组、ref 或 getter。 |
 | options | Viewer.js 配置、ref 或 getter。     |
 
-| 返回值       | 说明                               |
-| ------------ | ---------------------------------- |
-| viewer       | ShallowRef<ViewerJs \| undefined>  |
-| isShown      | 弹层是否显示的响应式状态。         |
-| show(index?) | 打开图库，可指定图片下标。         |
-| hide()       | 关闭预览。                         |
-| destroy()    | 释放实例；再次 show() 可重新创建。 |
+| 返回值       | 说明                                                                                                    |
+| ------------ | ------------------------------------------------------------------------------------------------------- |
+| viewer       | ShallowRef<ViewerJs \| undefined>                                                                       |
+| isShown      | 弹层是否显示的响应式状态。                                                                              |
+| show(index?) | 打开图库，可指定图片下标。                                                                              |
+| hide()       | 正常关闭预览，按配置播放退出动画并触发 `hide` / `hidden` 事件；关闭完成后自动销毁实例并清理临时 DOM。   |
+| destroy()    | 立即销毁实例并清理临时 DOM，不播放退出动画，也不触发 `hide` / `hidden` 事件；再次 `show()` 可重新创建。 |
 
 在 setup 中调用 useViewer，作用域结束时自动清理。
 
