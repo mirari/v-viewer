@@ -28,8 +28,8 @@ api vue3 zh
 | viewer       | ShallowRef<ViewerJs \| undefined>                                                                       |
 | isShown      | 弹层是否显示的响应式状态。                                                                              |
 | show(index?) | 打开图库，可指定图片下标。                                                                              |
-| hide()       | 正常关闭预览，按配置播放退出动画并触发 `hide` / `hidden` 事件；关闭完成后自动销毁实例并清理临时 DOM。   |
-| destroy()    | 立即销毁实例并清理临时 DOM，不播放退出动画，也不触发 `hide` / `hidden` 事件；再次 `show()` 可重新创建。 |
+| hide()       | 正常关闭预览，按配置播放退出动画并调用 `hide` / `hidden` 回调；关闭完成后自动销毁实例并清理临时 DOM。   |
+| destroy()    | 立即销毁实例并清理临时 DOM，不播放退出动画，也不调用 `hide` / `hidden` 回调；再次 `show()` 可重新创建。 |
 
 在 setup 中调用 useViewer，作用域结束时自动清理。
 
@@ -47,8 +47,8 @@ api vue3 zh
 <!--@include: ../.vitepress/fragments/viewer-options.zh.md-->
 <!-- /viewer-options:modal -->
 
-## 事件 {#events}
+## 回调 {#callbacks}
 
-在同一个 `options` 对象中设置 `viewed(event)` 等回调。参数为原始 DOM 事件，操作数据位于 `event.detail`；点击事件名可查看 [Viewer.js 原文档](https://github.com/fengyuanchen/viewerjs#events)。
+在 `options` 中设置 `viewed(event)` 等回调函数，对应 [Viewer.js 原生事件](https://github.com/fengyuanchen/viewerjs#events)。回调参数为原始 DOM 事件，操作数据位于 `event.detail`；点击名称可查看原文档。
 
 <!--@include: ../.vitepress/fragments/viewer-events.zh.md-->

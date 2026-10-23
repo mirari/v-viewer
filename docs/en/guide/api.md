@@ -23,13 +23,13 @@ api vue3 en
 | images    | Image array, ref or getter for temporary galleries. |
 | options   | Viewer.js options, ref or getter.                   |
 
-| Return value | Description                                                                                                                                   |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| viewer       | ShallowRef<ViewerJs \| undefined>                                                                                                             |
-| isShown      | Reactive modal visibility.                                                                                                                    |
-| show(index?) | Open at an optional image index.                                                                                                              |
-| hide()       | Close normally with the configured exit transition and `hide` / `hidden` events; destroy the instance and remove temporary DOM after closing. |
-| destroy()    | Immediately destroy the instance and remove temporary DOM, without an exit transition or `hide` / `hidden` events; `show()` can recreate it.  |
+| Return value | Description                                                                                                                                      |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| viewer       | ShallowRef<ViewerJs \| undefined>                                                                                                                |
+| isShown      | Reactive modal visibility.                                                                                                                       |
+| show(index?) | Open at an optional image index.                                                                                                                 |
+| hide()       | Close normally with the configured exit transition and `hide` / `hidden` callbacks; destroy the instance and remove temporary DOM after closing. |
+| destroy()    | Immediately destroy the instance and remove temporary DOM, without an exit transition or `hide` / `hidden` callbacks; `show()` can recreate it.  |
 
 Call useViewer inside setup. It cleans up on scope disposal.
 
@@ -47,8 +47,8 @@ These match [Viewer.js options](https://github.com/fengyuanchen/viewerjs#options
 <!--@include: ../../.vitepress/fragments/viewer-options.en.md-->
 <!-- /viewer-options:modal -->
 
-## Events {#events}
+## Callbacks {#callbacks}
 
-Set callbacks such as `viewed(event)` on the same `options` object. They receive the original DOM event, with operation data in `event.detail`. Click an event name for its [Viewer.js documentation](https://github.com/fengyuanchen/viewerjs#events).
+Set callback functions such as `viewed(event)` in `options`. They correspond to [Viewer.js events](https://github.com/fengyuanchen/viewerjs#events) and receive the original DOM event, with operation data in `event.detail`. Click a name for its original documentation.
 
 <!--@include: ../../.vitepress/fragments/viewer-events.en.md-->

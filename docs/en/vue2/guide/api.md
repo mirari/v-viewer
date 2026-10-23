@@ -32,8 +32,8 @@ These match [Viewer.js options](https://github.com/fengyuanchen/viewerjs#options
 <!--@include: ../../../.vitepress/fragments/viewer-options.en.md-->
 <!-- /viewer-options:modal -->
 
-## Events {#events}
+## Callbacks {#callbacks}
 
-Set callbacks such as `viewed(event)` on the same `options` object. They receive the original DOM event, with operation data in `event.detail`. Click an event name for its [Viewer.js documentation](https://github.com/fengyuanchen/viewerjs#events).
+Set callback functions such as `viewed(event)` in `options`. They correspond to [Viewer.js events](https://github.com/fengyuanchen/viewerjs#events) and receive the original DOM event, with operation data in `event.detail`. Click a name for its original documentation.
 
 <!--@include: ../../../.vitepress/fragments/viewer-events.en.md-->

@@ -48,9 +48,9 @@ element?.$viewer?.show()
 
 <!--@include: ../../.vitepress/fragments/viewer-options.zh.md-->
 
-## 事件 {#events}
+## 回调 {#callbacks}
 
-在同一个 `options` 对象中设置 `viewed(event)` 等回调。参数为原始 DOM 事件，操作数据位于 `event.detail`；点击事件名可查看 [Viewer.js 原文档](https://github.com/fengyuanchen/viewerjs#events)。
+在 `options` 中设置 `viewed(event)` 等回调函数，对应 [Viewer.js 原生事件](https://github.com/fengyuanchen/viewerjs#events)。回调参数为原始 DOM 事件，操作数据位于 `event.detail`；点击名称可查看原文档。
 
 <!--@include: ../../.vitepress/fragments/viewer-events.zh.md-->
 
