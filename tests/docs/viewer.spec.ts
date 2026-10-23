@@ -277,6 +277,28 @@ for (const vue2 of [false, true]) {
         frame.getByRole('dialog').locator('.viewer-list > li'),
       ).toHaveCount(5)
       await expect(page.locator('body > .viewer-container')).toBeVisible()
+      if (mode === 'api') {
+        const thumbnail = frame
+          .getByRole('dialog')
+          .locator('.viewer-list img')
+          .first()
+        const original = frame.getByRole('dialog').locator('.viewer-canvas img')
+        await expect(thumbnail).toHaveAttribute(
+          'src',
+          /\/images\/thumbnails\/photo-01\.jpg/,
+        )
+        await expect(original).toHaveAttribute('src', /\/images\/photo-01\.jpg/)
+        await expect
+          .poll(() =>
+            thumbnail.evaluate((img: HTMLImageElement) => img.naturalWidth),
+          )
+          .toBe(240)
+        await expect
+          .poll(() =>
+            original.evaluate((img: HTMLImageElement) => img.naturalWidth),
+          )
+          .toBe(960)
+      }
       await expect
         .poll(() => page.getByRole('dialog').boundingBox())
         .toEqual({ x: 0, y: 0, ...page.viewportSize()! })

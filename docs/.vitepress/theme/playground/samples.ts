@@ -11,7 +11,7 @@ export function sample(
   // Use absolute URLs inside the opaque-origin preview frame.
   const base = typeof location === 'undefined' ? '' : location.origin
   const images = sampleImages.map((path) => base + withBase(path))
-  const sourceImages = `const sourceImages = ${JSON.stringify(images, null, 2)}${kind === 'api' ? ".map(src => ({ src, 'data-source': src }))" : ''}`
+  const sourceImages = `const sourceImages = ${JSON.stringify(images, null, 2)}${kind === 'api' ? ".map(original => ({ src: original.replace('/images/', '/images/thumbnails/'), 'data-source': original }))" : ''}`
   const viewerOptions =
     kind === 'api'
       ? "{ toolbar: true, url: 'data-source', initialViewIndex: 0 }"
