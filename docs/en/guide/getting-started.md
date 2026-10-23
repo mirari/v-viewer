@@ -1,9 +1,5 @@
 # Quick start
 
-::: warning Upgrading an existing project
-This major rewrite includes breaking changes. Components now recommend direct props, Vue events and ref methods. The legacy options prop remains compatible, but is deprecated. Read the [migration examples](./component#migration) before upgrading.
-:::
-
 <ClientOnly><ViewerConfigurator /></ClientOnly>
 
 ## Installation

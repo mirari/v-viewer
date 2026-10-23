@@ -1,9 +1,5 @@
 # 快速上手
 
-::: warning 旧项目升级注意
-本次主版本重构包含破坏性变更。组件推荐改用直接属性、Vue 事件和 ref 方法；旧 options 传参保留兼容，但不推荐继续使用。升级前请对照[迁移示例](./component#migration)调整写法。
-:::
-
 <ClientOnly><ViewerConfigurator /></ClientOnly>
 
 ## 安装

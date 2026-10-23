@@ -3,7 +3,7 @@
 Suitable for complex scenarios involving custom toolbars or images in dynamically rendered Markdown or HTML whose content is not known in advance. By default, it watches additions, removals and attribute changes of `<img>` elements inside the component and automatically updates the gallery.
 
 ::: warning Upgrading from an older major version
-The Vue 2 (4.x) and Vue 3 (5.x) lines are a rewrite with breaking changes. Migrate component settings to props, callbacks to Vue events, and method calls to the component ref. **The legacy options prop is retained for compatibility, but is deprecated.** Existing options-based galleries can migrate gradually.
+The Vue 3 (5.x) line is a rewrite with breaking changes. Migrate component settings to props, callbacks to Vue events, and method calls to the component ref. **The legacy options prop is retained for compatibility, but is deprecated.** Existing options-based galleries can migrate gradually.
 :::
 
 [Playground](/en/playground?example=component)
