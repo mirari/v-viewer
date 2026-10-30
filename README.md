@@ -10,7 +10,7 @@
 
 An image viewer for Vue with zoom, rotation, image navigation and custom toolbars, powered by [Viewer.js](https://github.com/fengyuanchen/viewerjs).
 
-**[English documentation](https://v-viewer.mirari.cc/en/)** · **[中文文档](https://v-viewer.mirari.cc/)**
+**[English documentation](https://v-viewer.mirari.cc/en/)** · **[中文文档](https://v-viewer.mirari.cc/)** · **[Live demo / 在线演示](https://v-viewer.mirari.cc/playground)**
 
 ## Install
 
