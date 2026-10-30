@@ -8,13 +8,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/mirari/v-viewer)](https://github.com/mirari/v-viewer/stargazers)
 
-Image viewer components and directives for **Vue 2 and Vue 3**, with a `useViewer()` composable for Vue 3 and a `viewerApi()` function for Vue 2. Supports zooming, rotation, image navigation and custom toolbars, powered by [Viewer.js](https://github.com/fengyuanchen/viewerjs).
+An image viewer for Vue with zoom, rotation, image navigation and custom toolbars, powered by [Viewer.js](https://github.com/fengyuanchen/viewerjs).
 
 **[English documentation](https://v-viewer.mirari.cc/en/)** · **[中文文档](https://v-viewer.mirari.cc/)** · [Documentation source](https://github.com/mirari/v-viewer/tree/master/docs) · [Contributing](https://github.com/mirari/v-viewer/blob/master/CONTRIBUTING.md)
 
-**5.x supports Vue 3.0+**; **4.x supports Vue 2.4+** through the `legacy` channel. Both are new major versions of the rewritten library; upgrade explicitly from the previous 1.x/3.x releases. See [migration notes](#migration) before upgrading an existing project.
-
 ## Install
+
+**5.x supports Vue 3.0+**; **4.x supports Vue 2.4+** through the `legacy` channel. Both are new major versions of the rewritten library; upgrade explicitly from the previous 1.x/3.x releases. See [migration notes](#migration) before upgrading an existing project.
 
 ```sh
 npm install v-viewer         # Vue 3
